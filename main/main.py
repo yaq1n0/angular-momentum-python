@@ -1,5 +1,9 @@
+# main file
+
 # importing python modules
 from Tkinter import *
+import os
+import random
 
 # importing personal modules
 import myvars
@@ -8,7 +12,7 @@ import myclasses
 
 # creating root
 root = Tk()
-root.title(myvars.root_title)
+root.title("Rotational Motion")
 root.geometry(myvars.start_geometry)
 root.configure(bg=myvars.colors[4])
 
@@ -46,7 +50,7 @@ def goto_game():
 
 
 def goto_cheatsheet():
-    root.geometry(myvars.root_geometry)
+    root.geometry(myvars.cheatsheet_geometry)
     main_bf.frame.destroy()
     game_bf.frame.destroy()
     documentation_bf.frame.destroy()
@@ -69,7 +73,7 @@ title_label.label.place(relwidth=0.5)
 button1 = myclasses.MyButton(start_bf.frame, "Main", goto_main, 0.25, 0.15)
 button1.button.place(relwidth=0.5)
 
-button2 = myclasses.MyButton(start_bf.frame, "Game", goto_game, 0.25, 0.30)
+button2 = myclasses.MyButton(start_bf.frame, "Quiz Game", goto_game, 0.25, 0.30)
 button2.button.place(relwidth=0.5)
 
 button3 = myclasses.MyButton(start_bf.frame, "CheatSheet", goto_cheatsheet, 0.25, 0.45)
@@ -181,7 +185,7 @@ fb2b = myclasses.MyButton(frame2.frame, "Momentum", flip_frame2b, 0.70, myvars.f
 fb2c = myclasses.MyButton(frame2.frame, "Energy", flip_frame2c, 0.85, myvars.fb_rely_secondary)
 fb3a = myclasses.MyButton(frame3.frame, "Basic", flip_frame3a, 0.55, myvars.fb_rely_secondary)
 fb3b = myclasses.MyButton(frame3.frame, "Momentum", flip_frame3b, 0.70, myvars.fb_rely_secondary)
-fb3b = myclasses.MyButton(frame3.frame, "Energy", flip_frame3c, 0.85, myvars.fb_rely_secondary)
+fb3c = myclasses.MyButton(frame3.frame, "Energy", flip_frame3c, 0.85, myvars.fb_rely_secondary)
 
 # setting default frame order
 flip_main_pf2()
@@ -547,7 +551,146 @@ frame3c_canvas1 = myclasses.MyCanvas(frame3c.frame)
 
 # game_bf objects
 
+# end screen objects
+end_label = Label(game_bf.frame)
+end_label.configure(text="You have gone through all the questions \n please come back later for more")
+end_label.configure(bg=myvars.colors[4], fg=myvars.colors[0])
+end_label.place(relx=0.05, rely=0.05, relwidth=0.90, relheight=0.45)
+
+end_button = myclasses.MyButton(game_bf.frame, "Exit", root.destroy, 0.45, 0.50)
+
+# questions
+q1 = myclasses.MyQuestion(game_bf.frame,
+                          "What is the moment of inertia, I for a disc?",
+                          "I = MR^2",
+                          "I = 0.5 *  ML^2",
+                          "I = 0.5 *  MR^2",
+                          "I = 0.5 *  Mk^2",
+                          "for particle",
+                          "for a stick",
+                          "for a disc",
+                          "I = Mk^2, where k is the radius of gyration",
+                          3
+                          )
+
+q2 = myclasses.MyQuestion(game_bf.frame,
+                          "What is the Rotational Kinetic Energy of a rolling disc?",
+                          "0.5 * mv^2",
+                          "0.25 * mr^2w^2",
+                          "0.5 * mr^2",
+                          "0.25 * Iw^2",
+                          "Linear Kinetic Energy",
+                          "RKE = 0.5 * Iw^2 = 0.5 * (0.5 * MR^2)w^2",
+                          "I for disc",
+                          "RKE = 0.5 * Iw^2",
+                          2
+                          )
+
+q3 = myclasses.MyQuestion(game_bf.frame,
+                          "What is the angular momentum, L for an orbiting particle?",
+                          "L = mr^2w",
+                          "L = mv",
+                          "L = wr",
+                          "L = mr^2",
+                          "L = Iw",
+                          "Linear momentum, p = mv",
+                          "v = wr",
+                          "I for a particle = mr^2",
+                          1
+                          )
+
+q4 = myclasses.MyQuestion(game_bf.frame,
+                          "Rate of change of angular momentum is equal to ___________?",
+                          "torque",
+                          "force",
+                          "moment of inertia",
+                          "angular velocity",
+                          "torque is the rate of change of angular momentum",
+                          "force is the rate of change of linear momentum",
+                          "moment of inertia is the product of mass and square of distance",
+                          "angular velocity is the rate of change of angle in radian",
+                          1
+                          )
+
+q5 = myclasses.MyQuestion(game_bf.frame,
+                          "What is the unit for Angular Momentum?",
+                          "kgms^-1",
+                          "kgm^2(s^-2)",
+                          "kgm^2(s^-1)",
+                          "kgm^2",
+                          "linear momentum",
+                          "torque",
+                          "L = Iw = (MR^2)w = (kgm^2)s^-1",
+                          "moment of inertia",
+                          3
+                          )
+
+q6 = myclasses.MyQuestion(game_bf.frame,
+                          "What real force keeps a satellite in a circular orbit around the earth?",
+                          "Thrust",
+                          "Gravity",
+                          "Centripetal force",
+                          "There is no force in space",
+                          "It is a propulsive force",
+                          "Gravitational pull of earth towards the satellite",
+                          "It is not a real force, but a net force",
+                          "Gravitational force exists in space",
+                          2
+                          )
+
+q7 = myclasses.MyQuestion(game_bf.frame,
+                          "The velocity is always __________ to the line of a circle.",
+                          "tangent",
+                          "towards the center",
+                          "outwards",
+                          "inwards",
+                          "Velocity acts tangent to a circle",
+                          "Centripetal force acts towards the center of a circle",
+                          "Invalid answer",
+                          "Invalid answer",
+                          1
+                          )
+
+q8 = myclasses.MyQuestion(game_bf.frame,
+                          "What is the force that keeps an object in circular motion?",
+                          "Centrifugal force",
+                          "Centripetal force",
+                          "Center-fleeing force",
+                          "Gravity",
+                          "tendency of an object to fly away from the center of a curved path",
+                          "a resultant force of all real forces acting on the object, that acts towards the centre of a circular motion",
+                          "equivalent to Centrifugal Force",
+                          "Not a net force",
+                          2
+                          )
+
+# shuffling questions
+qlist = [q1, q2, q3, q4, q5, q6, q7, q8]
+random.shuffle(qlist)
+
+for q in qlist:
+    q.pf.frame.tkraise()
+
 # cheatsheet_bf objects
 
+img1_path = os.path.abspath("main/cheatsheet.png")
+img1_import = PhotoImage(file=img1_path)
+cheatsheet_image = img1_import.subsample(3, 3)
+
+cheatsheet_label = Label(cheatsheet_bf.frame, image=cheatsheet_image)
+cheatsheet_label.configure(bg="#3C3838", relief=FLAT, bd=0)
+cheatsheet_label.place(relx=0, rely=0, relwidth=1, relheight=1)
+
 # documentation_bf objects
+
+'''
+img2_path = os.path.abspath("main/documentation.png")
+img2_import = PhotoImage(file=img2_path)
+documentation_image = img2_import.subsample(2, 2)
+
+documentation_label = Label(documentation_bf.frame, image=documentation_image)
+documentation_label.configure(bg="insert color", relief=FLAT, bd=0)
+documentation_label.place(relx=0, rely=0, relwidth=1, relheight=1)
+'''
+
 root.mainloop()

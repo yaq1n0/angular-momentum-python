@@ -1,7 +1,11 @@
-from Tkinter import *
+# contains all custom classes
 
+# importing python modules
+from Tkinter import *
+import tkMessageBox
+
+# importing personal modules
 import myvars
-import myfunctions
 
 
 # Defining Object ToolTip
@@ -209,6 +213,16 @@ class MyLabel(object):
 # Creating MyScale
 class MyScale(object):
     def __init__(self, parent, text, relx, rely):
+        # making parameters into attributes
+        self.parent = parent
+        self.text = text
+        self.relx = relx
+        self.rely = rely
+
+        # creating Tkinter variables
+        self.l_val = StringVar()
+
+        # setting variables
         bgcolor = myvars.fbg
         fgcolor = myvars.ffg
 
@@ -219,18 +233,145 @@ class MyScale(object):
         scale_relwidth = myvars.scale_relwidth
         scale_relheight = myvars.scale_relheight
 
-        self.scale = Scale(parent)
+        def update(scale_value):
+            self.l_val.set(self.text + " = " + scale_value)
+
+        # creating Scale
+        self.scale = Scale(self.parent)
+        self.scale.configure(command=update)
         self.scale.configure(from_=lowrange, to=highrange)
-        self.scale.configure(orient=HORIZONTAL, showvalue=1, resolution=resolution)
+        self.scale.configure(orient=HORIZONTAL, showvalue=0, resolution=resolution)
         self.scale.configure(bg=bgcolor, fg=fgcolor)
         self.scale.configure(relief=RIDGE, highlightthickness=0, bd=0)
         self.scale.place(relx=relx, rely=rely, relwidth=scale_relwidth, relheight=scale_relheight)
 
-        label_rely = rely - 0.045
+        label_rely = rely - 0.050
 
         self.label = Label(parent)
-        self.label.configure(text=text)
+        self.label.configure(textvariable=self.l_val)
         self.label.configure(bg=bgcolor, fg=fgcolor)
         self.label.configure(relief=FLAT)
         self.label.configure(padx=2, pady=2)
         self.label.place(relx=relx, rely=label_rely)
+
+
+class MyQuestion(object):
+    def __init__(self, parent, question_text, ans1_text, ans2_text, ans3_text, ans4_text, exp1_text, exp2_text,
+                 exp3_text, exp4_text, correct_ans):
+
+        # making parameters into attributes
+        self.parent = parent
+
+        self.qtext = question_text
+
+        self.text1 = ans1_text
+        self.text2 = ans2_text
+        self.text3 = ans3_text
+        self.text4 = ans4_text
+
+        self.exp1 = exp1_text
+        self.exp2 = exp2_text
+        self.exp3 = exp3_text
+        self.exp4 = exp4_text
+
+        self.ans = correct_ans
+
+        # creating Tkinter variables
+
+        self.ans_input = IntVar()
+        self.is_correct = BooleanVar()
+        self.efbg = StringVar()
+
+        # questionwide bgcolor, fgcolor
+        self.bgcolor = myvars.colors[2]
+        self.fgcolor = myvars.colors[0]
+
+        self.parent_frame()
+        self.question_frame()
+
+    def parent_frame(self):
+        self.pf = MyFrame(self.parent, self.bgcolor)
+
+    def question_frame(self):
+        self.qf = MyFrame(self.pf.frame, self.bgcolor)
+
+        # creating title label
+
+        self.title_label = Label(self.qf.frame)
+        self.title_label.configure(text=self.qtext)
+        self.title_label.configure(bg=self.bgcolor, fg=self.fgcolor)
+        self.title_label.configure(relief=FLAT)
+        self.title_label.configure(padx=2, pady=2)
+        self.title_label.place(relx=0.05, rely=0.05, relwidth=0.90, relheight=0.10)
+
+        # creating radio buttons 1-4
+        self.q1 = Radiobutton(self.qf.frame)
+        self.q1.configure(text="A. " + self.text1)
+        self.q1.configure(bg=self.bgcolor, fg=self.fgcolor)
+        self.q1.configure(variable=self.ans_input, value=1)
+        self.q1.place(relx=0.10, rely=0.20)
+
+        self.q2 = Radiobutton(self.qf.frame)
+        self.q2.configure(text="B. " + self.text2)
+        self.q2.configure(bg=self.bgcolor, fg=self.fgcolor)
+        self.q2.configure(variable=self.ans_input, value=2)
+        self.q2.place(relx=0.10, rely=0.35)
+
+        self.q3 = Radiobutton(self.qf.frame)
+        self.q3.configure(text="C." + self.text3)
+        self.q3.configure(bg=self.bgcolor, fg=self.fgcolor)
+        self.q3.configure(variable=self.ans_input, value=3)
+        self.q3.place(relx=0.10, rely=0.50)
+
+        self.q4 = Radiobutton(self.qf.frame)
+        self.q4.configure(text="D. " + self.text4)
+        self.q4.configure(bg=self.bgcolor, fg=self.fgcolor)
+        self.q4.configure(variable=self.ans_input, value=4)
+        self.q4.place(relx=0.10, rely=0.65)
+
+        # creating check button
+        self.cb = MyButton(self.qf.frame, "Check Answer", self.check_ans, 0.85, 0.85)
+
+    def explanation_frame(self, exp_text):
+        self.ef = MyFrame(self.pf.frame, self.efbg.get())
+        self.ef.frame.tkraise()
+
+        self.exp_label = Label(self.ef.frame)
+        self.exp_label.configure(text=exp_text)
+        self.exp_label.configure(bg=self.efbg.get(), fg=self.fgcolor)
+        self.exp_label.configure(relief=FLAT)
+        self.exp_label.configure(padx=2, pady=2, anchor=NW)
+        self.exp_label.place(relx=0.05, rely=0.05, relwidth=0.90, relheight=0.90)
+
+        # creating next question button
+        self.nq = MyButton(self.ef.frame, "Next Question", self.next_ques, 0.85, 0.85)
+
+    def check_ans(self):
+
+        if self.ans_input.get() == self.ans:
+            self.efbg.set(myvars.color_green)
+            self.is_correct.set(True)
+
+        else:
+            self.efbg.set(myvars.color_red)
+            self.is_correct.set(False)
+
+        if self.ans_input.get() == 1:
+            self.explanation_frame(self.exp1)
+
+        elif self.ans_input.get() == 2:
+            self.explanation_frame(self.exp2)
+
+        elif self.ans_input.get() == 3:
+            self.explanation_frame(self.exp3)
+
+        elif self.ans_input.get() == 4:
+            self.explanation_frame(self.exp4)
+
+        else:
+            tkMessageBox.showerror("Error", "Please select an answer to continue")
+
+    def next_ques(self):
+        self.ef.frame.destroy()
+        self.qf.frame.destroy()
+        self.pf.frame.destroy()

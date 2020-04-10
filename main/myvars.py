@@ -1,3 +1,5 @@
+# contains all project variables
+
 # defining colors
 colors = ["#FFFFFF",
           "#D3D3D3",
@@ -6,19 +8,26 @@ colors = ["#FFFFFF",
           "#000000"
           ]
 
+color_green = "#77dd77"
+color_red = "#FF6961"
+
 fbg = colors[3]
 ffg = colors[0]
 
-# root size vars
+# root geometry
 root_width = 1280
 root_height = 720
-root_title = "Rotational Motion"
 root_geometry = str(root_width) + "x" + str(root_height)
 
 # start geometry
 start_width = 360
 start_height = 720
 start_geometry = str(start_width) + "x" + str(start_height)
+
+# cheatsheet geometry
+cheatsheet_width = 850
+cheatsheet_height = 750
+cheatsheet_geometry = str(cheatsheet_width) + "x" + str(cheatsheet_height)
 
 # frame bottom padding variable
 frame_bottom_pad1 = 0.1
@@ -56,4 +65,3 @@ spoke_step = 360.0 / spoke_number
 
 # moving platform vars
 platform_width = 2.0
-line_step = 40

@@ -1,7 +1,11 @@
+# contains all custom functions
+
+# importing python modules
 from Tkinter import *
 import tkMessageBox
 import math
 
+# importing personal modules
 import myvars
 import myclasses
 
@@ -179,6 +183,8 @@ def animate_rolling_circle(root,
     circumference = 2.0 * math.pi * float(radius)
     arc_len = float(granularity) / 360.0 * float(circumference)
 
+    line_step = int(radius)
+
     ref_ms = int(1000 * ((1.0 / float(ang_vel)) / (360.0 / float(granularity))))
 
     px_pos = x_pos - (2 * float(radius))
@@ -227,12 +233,12 @@ def animate_rolling_circle(root,
             line_xpos = px_pos + platform_len - (rec_num * arc_len)
 
             # checking line_xpos validity and correcting if invalid
-            if line_xpos <= px_pos + platform_len - myvars.line_step:
+            if line_xpos <= px_pos + platform_len - line_step:
                 rec_num = 0
                 line_xpos = px_pos + platform_len - (rec_num * arc_len)
 
             # drawing vertical platform lines
-            for line_pos in range(int(line_xpos), int(px_pos), -myvars.line_step):
+            for line_pos in range(int(line_xpos), int(px_pos), -line_step):
                 canvas.create_line(line_pos, py_pos, line_pos, py_pos + platform_thickness)
 
             # refreshing the canvas with all components drawn
