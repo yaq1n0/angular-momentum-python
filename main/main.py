@@ -2,8 +2,10 @@
 
 # importing python modules
 from Tkinter import *
-import os
 import random
+import os
+import sys
+import subprocess
 
 # importing personal modules
 import myvars
@@ -25,6 +27,16 @@ documentation_bf = myclasses.MyFrame(root, myvars.colors[4])
 
 # raising start_bf and setting window size
 start_bf.frame.tkraise()
+
+
+# restart function
+def restart(event):
+    # code from "https://blog.petrzemek.net/2014/03/23/restarting-a-python-script-within-itself/"
+    os.execv(sys.executable, ['python'] + sys.argv)
+
+
+# creating program-wide binds
+root.bind("<Control-r>", restart)
 
 
 # goto functions
@@ -224,7 +236,7 @@ def calculate_1a():
     var2 = frame1a_scale2.scale.get()
     ans1 = myfunctions.Moment_Inertia(myvars.particle_constant, var1, var2)
     frame1a_entry1.entry.delete(0, END)
-    frame1a_entry1.entry.insert(0, ans1)
+    frame1a_entry1.entry.insert(0, round(ans1, 2))
 
 
 # calculate 1b
@@ -235,9 +247,9 @@ def calculate_1b():
     ans1 = myfunctions.Moment_Inertia(myvars.particle_constant, var1, var2)
     ans2 = myfunctions.Angular_Momentum(ans1, var3)
     frame1b_entry1.entry.delete(0, END)
-    frame1b_entry1.entry.insert(0, ans1)
+    frame1b_entry1.entry.insert(0, round(ans1, 2))
     frame1b_entry2.entry.delete(0, END)
-    frame1b_entry2.entry.insert(0, ans2)
+    frame1b_entry2.entry.insert(0, round(ans2, 2))
 
 
 # calculate 1c
@@ -248,9 +260,9 @@ def calculate_1c():
     ans1 = myfunctions.Moment_Inertia(myvars.particle_constant, var1, var2)
     ans2 = myfunctions.Rotational_Kinetic_Energy(ans1, var3)
     frame1c_entry1.entry.delete(0, END)
-    frame1c_entry1.entry.insert(0, ans1)
+    frame1c_entry1.entry.insert(0, round(ans1, 2))
     frame1c_entry2.entry.delete(0, END)
-    frame1c_entry2.entry.insert(0, ans2)
+    frame1c_entry2.entry.insert(0, round(ans2, 2))
 
 
 # calculate 2a
@@ -259,7 +271,7 @@ def calculate_2a():
     var2 = frame2a_scale2.scale.get()
     ans1 = myfunctions.Moment_Inertia(myvars.circle_constant, var1, var2)
     frame2a_entry1.entry.delete(0, END)
-    frame2a_entry1.entry.insert(0, ans1)
+    frame2a_entry1.entry.insert(0, round(ans1, 2))
 
 
 # calculate 2b
@@ -270,9 +282,9 @@ def calculate_2b():
     ans1 = myfunctions.Moment_Inertia(myvars.circle_constant, var1, var2)
     ans2 = myfunctions.Angular_Momentum(ans1, var3)
     frame2b_entry1.entry.delete(0, END)
-    frame2b_entry1.entry.insert(0, ans1)
+    frame2b_entry1.entry.insert(0, round(ans1, 2))
     frame2b_entry2.entry.delete(0, END)
-    frame2b_entry2.entry.insert(0, ans2)
+    frame2b_entry2.entry.insert(0, round(ans2, 2))
 
 
 # calculate 2c
@@ -283,9 +295,9 @@ def calculate_2c():
     ans1 = myfunctions.Moment_Inertia(myvars.circle_constant, var1, var2)
     ans2 = myfunctions.Rotational_Kinetic_Energy(ans1, var3)
     frame2c_entry1.entry.delete(0, END)
-    frame2c_entry1.entry.insert(0, ans1)
+    frame2c_entry1.entry.insert(0, round(ans1, 2))
     frame2c_entry2.entry.delete(0, END)
-    frame2c_entry2.entry.insert(0, ans2)
+    frame2c_entry2.entry.insert(0, round(ans2, 2))
 
 
 # calculate 3a
@@ -294,7 +306,7 @@ def calculate_3a():
     var2 = frame3a_scale2.scale.get()
     ans1 = myfunctions.Moment_Inertia(myvars.circle_constant, var1, var2)
     frame3a_entry1.entry.delete(0, END)
-    frame3a_entry1.entry.insert(0, ans1)
+    frame3a_entry1.entry.insert(0, round(ans1, 2))
 
 
 # calculate 3b
@@ -307,11 +319,11 @@ def calculate_3b():
     ans2 = myfunctions.Angular_Momentum(ans1, var3)
     ans3 = myfunctions.Linear_Momentum(var2, var4)
     frame3b_entry1.entry.delete(0, END)
-    frame3b_entry1.entry.insert(0, ans1)
+    frame3b_entry1.entry.insert(0, round(ans1, 2))
     frame3b_entry2.entry.delete(0, END)
-    frame3b_entry2.entry.insert(0, ans2)
+    frame3b_entry2.entry.insert(0, round(ans2, 2))
     frame3b_entry3.entry.delete(0, END)
-    frame3b_entry3.entry.insert(0, ans3)
+    frame3b_entry3.entry.insert(0, round(ans3, 2))
 
 
 # calculate 3c
@@ -325,13 +337,13 @@ def calculate_3c():
     ans3 = myfunctions.Linear_Kinetic_Energy(var2, var4)
     ans4 = myfunctions.TKE(ans2, ans3)
     frame3c_entry1.entry.delete(0, END)
-    frame3c_entry1.entry.insert(0, ans1)
+    frame3c_entry1.entry.insert(0, round(ans1, 2))
     frame3c_entry2.entry.delete(0, END)
-    frame3c_entry2.entry.insert(0, ans2)
+    frame3c_entry2.entry.insert(0, round(ans2, 2))
     frame3c_entry3.entry.delete(0, END)
-    frame3c_entry3.entry.insert(0, ans3)
+    frame3c_entry3.entry.insert(0, round(ans3, 2))
     frame3c_entry4.entry.delete(0, END)
-    frame3c_entry4.entry.insert(0, ans4)
+    frame3c_entry4.entry.insert(0, round(ans4, 2))
 
 
 # animation functions
@@ -478,7 +490,7 @@ frame1c_canvas1 = myclasses.MyCanvas(frame1c.frame)
 
 # frame2a objects
 
-main_label_2a = myclasses.MyLabel(frame2a.frame, "Rotating Circle Basic", 0.05, 0.05)
+main_label_2a = myclasses.MyLabel(frame2a.frame, "Rotating Circle Basics", 0.05, 0.05)
 calculate_button_2a = myclasses.MyButton(frame2a.frame, "Calculate", calculate_2a, 0.70, 0.90)
 animate_button_2a = myclasses.MyButton(frame2a.frame, "Animate", animate_2a, 0.85, 0.90)
 frame2a_scale1 = myclasses.MyScale(frame2a.frame, "Radius (m)", 0.05, 0.20)
@@ -557,7 +569,7 @@ end_label.configure(text="You have gone through all the questions \n please come
 end_label.configure(bg=myvars.colors[4], fg=myvars.colors[0])
 end_label.place(relx=0.05, rely=0.05, relwidth=0.90, relheight=0.45)
 
-end_button = myclasses.MyButton(game_bf.frame, "Exit", root.destroy, 0.45, 0.50)
+end_button = myclasses.MyButton(game_bf.frame, "Relaunch", restart, 0.45, 0.50)
 
 # questions
 q1 = myclasses.MyQuestion(game_bf.frame,
@@ -673,18 +685,20 @@ for q in qlist:
 
 # cheatsheet_bf objects
 
-img1_path = os.path.abspath("main/cheatsheet.png")
+'''
+img1_path = os.path.abspath("cheatsheet.png")
 img1_import = PhotoImage(file=img1_path)
-cheatsheet_image = img1_import.subsample(3, 3)
+cheatsheet_image = img1_import.subsample(2, 2)
 
 cheatsheet_label = Label(cheatsheet_bf.frame, image=cheatsheet_image)
 cheatsheet_label.configure(bg="#3C3838", relief=FLAT, bd=0)
 cheatsheet_label.place(relx=0, rely=0, relwidth=1, relheight=1)
+'''
 
 # documentation_bf objects
 
 '''
-img2_path = os.path.abspath("main/documentation.png")
+img2_path = os.path.abspath("documentation.png")
 img2_import = PhotoImage(file=img2_path)
 documentation_image = img2_import.subsample(2, 2)
 

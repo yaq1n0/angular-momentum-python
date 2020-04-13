@@ -1,3 +1,4 @@
+
 # contains all custom functions
 
 # importing python modules
@@ -11,6 +12,7 @@ import myclasses
 
 
 # CreateToolTip function for ToolTip object
+# code from "https://stackoverflow.com/questions/20399243/display-message-when-hovering-over-something-with-mouse-cursor-in-python"
 def CreateToolTip(widget, text):
     # instantizing toolTip instance of ToolTip class
     toolTip = myclasses.ToolTip(widget)

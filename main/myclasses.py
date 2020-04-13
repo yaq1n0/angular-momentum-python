@@ -1,3 +1,4 @@
+
 # contains all custom classes
 
 # importing python modules
@@ -9,6 +10,7 @@ import myvars
 
 
 # Defining Object ToolTip
+# code from "https://stackoverflow.com/questions/20399243/display-message-when-hovering-over-something-with-mouse-cursor-in-python"
 class ToolTip(object):
 
     def __init__(self, widget):
@@ -117,16 +119,13 @@ class MyButton(object):
         bgcolor = myvars.colors[2]
         fgcolor = myvars.colors[0]
 
-        abgcolor = myvars.colors[1]
-        afgcolor = myvars.colors[4]
-
         relwidth = 0.10
         relheight = 0.05
 
         self.button = Button(parent)
         self.button.configure(text=text, command=command)
         self.button.configure(bg=bgcolor, fg=fgcolor)
-        self.button.configure(activebackground=abgcolor, activeforeground=afgcolor)
+        self.button.configure(activebackground=bgcolor, activeforeground=fgcolor)
         self.button.configure(relief=RIDGE, highlightthickness=0, bd=0)
         self.button.place(relx=relx, rely=rely, relwidth=relwidth, relheight=relheight)
 
@@ -281,10 +280,11 @@ class MyQuestion(object):
         self.ans_input = IntVar()
         self.is_correct = BooleanVar()
         self.efbg = StringVar()
+        self.is_correct_text = StringVar()
 
         # questionwide bgcolor, fgcolor
         self.bgcolor = myvars.colors[2]
-        self.fgcolor = myvars.colors[0]
+        self.fgcolor = myvars.colors[4]
 
         self.parent_frame()
         self.question_frame()
@@ -293,6 +293,7 @@ class MyQuestion(object):
         self.pf = MyFrame(self.parent, self.bgcolor)
 
     def question_frame(self):
+        # creating frame
         self.qf = MyFrame(self.pf.frame, self.bgcolor)
 
         # creating title label
@@ -307,54 +308,67 @@ class MyQuestion(object):
         # creating radio buttons 1-4
         self.q1 = Radiobutton(self.qf.frame)
         self.q1.configure(text="A. " + self.text1)
-        self.q1.configure(bg=self.bgcolor, fg=self.fgcolor)
+        self.q1.configure(bg=self.bgcolor, activebackground=self.bgcolor)
         self.q1.configure(variable=self.ans_input, value=1)
         self.q1.place(relx=0.10, rely=0.20)
 
         self.q2 = Radiobutton(self.qf.frame)
         self.q2.configure(text="B. " + self.text2)
-        self.q2.configure(bg=self.bgcolor, fg=self.fgcolor)
+        self.q2.configure(bg=self.bgcolor, activebackground=self.bgcolor)
         self.q2.configure(variable=self.ans_input, value=2)
         self.q2.place(relx=0.10, rely=0.35)
 
         self.q3 = Radiobutton(self.qf.frame)
-        self.q3.configure(text="C." + self.text3)
-        self.q3.configure(bg=self.bgcolor, fg=self.fgcolor)
+        self.q3.configure(text="C. " + self.text3)
+        self.q3.configure(bg=self.bgcolor, activebackground=self.bgcolor)
         self.q3.configure(variable=self.ans_input, value=3)
         self.q3.place(relx=0.10, rely=0.50)
 
         self.q4 = Radiobutton(self.qf.frame)
         self.q4.configure(text="D. " + self.text4)
-        self.q4.configure(bg=self.bgcolor, fg=self.fgcolor)
+        self.q4.configure(bg=self.bgcolor, activebackground=self.bgcolor)
         self.q4.configure(variable=self.ans_input, value=4)
         self.q4.place(relx=0.10, rely=0.65)
 
         # creating check button
         self.cb = MyButton(self.qf.frame, "Check Answer", self.check_ans, 0.85, 0.85)
+        self.cb.button.configure(bg=myvars.colors[4], fg=myvars.colors[0])
+        self.cb.button.configure(activebackground=myvars.colors[4], activeforeground=myvars.colors[0])
 
     def explanation_frame(self, exp_text):
         self.ef = MyFrame(self.pf.frame, self.efbg.get())
         self.ef.frame.tkraise()
 
+        self.correct_label = Label(self.ef.frame)
+        self.correct_label.configure(text=self.is_correct_text.get())
+        self.correct_label.configure(bg=self.efbg.get(), fg=self.fgcolor)
+        self.correct_label.configure(relief=FLAT)
+        self.correct_label.configure(padx=2, pady=2, anchor=N)
+        self.correct_label.place(relx=0.05, rely=0.05, relwidth=0.90, relheight=0.05)
+
         self.exp_label = Label(self.ef.frame)
         self.exp_label.configure(text=exp_text)
         self.exp_label.configure(bg=self.efbg.get(), fg=self.fgcolor)
         self.exp_label.configure(relief=FLAT)
-        self.exp_label.configure(padx=2, pady=2, anchor=NW)
-        self.exp_label.place(relx=0.05, rely=0.05, relwidth=0.90, relheight=0.90)
+        self.exp_label.configure(padx=2, pady=2, anchor=N)
+        self.exp_label.place(relx=0.05, rely=0.10, relwidth=0.90, relheight=0.85)
 
         # creating next question button
         self.nq = MyButton(self.ef.frame, "Next Question", self.next_ques, 0.85, 0.85)
+        self.nq.button.configure(bg=myvars.colors[4], fg=myvars.colors[0])
+        self.nq.button.configure(activebackground=myvars.colors[4], activeforeground=myvars.colors[0])
 
     def check_ans(self):
 
         if self.ans_input.get() == self.ans:
             self.efbg.set(myvars.color_green)
             self.is_correct.set(True)
+            self.is_correct_text.set("Correct Answer! :)")
 
         else:
             self.efbg.set(myvars.color_red)
             self.is_correct.set(False)
+            self.is_correct_text.set("Wrong Answer :(")
 
         if self.ans_input.get() == 1:
             self.explanation_frame(self.exp1)

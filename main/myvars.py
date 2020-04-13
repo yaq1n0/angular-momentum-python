@@ -1,3 +1,4 @@
+
 # contains all project variables
 
 # defining colors
