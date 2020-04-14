@@ -261,19 +261,37 @@ class MyQuestion(object):
         # making parameters into attributes
         self.parent = parent
 
-        self.qtext = question_text
+        self.qtext = str(question_text)
 
-        self.text1 = ans1_text
-        self.text2 = ans2_text
-        self.text3 = ans3_text
-        self.text4 = ans4_text
+        self.text1 = str(ans1_text)
+        self.text2 = str(ans2_text)
+        self.text3 = str(ans3_text)
+        self.text4 = str(ans4_text)
 
-        self.exp1 = exp1_text
-        self.exp2 = exp2_text
-        self.exp3 = exp3_text
-        self.exp4 = exp4_text
+        self.exp1 = str(exp1_text)
+        self.exp2 = str(exp2_text)
+        self.exp3 = str(exp3_text)
+        self.exp4 = str(exp4_text)
 
-        self.ans = correct_ans
+        self.ans = int(correct_ans)
+
+        # correct answer explanation
+        if self.ans == 1:
+            self.ans_text = "A. " + self.text1
+            self.ans_exp = self.exp1
+        elif self.ans == 2:
+            self.ans_text = "B. " + self.text2
+            self.ans_exp = self.exp2
+        elif self.ans == 3:
+            self.ans_text = "C. " + self.text3
+            self.ans_exp = self.exp3
+        elif self.ans == 4:
+            self.ans_text = "D. " + self.text4
+            self.ans_exp = self.exp4
+        else:
+            self.ans_text = "invalid correct_ans parameter"
+            self.ans_exp = "invalid correct_ans parameter"
+            print "invalid correct_ans parameter, please input between 1 and 4"
 
         # creating Tkinter variables
 
@@ -358,6 +376,14 @@ class MyQuestion(object):
         self.nq.button.configure(bg=myvars.colors[4], fg=myvars.colors[0])
         self.nq.button.configure(activebackground=myvars.colors[4], activeforeground=myvars.colors[0])
 
+        if not self.is_correct.get():
+            self.disp_ans_button()
+
+    def disp_ans_button(self):
+        self.eb = MyButton(self.ef.frame, "Show Answer", self.disp_ans, 0.70, 0.85)
+        self.eb.button.configure(bg=myvars.colors[4], fg=myvars.colors[0])
+        self.eb.button.configure(activebackground=myvars.colors[4], activeforeground=myvars.colors[0])
+
     def check_ans(self):
 
         if self.ans_input.get() == self.ans:
@@ -389,3 +415,7 @@ class MyQuestion(object):
         self.ef.frame.destroy()
         self.qf.frame.destroy()
         self.pf.frame.destroy()
+
+    def disp_ans(self):
+        disp_ans_text = 'The correct answer is "' + str(self.ans_text) + '" because ' + str(self.ans_exp)
+        tkMessageBox.showinfo("Correct Answer", disp_ans_text)
