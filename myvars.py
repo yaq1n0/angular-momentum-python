@@ -1,5 +1,10 @@
+# project variables
 
-# contains all project variables
+# importing default python modules
+
+# importing custom python modules
+
+# importing custom modules
 
 # defining colors
 colors = ["#FFFFFF",
@@ -26,9 +31,14 @@ start_height = 720
 start_geometry = str(start_width) + "x" + str(start_height)
 
 # cheatsheet geometry
-cheatsheet_width = 850
-cheatsheet_height = 750
+cheatsheet_width = 1280
+cheatsheet_height = 1120
 cheatsheet_geometry = str(cheatsheet_width) + "x" + str(cheatsheet_height)
+
+# documentation geometry
+documentation_width = 1280
+documentation_height = 720
+documentation_geometry = str(documentation_width) + "x" + str(documentation_height)
 
 # frame bottom padding variable
 frame_bottom_pad1 = 0.1

@@ -1,11 +1,12 @@
+# custom classes
 
-# contains all custom classes
-
-# importing python modules
+# importing default python modules
 from Tkinter import *
 import tkMessageBox
 
-# importing personal modules
+# importing custom python modules
+
+# importing custom modules
 import myvars
 
 
@@ -417,5 +418,6 @@ class MyQuestion(object):
         self.pf.frame.destroy()
 
     def disp_ans(self):
-        disp_ans_text = 'The correct answer is "' + str(self.ans_text) + '" because ' + str(self.ans_exp)
+        tmp_str = self.ans_exp[0].lower() + self.ans_exp[1:]
+        disp_ans_text = 'The correct answer is "' + str(self.ans_text) + '" because ' + str(tmp_str)
         tkMessageBox.showinfo("Correct Answer", disp_ans_text)

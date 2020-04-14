@@ -1,14 +1,18 @@
+# custom functions
 
-# contains all custom functions
-
-# importing python modules
+# importing default python modules
 from Tkinter import *
 import tkMessageBox
+
+from PIL import Image, ImageTk
+
 import math
 
-# importing personal modules
-import myvars
+# importing custom python modules
+
+# importing custom modules
 import myclasses
+import myvars
 
 
 # CreateToolTip function for ToolTip object
@@ -95,6 +99,7 @@ def ttl(canvas, x_pos, y_pos, radius, theta):
     return canvas.create_line(x_pos, y_pos, x, y, width=myvars.spoke_width)
 
 
+# animate orbiting particle
 def animate_orbiting_particle(root,
                               canvas,
                               x_pos,
@@ -136,6 +141,7 @@ def animate_orbiting_particle(root,
             root.after(ref_ms, canvas.delete(orb_part))
 
 
+# animate rotating circle
 def animate_rotating_circle(root,
                             canvas,
                             x_pos,
@@ -174,6 +180,7 @@ def animate_rotating_circle(root,
             root.after(ref_ms, canvas.delete(line1, line2, line3, line4))
 
 
+# animate rolling circle
 def animate_rolling_circle(root,
                            canvas,
                            x_pos,
@@ -248,3 +255,11 @@ def animate_rolling_circle(root,
 
             # deleting all components after ref_ms
             root.after(ref_ms, canvas.delete(ALL))
+
+
+# creating My
+def MyImage(path, x, y):
+    img_open = Image.open(path)
+    img_resized = img_open.resize((x, y), Image.ANTIALIAS)
+    img_Tk = ImageTk.PhotoImage(img_resized)
+    return img_Tk

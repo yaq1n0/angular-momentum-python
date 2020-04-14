@@ -1,15 +1,22 @@
 # main file
 
-# importing python modules
+# importing default python modules
 from Tkinter import *
+
 import random
 import os
 import sys
 
-# importing personal modules
-import myvars
-import myfunctions
+# importing custom python modules
+
+# importing custom modules
 import myclasses
+import myfunctions
+import myvars
+
+# space to test code
+
+print "hello there"
 
 # creating root
 root = Tk()
@@ -50,33 +57,42 @@ def goto(bf):
 
 def goto_main():
     root.geometry(myvars.root_geometry)
+
     cheatsheet_bf.frame.destroy()
     game_bf.frame.destroy()
     documentation_bf.frame.destroy()
+
     goto(main_bf)
 
 
 def goto_game():
     root.geometry(myvars.root_geometry)
+    root.title("Quiz Game")
     main_bf.frame.destroy()
     cheatsheet_bf.frame.destroy()
     documentation_bf.frame.destroy()
+
     goto(game_bf)
 
 
 def goto_cheatsheet():
     root.geometry(myvars.cheatsheet_geometry)
+    root.title("CheatSheet")
     main_bf.frame.destroy()
     game_bf.frame.destroy()
     documentation_bf.frame.destroy()
+
     goto(cheatsheet_bf)
 
 
 def goto_documentation():
     root.geometry(myvars.root_geometry)
+    root.title("Documentation")
+
     main_bf.frame.destroy()
     cheatsheet_bf.frame.destroy()
     game_bf.frame.destroy()
+
     goto(documentation_bf)
 
 
@@ -578,13 +594,13 @@ end_button = myclasses.MyButton(game_bf.frame, "Relaunch", restart1, 0.45, 0.50)
 q1 = myclasses.MyQuestion(game_bf.frame,
                           "What is the moment of inertia, I for a disc?",
                           "I = MR^2",
-                          "I = 0.5 *  ML^2",
-                          "I = 0.5 *  MR^2",
-                          "I = 0.5 *  Mk^2",
-                          "for particle",
-                          "for a stick",
-                          "for a disc",
-                          "I = Mk^2, where k is the radius of gyration",
+                          "I = 1/12 *  ML^2",
+                          "I = 1/2 *  MR^2",
+                          "I = 1/2 *  Mk^2",
+                          "This is the Moment of Inertia for a particle.",
+                          "This is the Moment of Inertia for a stick.",
+                          "This is the Moment of Inertia for a disc.",
+                          "This Moment of Inertia is for a particle of a disc and involves k, \nwhich is the radius of gyration.",
                           3
                           )
 
@@ -594,10 +610,10 @@ q2 = myclasses.MyQuestion(game_bf.frame,
                           "0.25 * mr^2w^2",
                           "0.5 * mr^2",
                           "0.25 * Iw^2",
-                          "Linear Kinetic Energy",
-                          "RKE = 0.5 * Iw^2 = 0.5 * (0.5 * MR^2)w^2",
-                          "I for disc",
-                          "RKE = 0.5 * Iw^2",
+                          "This is a formula for Linear Kinetic Energy.",
+                          "For a rolling disc, the Rotational Kinetic Energy is given as, \nRKE = 0.5 * Iw^2 = 0.5 * (0.5 * mr^2)w^2 = 0.25 * mr^2w^2 ",
+                          "This is the Moment of Inertia of a disc. \nNote: This formula does not involve any kind of velocity. \nThus, it cannot be Kinetic Energy.",
+                          "For a rolling disc, the Rotational Kinetic Energy is given as, \nRKE = 0.5 * Iw^2. \n\nWhen the Moment of Inertia of the disc is substituted, \nthen only the 0.25 appear.",
                           2
                           )
 
@@ -607,10 +623,10 @@ q3 = myclasses.MyQuestion(game_bf.frame,
                           "L = mv",
                           "L = wr",
                           "L = mr^2",
-                          "L = Iw",
-                          "Linear momentum, p = mv",
-                          "v = wr",
-                          "I for a particle = mr^2",
+                          "The angular momentum for an orbiting paticle is given as, \nL = Iw. \n\nThus, when the Moment of Inertia(I) of a disc is substituted, \nL = mr^2w ",
+                          "Recall that LINEAR Momentum is the product of mass and velocity. \np = mv",
+                          "This formula is used to find linear velocity. \nv = wr",
+                          "This formula is the Moment of Inertia for a particle. \nI = mr^2",
                           1
                           )
 
@@ -620,10 +636,10 @@ q4 = myclasses.MyQuestion(game_bf.frame,
                           "force",
                           "moment of inertia",
                           "angular velocity",
-                          "torque is the rate of change of angular momentum",
-                          "force is the rate of change of linear momentum",
-                          "moment of inertia is the product of mass and square of distance",
-                          "angular velocity is the rate of change of angle in radian",
+                          "Torque is the rate of change of angular momentum.",
+                          "Force is the rate of change of LINEAR momentum.",
+                          "Moment of Inertia is the product of mass and square of distance.",
+                          "Angular Velocity is the rate of change of Angular Displacement in radians per second.",
                           1
                           )
 
@@ -633,10 +649,10 @@ q5 = myclasses.MyQuestion(game_bf.frame,
                           "kgm^2(s^-2)",
                           "kgm^2(s^-1)",
                           "kgm^2",
-                          "linear momentum",
-                          "torque",
-                          "L = Iw = (MR^2)w = (kgm^2)s^-1",
-                          "moment of inertia",
+                          "This unit is for LINEAR Momentum. \nLinear and Angular Momentum have different units due to involving different quantities. \np = mv = kgms^-1",
+                          "This unit is for Torque. \nTorque is the product of Moment of Inertia and Angular Acceleration. \nT = Ia = kgm^2(s^-2)",
+                          "This is the unit for Angular Momentum. \nL = Iw = (MR^2)w = (kgm^2)s^-1",
+                          "This is the unit for Moment of Inertia. \nI = mr^2 = kgm^2",
                           3
                           )
 
@@ -646,10 +662,10 @@ q6 = myclasses.MyQuestion(game_bf.frame,
                           "Gravity",
                           "Centripetal force",
                           "There is no force in space",
-                          "It is a propulsive force",
-                          "Gravitational pull of earth towards the satellite",
-                          "It is not a real force, but a net force",
-                          "Gravitational force exists in space",
+                          "This is a propulsive force. ",
+                          "Gravitational pull of earth acts on the satellite which keeps the satellite in a circular orbit \naround the earth provided its velocity balances the gravitational force.",
+                          "Centripetal force is just a net force.",
+                          "Gravitational force exists in space.",
                           2
                           )
 
@@ -659,10 +675,10 @@ q7 = myclasses.MyQuestion(game_bf.frame,
                           "towards the center",
                           "outwards",
                           "inwards",
-                          "Velocity acts tangent to a circle",
-                          "Centripetal force acts towards the center of a circle",
-                          "Invalid answer",
-                          "Invalid answer",
+                          "Velocity acts tangent to a circle.",
+                          "Centripetal force acts towards the center of a circle.",
+                          "Invalid answer.",
+                          "Invalid answer.",
                           1
                           )
 
@@ -671,11 +687,11 @@ q8 = myclasses.MyQuestion(game_bf.frame,
                           "Centrifugal force",
                           "Centripetal force",
                           "Center-fleeing force",
-                          "Gravity",
-                          "tendency of an object to fly away from the center of a curved path",
-                          "a resultant force of all real forces acting on the object, that acts towards the centre of a circular motion",
-                          "equivalent to Centrifugal Force",
-                          "Not a net force",
+                          "Gravitational Force",
+                          "Centrifugal force is the tendency of an object to \nfly away from the center of a curved path.",
+                          "Centripetal force is the net force keeping an object in circular motion. \nThe resultant force of all real forces acting on the object, \nthat acts towards the centre of the circular path is responsible for its circular motion.",
+                          "This force is also called Centrifugal Force which is \nthe tendency of an object to fly away from the center of a curved path.",
+                          "This is an attractive force which occurs between \nmasses of objects and it is not a net force.",
                           2
                           )
 
@@ -688,25 +704,15 @@ for q in qlist:
 
 # cheatsheet_bf objects
 
-'''
-img1_path = os.path.abspath("cheatsheet.png")
-img1_import = PhotoImage(file=img1_path)
-cheatsheet_image = img1_import.subsample(2, 2)
-
-cheatsheet_label = Label(cheatsheet_bf.frame, image=cheatsheet_image)
-cheatsheet_label.configure(bg="#3C3838", relief=FLAT, bd=0)
+cheatsheet_img = myfunctions.MyImage("cheatsheet.jpg", myvars.cheatsheet_width, myvars.cheatsheet_height)
+cheatsheet_label = Label(cheatsheet_bf.frame, image=cheatsheet_img)
 cheatsheet_label.place(relx=0, rely=0, relwidth=1, relheight=1)
-'''
 
 # documentation_bf objects
 
 '''
-img2_path = os.path.abspath("documentation.png")
-img2_import = PhotoImage(file=img2_path)
-documentation_image = img2_import.subsample(2, 2)
-
-documentation_label = Label(documentation_bf.frame, image=documentation_image)
-documentation_label.configure(bg="insert color", relief=FLAT, bd=0)
+documentation_img = myfunctions.MyImage("documentation.jpg", myvars.documentation_width, myvars.documentation_height)
+documentation_label = Label(documentation_bf.frame, image=documentation_img)
 documentation_label.place(relx=0, rely=0, relwidth=1, relheight=1)
 '''
 
