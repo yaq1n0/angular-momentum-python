@@ -5,6 +5,21 @@
 # importing custom python modules
 
 # importing custom modules
+import config
+
+# validation checks for config
+if type(config.width) != int:
+    print "Please use an integer value for width"
+if type(config.height) != int:
+    print "please use an integer value for height"
+if type(config.font) != str:
+    print "please use a string for font"
+if type(config.font_size) != int:
+    print "please use an integer value for font_size"
+if type(config.enhanced_performance) != bool:
+    print 'please use either "True" or "False" boolean values'
+
+perf = config.enhanced_performance
 
 # defining colors
 colors = ["#FFFFFF",
@@ -20,14 +35,17 @@ color_red = "#FF6961"
 fbg = colors[3]
 ffg = colors[0]
 
+# MyFont variable
+MyFont = (config.font, config.font_size)
+
 # root geometry
-root_width = 1280
-root_height = 720
+root_width = config.width
+root_height = config.height
 root_geometry = str(root_width) + "x" + str(root_height)
 
 # start geometry
-start_width = 360
-start_height = 720
+start_height = root_height
+start_width = start_height / 2
 start_geometry = str(start_width) + "x" + str(start_height)
 
 # cheatsheet geometry

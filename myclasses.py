@@ -7,6 +7,7 @@ import tkMessageBox
 # importing custom python modules
 
 # importing custom modules
+import myfunctions
 import myvars
 
 
@@ -125,6 +126,7 @@ class MyButton(object):
 
         self.button = Button(parent)
         self.button.configure(text=text, command=command)
+        self.button.configure(font=myvars.MyFont)
         self.button.configure(bg=bgcolor, fg=fgcolor)
         self.button.configure(activebackground=bgcolor, activeforeground=fgcolor)
         self.button.configure(relief=RIDGE, highlightthickness=0, bd=0)
@@ -167,6 +169,7 @@ class MyEntry(object):
 
         self.label = Label(parent)
         self.label.configure(text=text)
+        self.label.configure(font=myvars.MyFont)
         self.label.configure(bg=bgcolor, fg=fgcolor)
         self.label.configure(relief=FLAT)
         self.label.configure(padx=2, pady=2)
@@ -204,6 +207,7 @@ class MyLabel(object):
 
         self.label = Label(parent)
         self.label.configure(text=text)
+        self.label.configure(font=myvars.MyFont)
         self.label.configure(bg=bgcolor, fg=fgcolor)
         self.label.configure(relief=FLAT)
         self.label.configure(padx=2, pady=2)
@@ -249,6 +253,7 @@ class MyScale(object):
 
         self.label = Label(parent)
         self.label.configure(textvariable=self.l_val)
+        self.label.configure(font=myvars.MyFont)
         self.label.configure(bg=bgcolor, fg=fgcolor)
         self.label.configure(relief=FLAT)
         self.label.configure(padx=2, pady=2)
@@ -319,6 +324,7 @@ class MyQuestion(object):
 
         self.title_label = Label(self.qf.frame)
         self.title_label.configure(text=self.qtext)
+        self.title_label.configure(font=myvars.MyFont)
         self.title_label.configure(bg=self.bgcolor, fg=self.fgcolor)
         self.title_label.configure(relief=FLAT)
         self.title_label.configure(padx=2, pady=2)
@@ -327,24 +333,28 @@ class MyQuestion(object):
         # creating radio buttons 1-4
         self.q1 = Radiobutton(self.qf.frame)
         self.q1.configure(text="A. " + self.text1)
+        self.q1.configure(font=myvars.MyFont)
         self.q1.configure(bg=self.bgcolor, activebackground=self.bgcolor)
         self.q1.configure(variable=self.ans_input, value=1)
         self.q1.place(relx=0.10, rely=0.20)
 
         self.q2 = Radiobutton(self.qf.frame)
         self.q2.configure(text="B. " + self.text2)
+        self.q2.configure(font=myvars.MyFont)
         self.q2.configure(bg=self.bgcolor, activebackground=self.bgcolor)
         self.q2.configure(variable=self.ans_input, value=2)
         self.q2.place(relx=0.10, rely=0.35)
 
         self.q3 = Radiobutton(self.qf.frame)
         self.q3.configure(text="C. " + self.text3)
+        self.q3.configure(font=myvars.MyFont)
         self.q3.configure(bg=self.bgcolor, activebackground=self.bgcolor)
         self.q3.configure(variable=self.ans_input, value=3)
         self.q3.place(relx=0.10, rely=0.50)
 
         self.q4 = Radiobutton(self.qf.frame)
         self.q4.configure(text="D. " + self.text4)
+        self.q4.configure(font=myvars.MyFont)
         self.q4.configure(bg=self.bgcolor, activebackground=self.bgcolor)
         self.q4.configure(variable=self.ans_input, value=4)
         self.q4.place(relx=0.10, rely=0.65)
@@ -360,6 +370,7 @@ class MyQuestion(object):
 
         self.correct_label = Label(self.ef.frame)
         self.correct_label.configure(text=self.is_correct_text.get())
+        self.correct_label.configure(font=myvars.MyFont)
         self.correct_label.configure(bg=self.efbg.get(), fg=self.fgcolor)
         self.correct_label.configure(relief=FLAT)
         self.correct_label.configure(padx=2, pady=2, anchor=N)
@@ -367,6 +378,7 @@ class MyQuestion(object):
 
         self.exp_label = Label(self.ef.frame)
         self.exp_label.configure(text=exp_text)
+        self.exp_label.configure(font=myvars.MyFont)
         self.exp_label.configure(bg=self.efbg.get(), fg=self.fgcolor)
         self.exp_label.configure(relief=FLAT)
         self.exp_label.configure(padx=2, pady=2, anchor=N)

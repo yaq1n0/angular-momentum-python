@@ -16,12 +16,13 @@ import myvars
 
 # space to test code
 
-print "hello there"
+print ""
 
 # creating root
 root = Tk()
 root.title("Rotational Motion")
 root.geometry(myvars.start_geometry)
+root.resizable(False, False)
 root.configure(bg=myvars.colors[4])
 
 # base frames
@@ -35,18 +36,27 @@ documentation_bf = myclasses.MyFrame(root, myvars.colors[4])
 start_bf.frame.tkraise()
 
 
-# restart function
-def restart(event):
+# restart and quit functions and their binds
+def program_restart():
     # code from "https://blog.petrzemek.net/2014/03/23/restarting-a-python-script-within-itself/"
     os.execv(sys.executable, ['python'] + sys.argv)
 
 
-def restart1():
-    os.execv(sys.executable, ['python'] + sys.argv)
+def program_restart_bind(event):
+    program_restart()
+
+
+def program_quit():
+    exit()
+
+
+def program_quit_bind(event):
+    program_quit()
 
 
 # creating program-wide binds
-root.bind("<Control-r>", restart)
+root.bind("<Control-r>", program_restart_bind)
+root.bind("<Control-q>", program_quit_bind)
 
 
 # goto functions
@@ -57,6 +67,7 @@ def goto(bf):
 
 def goto_main():
     root.geometry(myvars.root_geometry)
+    root.title("Rotational Motion")
 
     cheatsheet_bf.frame.destroy()
     game_bf.frame.destroy()
@@ -68,6 +79,7 @@ def goto_main():
 def goto_game():
     root.geometry(myvars.root_geometry)
     root.title("Quiz Game")
+
     main_bf.frame.destroy()
     cheatsheet_bf.frame.destroy()
     documentation_bf.frame.destroy()
@@ -78,6 +90,7 @@ def goto_game():
 def goto_cheatsheet():
     root.geometry(myvars.cheatsheet_geometry)
     root.title("CheatSheet")
+
     main_bf.frame.destroy()
     game_bf.frame.destroy()
     documentation_bf.frame.destroy()
@@ -86,7 +99,7 @@ def goto_cheatsheet():
 
 
 def goto_documentation():
-    root.geometry(myvars.root_geometry)
+    root.geometry(myvars.documentation_geometry)
     root.title("Documentation")
 
     main_bf.frame.destroy()
@@ -236,7 +249,7 @@ granularity_scale = myclasses.MyScale(main_pf2.frame, "Granularity", 0.05, 0.45)
 
 time_factor_scale.scale.configure(from_=1, to=100, resolution=1, bg=myvars.colors[4])
 len_mult_scale.scale.configure(from_=1, to=100, resolution=1, bg=myvars.colors[4])
-granularity_scale.scale.configure(from_=1, to=90, resolution=5, bg=myvars.colors[4])
+granularity_scale.scale.configure(from_=5, to=90, resolution=5, bg=myvars.colors[4])
 
 time_factor_scale.label.configure(bg=myvars.colors[4])
 len_mult_scale.label.configure(bg=myvars.colors[4])
@@ -588,7 +601,7 @@ end_label.configure(text="You have gone through all the questions \n please come
 end_label.configure(bg=myvars.colors[4], fg=myvars.colors[0])
 end_label.place(relx=0.05, rely=0.05, relwidth=0.90, relheight=0.45)
 
-end_button = myclasses.MyButton(game_bf.frame, "Relaunch", restart1, 0.45, 0.50)
+end_button = myclasses.MyButton(game_bf.frame, "Relaunch", program_restart, 0.45, 0.50)
 
 # questions
 q1 = myclasses.MyQuestion(game_bf.frame,
@@ -710,6 +723,7 @@ cheatsheet_label.place(relx=0, rely=0, relwidth=1, relheight=1)
 
 # documentation_bf objects
 
+# to add documentation_bf, just remove triple quote string and place "documentation.jpg" into running directory
 '''
 documentation_img = myfunctions.MyImage("documentation.jpg", myvars.documentation_width, myvars.documentation_height)
 documentation_label = Label(documentation_bf.frame, image=documentation_img)
