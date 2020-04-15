@@ -16,10 +16,12 @@ if type(config.font) != str:
     print "please use a string for font"
 if type(config.font_size) != int:
     print "please use an integer value for font_size"
-if type(config.enhanced_performance) != bool:
+if type(config.low_spec) != bool:
     print 'please use either "True" or "False" boolean values'
 
-perf = config.enhanced_performance
+# imprting config variables
+perf = config.low_spec
+MyFont = (config.font, config.font_size)
 
 # defining colors
 colors = ["#FFFFFF",
@@ -34,9 +36,6 @@ color_red = "#FF6961"
 
 fbg = colors[3]
 ffg = colors[0]
-
-# MyFont variable
-MyFont = (config.font, config.font_size)
 
 # root geometry
 root_width = config.width

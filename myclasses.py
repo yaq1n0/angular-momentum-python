@@ -7,7 +7,6 @@ import tkMessageBox
 # importing custom python modules
 
 # importing custom modules
-import myfunctions
 import myvars
 
 
