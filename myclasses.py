@@ -1,10 +1,11 @@
 # custom classes
 
 # imports
-from Tkinter import *
-from myvars import MyFont
-from myvars import colors
-from myvars import fbg, ffg
+from Tkinter import Toplevel, Frame, Canvas, Label, Button, Scale, Entry
+from Tkinter import LEFT, HORIZONTAL
+from Tkinter import FLAT, RIDGE
+from Tkinter import StringVar
+from myvars import MyFont, colors, fbg, ffg
 from myvars import canvas_relx, canvas_rely, canvas_width, canvas_height
 from myvars import scale_relwidth, scale_relheight
 

@@ -1,4 +1,4 @@
-# all functions
+# custom functions
 
 # imports
 from tkMessageBox import showinfo

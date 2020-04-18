@@ -1,7 +1,10 @@
 # MyQuestion class definition
 
 # imports
-from Tkinter import *
+from Tkinter import BooleanVar, IntVar, StringVar
+from Tkinter import Frame, Label, Button, Radiobutton
+from Tkinter import FLAT, RIDGE
+from Tkinter import N
 from tkMessageBox import showinfo, showerror
 from myvars import MyFont, dev
 from myvars import colors, color_green, color_red

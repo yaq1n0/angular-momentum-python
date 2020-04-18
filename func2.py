@@ -1,7 +1,7 @@
 # animation functions
 
 # imports
-from Tkinter import *
+from Tkinter import ALL
 from math import pi, sin, cos
 from myvars import colors, spoke_step, platform_width
 from myvars import part_radius, circum_width

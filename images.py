@@ -1,9 +1,9 @@
-# images (cheatsheet and documentation)
+# images (cheatsheet and documentation) component file
 
 # imports
 from Tkinter import Label
 from PIL import Image, ImageTk
-from myvars import cheatsheet_width, cheatsheet_height, documentation_width, documentation_height
+from myvars import dev, cheatsheet_width, cheatsheet_height, documentation_width, documentation_height
 
 
 def MyImage(frame, path, x_size, y_size):
@@ -16,8 +16,14 @@ def MyImage(frame, path, x_size, y_size):
 
 
 def run_cheatsheet(frame):
+    if dev:
+        print 'cheatsheet elements created'
+
     MyImage(frame, 'images/cheatsheet.jpg', cheatsheet_width, cheatsheet_height)
 
 
 def run_documentation(frame):
+    if dev:
+        print 'documentation elements created'
+
     MyImage(frame, 'images/documentation.jpg', documentation_width, documentation_height)

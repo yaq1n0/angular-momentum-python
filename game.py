@@ -1,13 +1,16 @@
-# quiz game
+# quiz game component file
 
 # imports
 from Tkinter import Label
 from random import shuffle
-from myvars import colors
+from myvars import dev, colors
 from question import MyQuestion
 
 
 def run_game(frame):
+    if dev:
+        print 'game elements created'
+
     # creating end screen elements
     end_label = Label(frame)
     end_label.configure(text='You have gone through all the questions \n '
@@ -124,6 +127,5 @@ def run_game(frame):
     # shuffling questions
     qlist = [q1, q2, q3, q4, q5, q6, q7, q8]
     shuffle(qlist)
-
     for question in qlist:
         question.pf.tkraise()

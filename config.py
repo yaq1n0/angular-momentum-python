@@ -1,12 +1,12 @@
 # program configuration
 
 # modify program resolution
-width = 1920
-height = 1080
+width = 1280
+height = 720
 
 # modify program font
 font = 'Arial'
-font_size = 16
+font_size = 12
 
 # enable developer mode
 enable_developer = True

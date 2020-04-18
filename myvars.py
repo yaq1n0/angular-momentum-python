@@ -19,6 +19,13 @@ if type(config_font_size) != int:
 if type(dev) != bool:
     print 'please use either "True" or "False" boolean values'
 
+# creating first run variables
+first_run1 = True
+# first_run2 WIP
+first_run2 = True
+first_run3 = True
+first_run4 = True
+
 # defining colors
 # grayscale
 colors = ["#FFFFFF",
