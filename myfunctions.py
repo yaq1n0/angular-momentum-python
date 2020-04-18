@@ -2,8 +2,6 @@
 
 # imports
 from tkMessageBox import showinfo
-from PIL import Image
-from PIL import ImageTk
 from myclasses import ToolTip
 
 
@@ -29,11 +27,3 @@ def CreateToolTip(widget, text):
 # PlaceHolder function for whatever
 def PlaceHolder():
     showinfo('placeholder', 'feature to be added or enabled in later version')
-
-
-# creating MyImage
-def CreateImage(path, x, y):
-    img_open = Image.open(path)
-    img_resized = img_open.resize((x, y), Image.ANTIALIAS)
-    img_Tk = ImageTk.PhotoImage(img_resized)
-    return img_Tk

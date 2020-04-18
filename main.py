@@ -5,7 +5,6 @@ from Tkinter import *
 from os import execv
 from sys import executable, argv
 from myclasses import MyButton, MyCanvas, MyEntry, MyFrame, MyFrameWBP, MyLabel, MyScale
-from myfunctions import CreateImage
 from func1 import Moment_Inertia
 from func1 import Angular_Momentum, Linear_Momentum
 from func1 import Rotational_Kinetic_Energy, Linear_Kinetic_Energy, TKE
@@ -18,7 +17,8 @@ from myvars import documentation_width, documentation_height
 from myvars import frame_bottom_pad1, frame_bottom_pad2, fb_rely_primary, fb_rely_secondary
 from myvars import canvas_width, canvas_height
 from myvars import particle_constant, circle_constant
-from quiz import run_game
+from game import run_game
+from images import run_cheatsheet, run_documentation
 
 # space to test code
 
@@ -68,7 +68,6 @@ def goto_main():
 def goto_game():
     root.geometry(game_geometry)
     root.title('Quiz Game')
-    # making sure the game starts from scratch every time
     run_game(game_bf.frame)
     game_bf.frame.tkraise()
 
@@ -76,12 +75,14 @@ def goto_game():
 def goto_cheatsheet():
     root.geometry(cheatsheet_geometry)
     root.title('CheatSheet')
+    run_cheatsheet(cheatsheet_bf.frame)
     cheatsheet_bf.frame.tkraise()
 
 
 def goto_documentation():
     root.geometry(documentation_geometry)
     root.title('Documentation')
+    run_documentation(documentation_bf.frame)
     documentation_bf.frame.tkraise()
 
 
@@ -150,7 +151,7 @@ frame3b = MyFrameWBP(frame3.frame, colors[3], frame_bottom_pad2)
 frame3c = MyFrameWBP(frame3.frame, colors[3], frame_bottom_pad2)
 
 
-# frame flip functions
+# flip frame functions
 def flip_main_pf1():
     main_pf1.frame.tkraise()
     frame1.frame.tkraise()
@@ -212,8 +213,14 @@ def flip_frame3c():
     frame3c.frame.tkraise()
 
 
-# frame navigation buttons
+# setting default frame order
+flip_main_pf2()
+flip_main_pf1()
+flip_frame3()
+flip_frame2()
+flip_frame1()
 
+# frame navigation buttons
 enter_as = MyButton(main_pf1.frame, 'Animation Settings', flip_main_pf2, 0.05, fb_rely_primary)
 exit_as = MyButton(main_pf2.frame, 'Exit', flip_main_pf1, 0.05, fb_rely_primary)
 fb1 = MyButton(main_pf1.frame, 'Orbiting Particle', flip_frame1, 0.55, fb_rely_primary)
@@ -229,15 +236,8 @@ fb3a = MyButton(frame3.frame, 'Basic', flip_frame3a, 0.55, fb_rely_secondary)
 fb3b = MyButton(frame3.frame, 'Momentum', flip_frame3b, 0.70, fb_rely_secondary)
 fb3c = MyButton(frame3.frame, 'Energy', flip_frame3c, 0.85, fb_rely_secondary)
 
-# setting default frame order
-flip_main_pf2()
-flip_main_pf1()
-flip_frame3()
-flip_frame2()
-flip_frame1()
 
 # main_pf2 (animation settings) objects
-
 main_pf2_title = MyLabel(main_pf2.frame, 'Animation Settings', 0.05, 0.05)
 main_pf2_title.label.configure(bg=colors[4])
 
@@ -257,8 +257,6 @@ time_factor_scale.scale.set(5)
 len_mult_scale.scale.set(10)
 granularity_scale.scale.set(15)
 
-
-# calculation functions
 
 # calculate 1a
 def calculate_1a():
@@ -376,8 +374,6 @@ def calculate_3c():
     frame3c_entry4.entry.insert(0, round(ans4, 2))
 
 
-# animation functions
-
 # animate orbiting particle
 def animate_orbiting_particle(canvas, radius, ang_vel):
     orbiting_particle_animation(root,
@@ -484,7 +480,6 @@ def animate_3c():
 
 
 # frame1a objects
-
 main_label_1a = MyLabel(frame1a.frame, 'Orbiting Particle Basics', 0.05, 0.05)
 calculate_button_1a = MyButton(frame1a.frame, 'Calculate', calculate_1a, 0.70, 0.90)
 animate_button_1a = MyButton(frame1a.frame, 'Animate', animate_1a, 0.85, 0.90)
@@ -495,7 +490,6 @@ frame1a_entry1 = MyEntry(frame1a.frame, 'Moment of Inertia (kgm^2)', 0.85, 0.20)
 frame1a_canvas1 = MyCanvas(frame1a.frame)
 
 # frame1b objects
-
 main_label_1b = MyLabel(frame1b.frame, 'Orbiting Particle Momentum', 0.05, 0.05)
 calculate_button_1b = MyButton(frame1b.frame, 'Calculate', calculate_1b, 0.70, 0.90)
 animate_button_1b = MyButton(frame1b.frame, 'Animate', animate_1b, 0.85, 0.90)
@@ -507,7 +501,6 @@ frame1b_entry2 = MyEntry(frame1b.frame, 'Angular Momentum (kgm^2/s)', 0.85, 0.35
 frame1b_canvas1 = MyCanvas(frame1b.frame)
 
 # frame1c objects
-
 main_label_1c = MyLabel(frame1c.frame, 'Orbiting Particle Energy', 0.05, 0.05)
 calculate_button_1c = MyButton(frame1c.frame, 'Calculate', calculate_1c, 0.70, 0.90)
 animate_button_1c = MyButton(frame1c.frame, 'Animate', animate_1c, 0.85, 0.90)
@@ -519,7 +512,6 @@ frame1c_entry2 = MyEntry(frame1c.frame, 'Rotational Kinetic Energy (J)', 0.85, 0
 frame1c_canvas1 = MyCanvas(frame1c.frame)
 
 # frame2a objects
-
 main_label_2a = MyLabel(frame2a.frame, 'Rotating Circle Basics', 0.05, 0.05)
 calculate_button_2a = MyButton(frame2a.frame, 'Calculate', calculate_2a, 0.70, 0.90)
 animate_button_2a = MyButton(frame2a.frame, 'Animate', animate_2a, 0.85, 0.90)
@@ -530,7 +522,6 @@ frame2a_entry1 = MyEntry(frame2a.frame, 'Moment of Inertia (kgm^2)', 0.85, 0.20)
 frame2a_canvas1 = MyCanvas(frame2a.frame)
 
 # frame2b objects
-
 main_label_2b = MyLabel(frame2b.frame, 'Rotating Circle Momentum', 0.05, 0.05)
 calculate_button_2b = MyButton(frame2b.frame, 'Calculate', calculate_2b, 0.70, 0.90)
 animate_button_2b = MyButton(frame2b.frame, 'Animate', animate_2b, 0.85, 0.90)
@@ -542,7 +533,6 @@ frame2b_entry2 = MyEntry(frame2b.frame, 'Angular Momentum (kgm^2/s)', 0.85, 0.35
 frame2b_canvas1 = MyCanvas(frame2b.frame)
 
 # frame2c objects
-
 main_label_2c = MyLabel(frame2c.frame, 'Rotating Circle Energy', 0.05, 0.05)
 calculate_button_2c = MyButton(frame2c.frame, 'Calculate', calculate_2c, 0.70, 0.90)
 animate_button_2c = MyButton(frame2c.frame, 'Animate', animate_2c, 0.85, 0.90)
@@ -554,7 +544,6 @@ frame2c_entry2 = MyEntry(frame2c.frame, 'Rotational Kinetic Energy (J)', 0.85, 0
 frame2c_canvas1 = MyCanvas(frame2c.frame)
 
 # frame3a objects
-
 main_label_3a = MyLabel(frame3a.frame, 'Rolling Circle Basics', 0.05, 0.05)
 calculate_button_3a = MyButton(frame3a.frame, 'Calculate', calculate_3a, 0.70, 0.90)
 animate_button_3a = MyButton(frame3a.frame, 'Animate', animate_3a, 0.85, 0.90)
@@ -565,7 +554,6 @@ frame3a_entry1 = MyEntry(frame3a.frame, 'Moment of Inertia (kgm^2)', 0.85, 0.20)
 frame3a_canvas1 = MyCanvas(frame3a.frame)
 
 # frame3b objects
-
 main_label_3b = MyLabel(frame3b.frame, 'Rolling Circle Momentum', 0.05, 0.05)
 calculate_button_3b = MyButton(frame3b.frame, 'Calculate', calculate_3b, 0.70, 0.90)
 animate_button_3b = MyButton(frame3b.frame, 'Animate', animate_3b, 0.85, 0.90)
@@ -578,7 +566,6 @@ frame3b_entry3 = MyEntry(frame3b.frame, 'Linear Momentum (kgm/s)', 0.85, 0.50)
 frame3b_canvas1 = MyCanvas(frame3b.frame)
 
 # frame3c objects
-
 main_label_3c = MyLabel(frame3c.frame, 'Rolling Circle Energy', 0.05, 0.05)
 calculate_button_3c = MyButton(frame3c.frame, 'Calculate', calculate_3c, 0.70, 0.90)
 animate_button_3c = MyButton(frame3c.frame, 'Animate', animate_3c, 0.85, 0.90)
@@ -590,26 +577,5 @@ frame3c_entry2 = MyEntry(frame3c.frame, 'Rotational Kinetic Energy (J)', 0.85, 0
 frame3c_entry3 = MyEntry(frame3c.frame, 'Linear Kinetic Energy (J)', 0.85, 0.50)
 frame3c_entry4 = MyEntry(frame3c.frame, 'Total Kinetic Energy (J)', 0.85, 0.65)
 frame3c_canvas1 = MyCanvas(frame3c.frame)
-
-# game_bf objects
-
-end_label = Label(game_bf.frame)
-end_label.configure(text='You have gone through all the questions \n please come back later for more')
-end_label.configure(bg=colors[4], fg=colors[0])
-end_label.place(relx=0.05, rely=0.05, relwidth=0.90, relheight=0.45)
-
-end_button = MyButton(game_bf.frame, 'Relaunch', program_restart, 0.45, 0.50)
-
-# cheatsheet_bf objects
-
-cheatsheet_img = CreateImage('images/cheatsheet.jpg', cheatsheet_width, cheatsheet_height)
-cheatsheet_label = Label(cheatsheet_bf.frame, image=cheatsheet_img)
-cheatsheet_label.place(relx=0, rely=0, relwidth=1, relheight=1)
-
-# documentation_bf objects
-
-documentation_img = CreateImage('images/documentation.jpg', documentation_width, documentation_height)
-documentation_label = Label(documentation_bf.frame, image=documentation_img)
-documentation_label.place(relx=0, rely=0, relwidth=1, relheight=1)
 
 root.mainloop()

@@ -1,12 +1,22 @@
 # quiz game
 
 # imports
+from Tkinter import Label
 from random import shuffle
+from myvars import colors
 from question import MyQuestion
 
 
 def run_game(frame):
-    # function to create all game elements
+    # creating end screen elements
+    end_label = Label(frame)
+    end_label.configure(text='You have gone through all the questions \n '
+                             'Please check in later for more \n '
+                             'Press "Control + R" to relaunch the program')
+    end_label.configure(bg=colors[4], fg=colors[0])
+    end_label.place(relx=0.05, rely=0.05, relwidth=0.90, relheight=0.90)
+
+    # creating questions
     q1 = MyQuestion(frame,
                     'What is the moment of inertia, I for a disc?',
                     'I = MR^2',
