@@ -1,4 +1,4 @@
-# calcRulation functions
+# calculation functions
 
 
 # finding moment of inertia

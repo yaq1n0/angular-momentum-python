@@ -4,13 +4,10 @@
 from Tkinter import Tk
 from os import execv
 from sys import executable, argv
-
 from data.myclasses import MyMainFrame, MyGameFrame, MyImageFrame, MyFrame, MyButton, MyLabel
-
-from data.variables import colors
-from data.variables import start_geometry, main_geometry, game_geometry, cheatsheet_geometry, documentation_geometry
-from data.variables import start_width, start_height, main_width, main_height, game_height, game_width
-from data.variables import cheatsheet_width, cheatsheet_height, documentation_width, documentation_height
+from data.variables import colors, start_geometry, main_geometry, game_geometry, cheatsheet_geometry, \
+    documentation_geometry, start_width, start_height, main_width, main_height, game_height, game_width, \
+    cheatsheet_width, cheatsheet_height, documentation_width, documentation_height
 
 # space to test code
 

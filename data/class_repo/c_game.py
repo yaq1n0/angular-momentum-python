@@ -1,18 +1,13 @@
 # game component class
 
 # imports
-from Tkinter import BooleanVar, IntVar, StringVar
-from Tkinter import Frame, Label, Button, Radiobutton
-from Tkinter import FLAT, RIDGE
-from Tkinter import N
-
+from Tkinter import BooleanVar, IntVar, StringVar, \
+    Frame, Label, Button, Radiobutton, \
+    FLAT, RIDGE, N
 from tkMessageBox import showinfo, showerror
 from random import shuffle
-
 from c_other import MyFrame
-
-from data.variables import dev, MyFont
-from data.variables import colors, color_green, color_red
+from data.variables import dev, MyFont, colors, color_green, color_red
 
 
 class MyQuestion(object):

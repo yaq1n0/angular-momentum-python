@@ -2,21 +2,15 @@
 
 # imports
 from Tkinter import END
-
 from c_other import MyFrame, MyFrameWBP, MyCanvas, MyLabel, MyScale, MyEntry, MyButton
-
-from data.myfunctions import atl
-from data.myfunctions import Moment_Inertia
-from data.myfunctions import Angular_Momentum, Linear_Momentum
-from data.myfunctions import Rotational_Kinetic_Energy, Linear_Kinetic_Energy, TKE
-from data.myfunctions import orbiting_particle_animation, rotating_circle_animation, rolling_circle_animation
-
-from data.variables import dev
-from data.variables import colors
-from data.variables import frame_bottom_pad1, frame_bottom_pad2
-from data.variables import fb_rely_primary, fb_rely_secondary
-from data.variables import canvas_width, canvas_height
-from data.variables import particle_constant, circle_constant
+from data.myfunctions import \
+    atl, Moment_Inertia, Angular_Momentum, Linear_Momentum, \
+    Rotational_Kinetic_Energy, Linear_Kinetic_Energy, TKE, \
+    orbiting_particle_animation, rotating_circle_animation, rolling_circle_animation
+from data.variables import \
+    dev, colors, frame_bottom_pad1, frame_bottom_pad2, \
+    fb_rely_primary, fb_rely_secondary, canvas_width, canvas_height, \
+    particle_constant, circle_constant
 
 
 class MyMainFrame(object):

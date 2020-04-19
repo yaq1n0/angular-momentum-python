@@ -1,14 +1,13 @@
 # other classes
 
 # imports
-from Tkinter import Toplevel, Frame, Canvas, Label, Button, Scale, Entry
-from Tkinter import LEFT, HORIZONTAL
-from Tkinter import FLAT, RIDGE
-from Tkinter import StringVar
-
-from data.variables import MyFont, colors, fbg, ffg
-from data.variables import canvas_relx, canvas_rely, canvas_width, canvas_height
-from data.variables import scale_relwidth, scale_relheight
+from Tkinter import \
+    Toplevel, Frame, Canvas, Label, Button, Scale, Entry, \
+    LEFT, HORIZONTAL, FLAT, RIDGE, StringVar
+from data.variables import \
+    MyFont, colors, fbg, ffg, \
+    canvas_relx, canvas_rely, canvas_width, canvas_height, \
+    scale_relwidth, scale_relheight
 
 
 # Defining Object ToolTip
