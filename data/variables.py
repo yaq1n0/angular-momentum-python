@@ -19,13 +19,6 @@ if type(config_font_size) != int:
 if type(dev) != bool:
     print 'please use either "True" or "False" boolean values'
 
-# creating first run variables
-first_run1 = True
-# first_run2 WIP
-first_run2 = True
-first_run3 = True
-first_run4 = True
-
 # defining colors
 # grayscale
 colors = ["#FFFFFF",
@@ -47,18 +40,15 @@ ffg = colors[0]
 MyFont = (config_font, config_font_size)
 
 # creating geometry values
-# root geometry
+# main geometry
 main_width = config_width
 main_height = config_height
 main_geometry = str(main_width) + "x" + str(main_height)
 
 # game geometry (set to the same as main)
+game_width = main_width
+game_height = main_height
 game_geometry = main_geometry
-
-# start geometry
-start_height = main_height
-start_width = start_height / 2
-start_geometry = str(start_width) + "x" + str(start_height)
 
 # cheatsheet geometry
 cheatsheet_width = 1280
@@ -69,6 +59,11 @@ cheatsheet_geometry = str(cheatsheet_width) + "x" + str(cheatsheet_height)
 documentation_width = 1280
 documentation_height = 720
 documentation_geometry = str(documentation_width) + "x" + str(documentation_height)
+
+# start geometry
+start_height = main_height
+start_width = start_height / 2
+start_geometry = str(start_width) + "x" + str(start_height)
 
 # creating canvas vars
 # canvas size vars relative to main

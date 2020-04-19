@@ -1,13 +1,18 @@
-# MyQuestion class definition
+# game component class
 
 # imports
 from Tkinter import BooleanVar, IntVar, StringVar
 from Tkinter import Frame, Label, Button, Radiobutton
 from Tkinter import FLAT, RIDGE
 from Tkinter import N
+
 from tkMessageBox import showinfo, showerror
-from myvars import MyFont, dev
-from myvars import colors, color_green, color_red
+from random import shuffle
+
+from c_other import MyFrame
+
+from data.variables import dev, MyFont
+from data.variables import colors, color_green, color_red
 
 
 class MyQuestion(object):
@@ -216,28 +221,26 @@ class MyQuestion(object):
         if self.ans_input.get() == 1:
             self.exp_text.set(self.exp1)
             self.explanation_frame()
+            self.qf.destroy()
 
         elif self.ans_input.get() == 2:
             self.exp_text.set(self.exp2)
             self.explanation_frame()
+            self.qf.destroy()
 
         elif self.ans_input.get() == 3:
             self.exp_text.set(self.exp3)
             self.explanation_frame()
+            self.qf.destroy()
 
         elif self.ans_input.get() == 4:
             self.exp_text.set(self.exp4)
             self.explanation_frame()
+            self.qf.destroy()
 
         else:
             # no selected answer condition
             showerror('Error', 'Please select an answer to continue')
-
-        # create explanation frame
-        self.explanation_frame()
-
-        # destroy question frame
-        self.qf.destroy()
 
     def disp_ans(self):
         # defining display answer function
@@ -249,3 +252,150 @@ class MyQuestion(object):
         # defininf next_question function
         self.pf.destroy()
         self.ef.destroy()
+
+
+class MyGameFrame(object):
+    def __init__(self, parent):
+        # assigning parameters to attributes
+        self.parent = parent
+
+        # creating frames
+        self.create_game_bf()
+        self.create_end_screen()
+        self.create_questions()
+        self.shuffle_questions()
+
+    def create_game_bf(self):
+        if dev:
+            print '[game] game base frame created'
+
+        self.game_bf = MyFrame(self.parent, colors[4])
+
+    def create_end_screen(self):
+        if dev:
+            print '[game] end screen created'
+
+        end_label = Label(self.game_bf.frame)
+        end_label.configure(text='You have gone through all the questions \n '
+                                 'Please check in later for more \n '
+                                 'Press "Control + R" to relaunch the program')
+        end_label.configure(bg=colors[4], fg=colors[0])
+        end_label.place(relx=0.05, rely=0.05, relwidth=0.90, relheight=0.90)
+
+    def create_questions(self):
+        if dev:
+            print '[game] questions created'
+
+        self.q1 = MyQuestion(self.game_bf.frame,
+                             'What is the moment of inertia, I for a disc?',
+                             'I = MR^2',
+                             'I = 1/12 *  ML^2',
+                             'I = 1/2 *  MR^2',
+                             'I = 1/2 *  Mk^2',
+                             'This is the Moment of Inertia for a particle.',
+                             'This is the Moment of Inertia for a stick.',
+                             'This is the Moment of Inertia for a disc.',
+                             'This Moment of Inertia is for a particle of a disc and involves k, \nwhich is the radius of gyration.',
+                             3
+                             )
+
+        self.q2 = MyQuestion(self.game_bf.frame,
+                             'What is the Rotational Kinetic Energy of a rolling disc?',
+                             '0.5 * mv^2',
+                             '0.25 * mr^2w^2',
+                             '0.5 * mr^2',
+                             '0.25 * Iw^2',
+                             'This is a formula for Linear Kinetic Energy.',
+                             'For a rolling disc, the Rotational Kinetic Energy is given as, \nRKE = 0.5 * Iw^2 = 0.5 * (0.5 * mr^2)w^2 = 0.25 * mr^2w^2 ',
+                             'This is the Moment of Inertia of a disc. \nNote: This formula does not involve any kind of velocity. \nThus, it cannot be Kinetic Energy.',
+                             'For a rolling disc, the Rotational Kinetic Energy is given as, \nRKE = 0.5 * Iw^2. \n\nWhen the Moment of Inertia of the disc is substituted, \nthen only the 0.25 appear.',
+                             2
+                             )
+
+        self.q3 = MyQuestion(self.game_bf.frame,
+                             'What is the angular momentum, L for an orbiting particle?',
+                             'L = mr^2w',
+                             'L = mv',
+                             'L = wr',
+                             'L = mr^2',
+                             'The angular momentum for an orbiting paticle is given as, \nL = Iw. \n\nThus, when the Moment of Inertia(I) of a disc is substituted, \nL = mr^2w ',
+                             'Recall that LINEAR Momentum is the product of mass and velocity. \np = mv',
+                             'This formula is used to find linear velocity. \nv = wr',
+                             'This formula is the Moment of Inertia for a particle. \nI = mr^2',
+                             1
+                             )
+
+        self.q4 = MyQuestion(self.game_bf.frame,
+                             'Rate of change of angular momentum is equal to ___________?',
+                             'torque',
+                             'force',
+                             'moment of inertia',
+                             'angular velocity',
+                             'Torque is the rate of change of angular momentum.',
+                             'Force is the rate of change of LINEAR momentum.',
+                             'Moment of Inertia is the product of mass and square of distance.',
+                             'Angular Velocity is the rate of change of Angular Displacement in radians per second.',
+                             1
+                             )
+
+        self.q5 = MyQuestion(self.game_bf.frame,
+                             'What is the unit for Angular Momentum?',
+                             'kgms^-1',
+                             'kgm^2(s^-2)',
+                             'kgm^2(s^-1)',
+                             'kgm^2',
+                             'This unit is for LINEAR Momentum. \nLinear and Angular Momentum have different units due to involving different quantities. \np = mv = kgms^-1',
+                             'This unit is for Torque. \nTorque is the product of Moment of Inertia and Angular Acceleration. \nT = Ia = kgm^2(s^-2)',
+                             'This is the unit for Angular Momentum. \nL = Iw = (MR^2)w = (kgm^2)s^-1',
+                             'This is the unit for Moment of Inertia. \nI = mr^2 = kgm^2',
+                             3
+                             )
+
+        self.q6 = MyQuestion(self.game_bf.frame,
+                             'What real force keeps a satellite in a circular orbit around the earth?',
+                             'Thrust',
+                             'Gravity',
+                             'Centripetal force',
+                             'There is no force in space',
+                             'This is a propulsive force. ',
+                             'Gravitational pull of earth acts on the satellite which keeps the satellite in a circular orbit \naround the earth provided its velocity balances the gravitational force.',
+                             'Centripetal force is just a net force.',
+                             'Gravitational force exists in space.',
+                             2
+                             )
+
+        self.q7 = MyQuestion(self.game_bf.frame,
+                             'The velocity is always __________ to the line of a circle.',
+                             'tangent',
+                             'towards the center',
+                             'outwards',
+                             'inwards',
+                             'Velocity acts tangent to a circle.',
+                             'Centripetal force acts towards the center of a circle.',
+                             'Invalid answer.',
+                             'Invalid answer.',
+                             1
+                             )
+
+        self.q8 = MyQuestion(self.game_bf.frame,
+                             'What is the force that keeps an object in circular motion?',
+                             'Centrifugal force',
+                             'Centripetal force',
+                             'Center-fleeing force',
+                             'Gravitational Force',
+                             'Centrifugal force is the tendency of an object to \nfly away from the center of a curved path.',
+                             'Centripetal force is the net force keeping an object in circular motion. \nThe resultant force of all real forces acting on the object, \nthat acts towards the centre of the circular path is responsible for its circular motion.',
+                             'This force is also called Centrifugal Force which is \nthe tendency of an object to fly away from the center of a curved path.',
+                             'This is an attractive force which occurs between \nmasses of objects and it is not a net force.',
+                             2
+                             )
+
+    def shuffle_questions(self):
+        if dev:
+            print '[game] questions shuffled'
+
+        self.qlist = [self.q1, self.q2, self.q3, self.q4, self.q5, self.q6, self.q7, self.q8]
+        shuffle(self.qlist)
+
+        for question in self.qlist:
+            question.pf.tkraise()

@@ -3,9 +3,11 @@
 # imports
 from Tkinter import ALL
 from math import pi, sin, cos
-from myvars import colors, spoke_step, platform_width
-from myvars import part_radius, circum_width
-from func1 import dtr, ttl
+
+from f_other import dtr, ttl
+
+from data.variables import colors, spoke_step, platform_width
+from data.variables import part_radius, circum_width
 
 
 # animate orbiting particle
