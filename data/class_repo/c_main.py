@@ -2,11 +2,14 @@
 
 # imports
 from Tkinter import END
+
 from c_other import MyFrame, MyFrameWBP, MyCanvas, MyLabel, MyScale, MyEntry, MyButton
+
 from data.myfunctions import \
     atl, Moment_Inertia, Angular_Momentum, Linear_Momentum, CreateToolTip, \
     Rotational_Kinetic_Energy, Linear_Kinetic_Energy, TKE, \
     orbiting_particle_animation, rotating_circle_animation, rolling_circle_animation
+
 from data.variables import \
     dev, tooltips, colors, frame_bottom_pad1, frame_bottom_pad2, \
     fb_rely_primary, fb_rely_secondary, canvas_width, canvas_height, \
@@ -98,9 +101,10 @@ class MyMainFrame(object):
         self.len_mult_scale.label.configure(bg=colors[4])
         self.granularity_scale.label.configure(bg=colors[4])
 
-        self.time_factor_scale.scale.set(5)
-        self.len_mult_scale.scale.set(10)
-        self.granularity_scale.scale.set(15)
+        if not dev:
+            self.time_factor_scale.scale.set(5)
+            self.len_mult_scale.scale.set(10)
+            self.granularity_scale.scale.set(15)
 
         if tooltips:
             CreateToolTip(self.time_factor_scale.label, 'Drag slider to adjust animation speed\nhigher value is faster')

@@ -2,9 +2,13 @@
 
 # imports
 from tkMessageBox import showinfo
+
 from math import pi, sin, cos
+
 from PIL import Image, ImageTk
+
 from data.myclasses import ToolTip
+
 from data.variables import spoke_width
 
 

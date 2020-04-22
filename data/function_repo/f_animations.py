@@ -2,9 +2,17 @@
 
 # imports
 from Tkinter import ALL
+
+from tkMessageBox import askquestion
+
 from math import pi, sin, cos
+
 from f_other import dtr, ttl
+
 from data.variables import colors, spoke_step, platform_width, part_radius, circum_width
+
+radius_error_ask_bool = True
+ang_vel_error_ask_bool = True
 
 
 # animate orbiting particle
@@ -16,6 +24,43 @@ def orbiting_particle_animation(root,
                                 ang_vel,
                                 granularity
                                 ):
+    global radius_error_ask_bool, ang_vel_error_ask_bool
+    # checking value ranges
+    if radius > 200 and radius_error_ask_bool:
+        radius_error = askquestion('Run Animation',
+                                   'You have selected parameters which may cause parts of the animation to be invisible, \n'
+                                   'it is recommended that you modify the animation settings\n'
+                                   'do you want to run the animation anyway?',
+                                   icon='warning')
+        if radius_error == 'no':
+            return
+
+        else:
+            radius_error_ask = askquestion('Ask Again?', 'Do you want to disable further alerts like this?')
+
+            if radius_error_ask == 'yes':
+                radius_error_ask_bool = False
+
+    if ang_vel > 15 and ang_vel_error_ask_bool:
+        ang_vel_error = askquestion('Run Animation',
+                                    'You have selected parameters which may cause the animation speed to be inaccurate, \n'
+                                    'it is recommended that you modify the animation settings\n'
+                                    'do you want to run the animation anyway?',
+                                    icon='warning')
+
+        if ang_vel_error == 'no':
+            return
+
+        else:
+            ang_vel_error_ask = askquestion('Ask Again?', 'Do you want to disable further alerts like this?')
+
+            if ang_vel_error_ask == 'yes':
+                ang_vel_error_ask_bool = False
+
+    # angular frequency defined as angular velocity / 2pi
+    ang_freq = ang_vel / (2 * pi)
+
+    # clearing canvas
     canvas.delete(ALL)
 
     # center_particle
@@ -36,7 +81,7 @@ def orbiting_particle_animation(root,
     # orbiting particle
     while True:
         for theta in range(0, 360, int(granularity)):
-            ref_ms = int(1000 * ((1.0 / float(ang_vel)) / (360.0 / float(granularity))))
+            ref_ms = int(1000 * ((1.0 / float(ang_freq)) / (360.0 / float(granularity))))
             x = x_pos + (float(radius) * sin(dtr(theta)))
             y = y_pos + (float(-radius) * cos(dtr(theta)))
             orb_part = canvas.create_oval(x - part_radius,
@@ -57,6 +102,43 @@ def rotating_circle_animation(root,
                               radius,
                               ang_vel,
                               granularity):
+    global radius_error_ask_bool, ang_vel_error_ask_bool
+    # checking value ranges
+    if radius > 200 and radius_error_ask_bool:
+        radius_error = askquestion('Run Animation',
+                                   'You have selected parameters which may cause parts of the animation to be invisible, \n'
+                                   'it is recommended that you modify the animation settings\n'
+                                   'do you want to run the animation anyway?',
+                                   icon='warning')
+        if radius_error == 'no':
+            return
+
+        else:
+            radius_error_ask = askquestion('Ask Again?', 'Do you want to disable further alerts like this?')
+
+            if radius_error_ask == 'yes':
+                radius_error_ask_bool = False
+
+    if ang_vel > 15 and ang_vel_error_ask_bool:
+        ang_vel_error = askquestion('Run Animation',
+                                    'You have selected parameters which may cause the animation speed to be inaccurate, \n'
+                                    'it is recommended that you modify the animation settings\n'
+                                    'do you want to run the animation anyway?',
+                                    icon='warning')
+
+        if ang_vel_error == 'no':
+            return
+
+        else:
+            ang_vel_error_ask = askquestion('Ask Again?', 'Do you want to disable further alerts like this?')
+
+            if ang_vel_error_ask == 'yes':
+                ang_vel_error_ask_bool = False
+
+    # angular frequency defined as angular velocity / 2pi
+    ang_freq = ang_vel / (2 * pi)
+
+    # clearing canvas
     canvas.delete(ALL)
 
     # circumference
@@ -77,7 +159,7 @@ def rotating_circle_animation(root,
 
     while True:
         for theta in range(0, 360, int(granularity)):
-            ref_ms = int(1000 * ((1.0 / float(ang_vel)) / (360.0 / float(granularity))))
+            ref_ms = int(1000 * ((1.0 / float(ang_freq)) / (360.0 / float(granularity))))
 
             line1 = ttl(canvas, x_pos, y_pos, radius, theta + (0 * spoke_step))
             line2 = ttl(canvas, x_pos, y_pos, radius, theta + (1 * spoke_step))
@@ -97,18 +179,53 @@ def rolling_circle_animation(root,
                              ang_vel,
                              granularity
                              ):
+    global radius_error_ask_bool, ang_vel_error_ask_bool
+    # checking value ranges
+    if radius > 200 and radius_error_ask_bool:
+        radius_error = askquestion('Run Animation',
+                                   'You have selected parameters which may cause parts of the animation to be invisible, \n'
+                                   'it is recommended that you modify the animation settings\n'
+                                   'do you want to run the animation anyway?',
+                                   icon='warning')
+        if radius_error == 'no':
+            return
+
+        else:
+            radius_error_ask = askquestion('Ask Again?', 'Do you want to disable further alerts like this?')
+
+            if radius_error_ask == 'yes':
+                radius_error_ask_bool = False
+
+    if ang_vel > 15 and ang_vel_error_ask_bool:
+        ang_vel_error = askquestion('Run Animation',
+                                    'You have selected parameters which may cause the animation speed to be inaccurate, \n'
+                                    'it is recommended that you modify the animation settings\n'
+                                    'do you want to run the animation anyway?',
+                                    icon='warning')
+
+        if ang_vel_error == 'no':
+            return
+
+        else:
+            ang_vel_error_ask = askquestion('Ask Again?', 'Do you want to disable further alerts like this?')
+
+            if ang_vel_error_ask == 'yes':
+                ang_vel_error_ask_bool = False
+
     circumference = 2.0 * pi * float(radius)
+    ang_freq = ang_vel / (2 * pi)
     arc_len = float(granularity) / 360.0 * float(circumference)
 
     line_step = int(radius)
 
-    ref_ms = int(1000 * ((1.0 / float(ang_vel)) / (360.0 / float(granularity))))
+    ref_ms = int(1000 * ((1.0 / float(ang_freq)) / (360.0 / float(granularity))))
 
     px_pos = x_pos - (2 * float(radius))
     py_pos = y_pos + radius + (0.5 * circum_width)
     platform_len = 4.0 * float(radius)
     platform_thickness = float(platform_len) / 10.0
 
+    # clearing canvas
     canvas.delete(ALL)
 
     rec_num = 0

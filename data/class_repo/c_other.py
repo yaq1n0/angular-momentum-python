@@ -4,6 +4,7 @@
 from Tkinter import \
     Toplevel, Frame, Canvas, Label, Button, Scale, Entry, \
     LEFT, HORIZONTAL, FLAT, RIDGE, SOLID, StringVar
+
 from data.variables import \
     MyFont, colors, fbg, ffg, \
     canvas_relx, canvas_rely, canvas_width, canvas_height, \
@@ -167,7 +168,7 @@ class MyScale(object):
         resolution = 0.1
 
         def update(scale_value):
-            self.l_val.set(self.text + ' = ' + scale_value)
+            self.l_val.set(' ' + self.text + ' = ' + scale_value + ' ')
 
         # creating Scale
         self.scale = Scale(self.parent)

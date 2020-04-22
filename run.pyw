@@ -2,10 +2,15 @@
 
 # imports
 from Tkinter import Tk
+
 from tkMessageBox import showerror
+
 from os import execv
+
 from sys import executable, argv
+
 from data.myclasses import MyMainFrame, MyGameFrame, MyImageFrame, MyFrame, MyButton, MyLabel
+
 from data.variables import dev, c_error, c_error_text, colors, start_geometry, main_geometry, game_geometry, \
     cheatsheet_geometry, \
     documentation_geometry, start_width, start_height, main_width, main_height, game_height, game_width, \

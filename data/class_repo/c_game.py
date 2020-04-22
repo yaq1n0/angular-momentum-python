@@ -4,9 +4,13 @@
 from Tkinter import BooleanVar, IntVar, StringVar, \
     Frame, Label, Button, Radiobutton, \
     FLAT, RIDGE, N
+
 from tkMessageBox import showinfo, showerror
+
 from random import shuffle
+
 from c_other import MyFrame
+
 from data.variables import dev, MyFont, colors, color_green, color_red
 
 
@@ -38,7 +42,7 @@ class MyQuestion(object):
             self.ans_input.set(self.ans)
 
         # questionwide bgcolor, fgcolor
-        self.bgcolor = colors[2]
+        self.bgcolor = colors[3]
         self.fgcolor = colors[4]
 
         # creating parent frame
@@ -171,7 +175,7 @@ class MyQuestion(object):
         self.da = Button(self.ef)
         self.da.configure(text='Show Answer', command=self.disp_ans)
         self.da.configure(font=MyFont)
-        self.da.configure(bg=self.bgcolor, fg=self.fgcolor)
+        self.da.configure(bg=colors[1], fg=colors[4])
         self.da.configure(activebackground=self.bgcolor, activeforeground=self.fgcolor)
         self.da.configure(relief=RIDGE, highlightthickness=0, bd=0)
         self.da.place(relx=0.65, rely=0.85, relwidth=0.10, relheight=0.05)
