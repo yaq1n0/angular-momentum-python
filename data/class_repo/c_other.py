@@ -3,7 +3,7 @@
 # imports
 from Tkinter import \
     Toplevel, Frame, Canvas, Label, Button, Scale, Entry, \
-    LEFT, HORIZONTAL, FLAT, RIDGE, StringVar
+    LEFT, HORIZONTAL, FLAT, RIDGE, SOLID, StringVar
 from data.variables import \
     MyFont, colors, fbg, ffg, \
     canvas_relx, canvas_rely, canvas_width, canvas_height, \
@@ -26,19 +26,15 @@ class ToolTip(object):
         if self.tipwindow or not self.text:
             return
         x, y, cx, cy = self.widget.bbox('insert')
-        x = x + self.widget.winfo_rootx() + 57
-        y = y + cy + self.widget.winfo_rooty() + 27
+        x = x + self.widget.winfo_rootx() + 60
+        y = y + cy + self.widget.winfo_rooty() + 30
         self.tipwindow = tw = Toplevel(self.widget)
         tw.wm_overrideredirect(1)
         tw.wm_geometry('+%d+%d' % (x, y))
-        label = Label(tw,
-                      bd=1,
-                      relief=FLAT,
-                      text=self.text,
-                      justify=LEFT,
-                      bg=colors[2],
-                      fg=colors[0],
-                      )
+        label = Label(tw, text=self.text)
+        label.configure(justify=LEFT)
+        label.configure(relief=SOLID, bd=1)
+        label.configure(bg=colors[0], fg=colors[4], font=MyFont)
         label.pack(ipadx=1)
 
     # hidetip method for ToolTip class

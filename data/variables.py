@@ -6,18 +6,30 @@ from config import height as config_height
 from config import font as config_font
 from config import font_size as config_font_size
 from config import enable_developer as dev
+from config import enable_tooltips as tooltips
+
+c_error = False
+c_error_text = ''
 
 # validation checks for config
 if type(config_width) != int:
-    print "Please use an integer value for width"
+    c_error = True
+    c_error_text = "Please use an integer value for width"
 if type(config_height) != int:
-    print "please use an integer value for height"
+    c_error = True
+    c_error_text = "please use an integer value for height"
 if type(config_font) != str:
-    print "please use a string for font"
+    c_error = True
+    c_error_text = "please use a string for font"
 if type(config_font_size) != int:
-    print "please use an integer value for font_size"
+    c_error = True
+    c_error_text = "please use an integer value for font_size"
 if type(dev) != bool:
-    print 'please use either "True" or "False" boolean values'
+    c_error = True
+    c_error_text = 'please use either "True" or "False" boolean values'
+if type(tooltips) != bool:
+    c_error = True
+    c_error_text = 'please use either "True" or "False" boolean values'
 
 # defining colors
 # grayscale

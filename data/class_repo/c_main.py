@@ -4,11 +4,11 @@
 from Tkinter import END
 from c_other import MyFrame, MyFrameWBP, MyCanvas, MyLabel, MyScale, MyEntry, MyButton
 from data.myfunctions import \
-    atl, Moment_Inertia, Angular_Momentum, Linear_Momentum, \
+    atl, Moment_Inertia, Angular_Momentum, Linear_Momentum, CreateToolTip, \
     Rotational_Kinetic_Energy, Linear_Kinetic_Energy, TKE, \
     orbiting_particle_animation, rotating_circle_animation, rolling_circle_animation
 from data.variables import \
-    dev, colors, frame_bottom_pad1, frame_bottom_pad2, \
+    dev, tooltips, colors, frame_bottom_pad1, frame_bottom_pad2, \
     fb_rely_primary, fb_rely_secondary, canvas_width, canvas_height, \
     particle_constant, circle_constant
 
@@ -86,6 +86,7 @@ class MyMainFrame(object):
         self.main_pf2_title.label.configure(bg=colors[4])
 
         self.time_factor_scale = MyScale(self.main_pf2.frame, 'Time Factor', 0.05, 0.15)
+        CreateToolTip(self.time_factor_scale.label, "Drag left or right to adjust animation speed")
         self.len_mult_scale = MyScale(self.main_pf2.frame, 'Length Multiplier', 0.05, 0.30)
         self.granularity_scale = MyScale(self.main_pf2.frame, 'Granularity', 0.05, 0.45)
 
@@ -101,6 +102,12 @@ class MyMainFrame(object):
         self.len_mult_scale.scale.set(10)
         self.granularity_scale.scale.set(15)
 
+        if tooltips:
+            CreateToolTip(self.time_factor_scale.label, 'Drag slider to adjust animation speed\nhigher value is faster')
+            CreateToolTip(self.len_mult_scale.label, 'Drag slider to adjust animation scale\nhigher value is bigger')
+            CreateToolTip(self.granularity_scale.label,
+                          'Drag slider to adjust animation smoothness\nhigher value is smoother')
+
     def create_frame1a(self):
         if dev:
             print '[main] frame1a objects created'
@@ -113,6 +120,12 @@ class MyMainFrame(object):
         self.frame1a_scale3 = MyScale(self.frame1a.frame, 'Angular Velocity (rad/s)', 0.05, 0.50)
         self.frame1a_entry1 = MyEntry(self.frame1a.frame, 'Moment of Inertia (kgm^2)', 0.85, 0.20)
         self.frame1a_canvas1 = MyCanvas(self.frame1a.frame)
+
+        if tooltips:
+            CreateToolTip(self.frame1a_scale1.label, 'Drag slider to adjust radius')
+            CreateToolTip(self.frame1a_scale2.label, 'Drag slider to adjust mass')
+            CreateToolTip(self.frame1a_scale3.label, 'Drag slider to adjust angular velocity')
+            CreateToolTip(self.frame1a_entry1.label, 'I = MR^2')
 
     def create_frame1b(self):
         if dev:
@@ -128,6 +141,13 @@ class MyMainFrame(object):
         self.frame1b_entry2 = MyEntry(self.frame1b.frame, 'Angular Momentum (kgm^2/s)', 0.85, 0.35)
         self.frame1b_canvas1 = MyCanvas(self.frame1b.frame)
 
+        if tooltips:
+            CreateToolTip(self.frame1b_scale1.label, 'Drag slider to adjust radius')
+            CreateToolTip(self.frame1b_scale2.label, 'Drag slider to adjust mass')
+            CreateToolTip(self.frame1b_scale3.label, 'Drag slider to adjust angular velocity')
+            CreateToolTip(self.frame1b_entry1.label, 'I = MR^2')
+            CreateToolTip(self.frame1b_entry2.label, 'L = Iw')
+
     def create_frame1c(self):
         if dev:
             print '[main] frame1c objects created'
@@ -142,6 +162,13 @@ class MyMainFrame(object):
         self.frame1c_entry2 = MyEntry(self.frame1c.frame, 'Rotational Kinetic Energy (J)', 0.85, 0.35)
         self.frame1c_canvas1 = MyCanvas(self.frame1c.frame)
 
+        if tooltips:
+            CreateToolTip(self.frame1c_scale1.label, 'Drag slider to adjust radius')
+            CreateToolTip(self.frame1c_scale2.label, 'Drag slider to adjust mass')
+            CreateToolTip(self.frame1c_scale3.label, 'Drag slider to adjust angular velocity')
+            CreateToolTip(self.frame1c_entry1.label, 'I = MR^2')
+            CreateToolTip(self.frame1c_entry2.label, 'RKE = (1/2) Iw^2')
+
     def create_frame2a(self):
         if dev:
             print '[main] frame2a objects created'
@@ -154,6 +181,12 @@ class MyMainFrame(object):
         self.frame2a_scale3 = MyScale(self.frame2a.frame, 'Angular Velocity (rad/s)', 0.05, 0.50)
         self.frame2a_entry1 = MyEntry(self.frame2a.frame, 'Moment of Inertia (kgm^2)', 0.85, 0.20)
         self.frame2a_canvas1 = MyCanvas(self.frame2a.frame)
+
+        if tooltips:
+            CreateToolTip(self.frame2a_scale1.label, 'Drag slider to adjust radius')
+            CreateToolTip(self.frame2a_scale2.label, 'Drag slider to adjust mass')
+            CreateToolTip(self.frame2a_scale3.label, 'Drag slider to adjust angular velocity')
+            CreateToolTip(self.frame2a_entry1.label, 'I = (1/2) MR^2')
 
     def create_frame2b(self):
         if dev:
@@ -169,6 +202,13 @@ class MyMainFrame(object):
         self.frame2b_entry2 = MyEntry(self.frame2b.frame, 'Angular Momentum (kgm^2/s)', 0.85, 0.35)
         self.frame2b_canvas1 = MyCanvas(self.frame2b.frame)
 
+        if tooltips:
+            CreateToolTip(self.frame2b_scale1.label, 'Drag slider to adjust radius')
+            CreateToolTip(self.frame2b_scale2.label, 'Drag slider to adjust mass')
+            CreateToolTip(self.frame2b_scale3.label, 'Drag slider to adjust angular velocity')
+            CreateToolTip(self.frame2b_entry1.label, 'I = (1/2) MR^2')
+            CreateToolTip(self.frame2b_entry2.label, 'L = Iw')
+
     def create_frame2c(self):
         if dev:
             print '[main] frame2c objects created'
@@ -183,6 +223,13 @@ class MyMainFrame(object):
         self.frame2c_entry2 = MyEntry(self.frame2c.frame, 'Rotational Kinetic Energy (J)', 0.85, 0.35)
         self.frame2c_canvas1 = MyCanvas(self.frame2c.frame)
 
+        if tooltips:
+            CreateToolTip(self.frame2c_scale1.label, 'Drag slider to adjust radius')
+            CreateToolTip(self.frame2c_scale2.label, 'Drag slider to adjust mass')
+            CreateToolTip(self.frame2c_scale3.label, 'Drag slider to adjust angular velocity')
+            CreateToolTip(self.frame2c_entry1.label, 'I = (1/2) MR^2')
+            CreateToolTip(self.frame2c_entry2.label, 'RKE = (1/2) Iw^2')
+
     def create_frame3a(self):
         if dev:
             print '[main] frame3a objects created'
@@ -195,6 +242,12 @@ class MyMainFrame(object):
         self.frame3a_scale3 = MyScale(self.frame3a.frame, 'Angular Velocity (rad/s)', 0.05, 0.50)
         self.frame3a_entry1 = MyEntry(self.frame3a.frame, 'Moment of Inertia (kgm^2)', 0.85, 0.20)
         self.frame3a_canvas1 = MyCanvas(self.frame3a.frame)
+
+        if tooltips:
+            CreateToolTip(self.frame3a_scale1.label, 'Drag slider to adjust radius')
+            CreateToolTip(self.frame3a_scale2.label, 'Drag slider to adjust mass')
+            CreateToolTip(self.frame3a_scale3.label, 'Drag slider to adjust angular velocity')
+            CreateToolTip(self.frame3a_entry1.label, 'I = (1/2) MR^2')
 
     def create_frame3b(self):
         if dev:
@@ -211,6 +264,13 @@ class MyMainFrame(object):
         self.frame3b_entry3 = MyEntry(self.frame3b.frame, 'Linear Momentum (kgm/s)', 0.85, 0.50)
         self.frame3b_canvas1 = MyCanvas(self.frame3b.frame)
 
+        if tooltips:
+            CreateToolTip(self.frame3b_scale1.label, 'Drag slider to adjust radius')
+            CreateToolTip(self.frame3b_scale2.label, 'Drag slider to adjust mass')
+            CreateToolTip(self.frame3b_scale3.label, 'Drag slider to adjust angular velocity')
+            CreateToolTip(self.frame3b_entry2.label, 'L = Iw')
+            CreateToolTip(self.frame3b_entry3.label, 'p = MV')
+
     def create_frame3c(self):
         if dev:
             print '[main] frame3c objects created'
@@ -226,6 +286,15 @@ class MyMainFrame(object):
         self.frame3c_entry3 = MyEntry(self.frame3c.frame, 'Linear Kinetic Energy (J)', 0.85, 0.50)
         self.frame3c_entry4 = MyEntry(self.frame3c.frame, 'Total Kinetic Energy (J)', 0.85, 0.65)
         self.frame3c_canvas1 = MyCanvas(self.frame3c.frame)
+
+        if tooltips:
+            CreateToolTip(self.frame3c_scale1.label, 'Drag slider to adjust radius')
+            CreateToolTip(self.frame3c_scale2.label, 'Drag slider to adjust mass')
+            CreateToolTip(self.frame3c_scale3.label, 'Drag slider to adjust angular velocity')
+            CreateToolTip(self.frame3c_entry1.label, 'I = (1/2) MR^2')
+            CreateToolTip(self.frame3c_entry2.label, 'RKE = (1/2) Iw^2')
+            CreateToolTip(self.frame3c_entry3.label, 'LKE = (1/2) MV^2')
+            CreateToolTip(self.frame3c_entry4.label, 'TKE = RKE + LKE')
 
     def flip_main_pf1(self):
         self.main_pf1.frame.tkraise()

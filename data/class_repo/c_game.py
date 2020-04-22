@@ -131,7 +131,7 @@ class MyQuestion(object):
         self.cb = Button(self.qf)
         self.cb.configure(text='Check Answer', command=self.check_ans)
         self.cb.configure(font=MyFont)
-        self.cb.configure(bg=self.bgcolor, fg=self.fgcolor)
+        self.cb.configure(bg=colors[1], fg=colors[4])
         self.cb.configure(activebackground=self.bgcolor, activeforeground=self.fgcolor)
         self.cb.configure(relief=RIDGE, highlightthickness=0, bd=0)
         self.cb.place(relx=0.80, rely=0.85, relwidth=0.10, relheight=0.05)
@@ -161,7 +161,7 @@ class MyQuestion(object):
         self.nq = Button(self.ef)
         self.nq.configure(text='Next Question', command=self.next_ques)
         self.nq.configure(font=MyFont)
-        self.nq.configure(bg=self.bgcolor, fg=self.fgcolor)
+        self.nq.configure(bg=colors[1], fg=colors[4])
         self.nq.configure(activebackground=self.bgcolor, activeforeground=self.fgcolor)
         self.nq.configure(relief=RIDGE, highlightthickness=0, bd=0)
         self.nq.place(relx=0.80, rely=0.85, relwidth=0.10, relheight=0.05)
@@ -273,7 +273,7 @@ class MyGameFrame(object):
         end_label = Label(self.game_bf.frame)
         end_label.configure(text='You have gone through all the questions \n '
                                  'Please check in later for more \n '
-                                 'Press "Control + R" to relaunch the program')
+                                 'Press "Escape" to exit')
         end_label.configure(bg=colors[4], fg=colors[0])
         end_label.place(relx=0.05, rely=0.05, relwidth=0.90, relheight=0.90)
 

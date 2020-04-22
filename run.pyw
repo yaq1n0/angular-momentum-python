@@ -2,16 +2,24 @@
 
 # imports
 from Tkinter import Tk
+from tkMessageBox import showerror
 from os import execv
 from sys import executable, argv
 from data.myclasses import MyMainFrame, MyGameFrame, MyImageFrame, MyFrame, MyButton, MyLabel
-from data.variables import colors, start_geometry, main_geometry, game_geometry, cheatsheet_geometry, \
+from data.variables import dev, c_error, c_error_text, colors, start_geometry, main_geometry, game_geometry, \
+    cheatsheet_geometry, \
     documentation_geometry, start_width, start_height, main_width, main_height, game_height, game_width, \
     cheatsheet_width, cheatsheet_height, documentation_width, documentation_height
 
-# space to test code
+# Program start debug
+if c_error:
+    root = Tk()
+    root.withdraw()
+    showerror('Config', c_error_text)
+    exit()
 
-print 'PROGRAM STARTED'
+if dev:
+    print '[run] PROGRAM STARTED'
 
 # creating root
 root = Tk()
