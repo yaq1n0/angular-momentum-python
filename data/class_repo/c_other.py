@@ -3,9 +3,9 @@
 # imports
 from Tkinter import \
     Toplevel, Frame, Canvas, Label, Button, Scale, Entry, \
-    LEFT, HORIZONTAL, FLAT, RIDGE, SOLID, StringVar
+    LEFT, HORIZONTAL, FLAT, RIDGE, SOLID, StringVar, N
 
-from data.variables import \
+from data.myvariables import \
     MyFont, colors, fbg, ffg, \
     canvas_relx, canvas_rely, canvas_width, canvas_height, \
     scale_relwidth, scale_relheight
@@ -142,7 +142,7 @@ class MyLabel(object):
         self.label.configure(text=text)
         self.label.configure(font=MyFont)
         self.label.configure(bg=bgcolor, fg=fgcolor)
-        self.label.configure(relief=FLAT)
+        self.label.configure(relief=FLAT, anchor=N)
         self.label.configure(padx=2, pady=2)
         self.label.place(relx=relx, rely=rely)
 

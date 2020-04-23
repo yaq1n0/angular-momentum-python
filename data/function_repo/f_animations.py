@@ -5,11 +5,13 @@ from Tkinter import ALL
 
 from tkMessageBox import askquestion
 
+from time import time
+
 from math import pi, sin, cos
 
-from f_other import dtr, ttl
+from data.myfunctions import dtr, ttl
 
-from data.variables import colors, spoke_step, platform_width, part_radius, circum_width
+from data.myvariables import dev, colors, spoke_step, platform_width, part_radius, circum_width
 
 radius_error_ask_bool = True
 ang_vel_error_ask_bool = True
@@ -81,6 +83,7 @@ def orbiting_particle_animation(root,
     # orbiting particle
     while True:
         for theta in range(0, 360, int(granularity)):
+            c_start = time()
             ref_ms = int(1000 * ((1.0 / float(ang_freq)) / (360.0 / float(granularity))))
             x = x_pos + (float(radius) * sin(dtr(theta)))
             y = y_pos + (float(-radius) * cos(dtr(theta)))
@@ -92,6 +95,9 @@ def orbiting_particle_animation(root,
                                           )
             canvas.update()
             root.after(ref_ms, canvas.delete(orb_part))
+            c_end = time()
+            if dev:
+                print '[animation] time per cycle', round(c_end - c_start, 2)
 
 
 # animate rotating circle
@@ -159,6 +165,7 @@ def rotating_circle_animation(root,
 
     while True:
         for theta in range(0, 360, int(granularity)):
+            c_start = time()
             ref_ms = int(1000 * ((1.0 / float(ang_freq)) / (360.0 / float(granularity))))
 
             line1 = ttl(canvas, x_pos, y_pos, radius, theta + (0 * spoke_step))
@@ -168,7 +175,8 @@ def rotating_circle_animation(root,
 
             canvas.update()
             root.after(ref_ms, canvas.delete(line1, line2, line3, line4))
-
+            c_end = time()
+            print '[animation] time per cycle', round(c_end - c_start, 2)
 
 # animate rolling circle
 def rolling_circle_animation(root,
@@ -181,7 +189,7 @@ def rolling_circle_animation(root,
                              ):
     global radius_error_ask_bool, ang_vel_error_ask_bool
     # checking value ranges
-    if radius > 200 and radius_error_ask_bool:
+    if radius > 180 and radius_error_ask_bool:
         radius_error = askquestion('Run Animation',
                                    'You have selected parameters which may cause parts of the animation to be invisible, \n'
                                    'it is recommended that you modify the animation settings\n'
@@ -232,7 +240,7 @@ def rolling_circle_animation(root,
 
     while True:
         for theta in range(0, 360, int(granularity)):
-
+            c_start = time()
             # circumference
             canvas.create_oval(x_pos - radius,
                                y_pos - radius,
@@ -280,3 +288,6 @@ def rolling_circle_animation(root,
 
             # deleting all components after ref_ms
             root.after(ref_ms, canvas.delete(ALL))
+
+            c_end = time()
+            print '[animation] time per cycle', round(c_end - c_start, 2)

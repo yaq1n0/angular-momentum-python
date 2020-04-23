@@ -9,7 +9,7 @@ from PIL import Image, ImageTk
 
 from data.myclasses import ToolTip
 
-from data.variables import spoke_width
+from data.myvariables import spoke_width
 
 
 # PlaceHolder function for whatever
