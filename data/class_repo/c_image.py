@@ -5,9 +5,9 @@ from Tkinter import Label
 
 from data.myclasses import MyFrame
 
-from data.myfunctions import CreateTkImage
+from data.myfunctions import CreateTkImage, GrayScale
 
-from data.myvariables import dev, colors
+from data.myvariables import dev
 
 
 # Creating MyImageFrame
@@ -15,7 +15,7 @@ class MyImageFrame(object):
     def __init__(self, parent, path, x_size, y_size):
         if dev:
             print '[image] image created from ' + path
-        self.img_frame = MyFrame(parent, colors[4])
+        self.img_frame = MyFrame(parent, GrayScale(20))
 
         img_object = CreateTkImage(path, x_size, y_size)
 

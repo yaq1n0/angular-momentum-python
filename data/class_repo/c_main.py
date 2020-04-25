@@ -3,17 +3,20 @@
 # imports
 from Tkinter import END
 
-from data.myclasses import MyFrame, MyFrameWBP, MyCanvas, MyLabel, MyScale, MyEntry, MyButton
+from data.myclasses import MyFrame, MyFrameWBP, MyCanvas, MyLabel, MyScale, MyEntry, MyButton, MyImageButton
 
 from data.myfunctions import \
     atl, Moment_Inertia, Angular_Momentum, Linear_Momentum, CreateToolTip, \
     Rotational_Kinetic_Energy, Linear_Kinetic_Energy, TKE, \
-    orbiting_particle_animation, rotating_circle_animation, rolling_circle_animation
+    orbiting_particle_animation, rotating_circle_animation, rolling_circle_animation, \
+    GrayScale, CreateTkImage
 
 from data.myvariables import \
-    dev, tooltips, colors, frame_bottom_pad1, frame_bottom_pad2, \
+    dev, tooltips, frame_bottom_pad1, frame_bottom_pad2, \
     fb_rely_primary, fb_rely_secondary, canvas_width, canvas_height, \
-    particle_constant, circle_constant
+    particle_constant, circle_constant, \
+    start_geometry, main_geometry, MyFontL, MyFontLB, MyFontXLB, \
+    main_width, main_height, start_width, start_height
 
 
 class MyMainFrame(object):
@@ -46,28 +49,31 @@ class MyMainFrame(object):
         if dev:
             print '[main] frames created'
 
-        self.main_bf = MyFrame(self.parent, colors[4])
-        self.main_pf1 = MyFrame(self.main_bf.frame, colors[4])
-        self.main_pf2 = MyFrame(self.main_bf.frame, colors[4])
-        self.frame1 = MyFrameWBP(self.main_bf.frame, colors[4], frame_bottom_pad1)
-        self.frame2 = MyFrameWBP(self.main_bf.frame, colors[4], frame_bottom_pad1)
-        self.frame3 = MyFrameWBP(self.main_bf.frame, colors[4], frame_bottom_pad1)
-        self.frame1a = MyFrameWBP(self.frame1.frame, colors[3], frame_bottom_pad2)
-        self.frame1b = MyFrameWBP(self.frame1.frame, colors[3], frame_bottom_pad2)
-        self.frame1c = MyFrameWBP(self.frame1.frame, colors[3], frame_bottom_pad2)
-        self.frame2a = MyFrameWBP(self.frame2.frame, colors[3], frame_bottom_pad2)
-        self.frame2b = MyFrameWBP(self.frame2.frame, colors[3], frame_bottom_pad2)
-        self.frame2c = MyFrameWBP(self.frame2.frame, colors[3], frame_bottom_pad2)
-        self.frame3a = MyFrameWBP(self.frame3.frame, colors[3], frame_bottom_pad2)
-        self.frame3b = MyFrameWBP(self.frame3.frame, colors[3], frame_bottom_pad2)
-        self.frame3c = MyFrameWBP(self.frame3.frame, colors[3], frame_bottom_pad2)
+        self.main_bf = MyFrame(self.parent, GrayScale(20))
+        self.main_pf1 = MyFrame(self.main_bf.frame, GrayScale(20))
+        self.main_pf2 = MyFrame(self.main_bf.frame, GrayScale(20))
+        self.frame1 = MyFrameWBP(self.main_bf.frame, GrayScale(20), frame_bottom_pad1)
+        self.frame2 = MyFrameWBP(self.main_bf.frame, GrayScale(20), frame_bottom_pad1)
+        self.frame3 = MyFrameWBP(self.main_bf.frame, GrayScale(20), frame_bottom_pad1)
+        self.frame1a = MyFrameWBP(self.frame1.frame, GrayScale(20), frame_bottom_pad2)
+        self.frame1b = MyFrameWBP(self.frame1.frame, GrayScale(20), frame_bottom_pad2)
+        self.frame1c = MyFrameWBP(self.frame1.frame, GrayScale(20), frame_bottom_pad2)
+        self.frame2a = MyFrameWBP(self.frame2.frame, GrayScale(20), frame_bottom_pad2)
+        self.frame2b = MyFrameWBP(self.frame2.frame, GrayScale(20), frame_bottom_pad2)
+        self.frame2c = MyFrameWBP(self.frame2.frame, GrayScale(20), frame_bottom_pad2)
+        self.frame3a = MyFrameWBP(self.frame3.frame, GrayScale(20), frame_bottom_pad2)
+        self.frame3b = MyFrameWBP(self.frame3.frame, GrayScale(20), frame_bottom_pad2)
+        self.frame3c = MyFrameWBP(self.frame3.frame, GrayScale(20), frame_bottom_pad2)
 
     def create_nav(self):
         if dev:
             print '[main] navigation buttons created'
 
-        self.enter_as = MyButton(self.main_pf1.frame, 'Animation Settings', self.flip_main_pf2, 0.05, fb_rely_primary)
-        self.exit_as = MyButton(self.main_pf2.frame, 'Exit', self.flip_main_pf1, 0.05, fb_rely_primary)
+        self.enter_as = MyImageButton(self.main_pf1.frame, CreateTkImage('data/images/settings.png', 64, 64),
+                                      self.flip_main_pf2, 0.05, fb_rely_primary)
+        self.exit_as = MyImageButton(self.main_pf2.frame, CreateTkImage('data/images/back.png', 64, 64),
+                                     self.flip_main_pf1, 0.175, 0.85)
+        self.exit_as.button.place(relwidth=0.125, relheight=0.0625)
         self.fb1 = MyButton(self.main_pf1.frame, 'Orbiting Particle', self.flip_frame1, 0.55, fb_rely_primary)
         self.fb2 = MyButton(self.main_pf1.frame, 'Rotating Circle', self.flip_frame2, 0.70, fb_rely_primary)
         self.fb3 = MyButton(self.main_pf1.frame, 'Rolling Circle', self.flip_frame3, 0.85, fb_rely_primary)
@@ -85,21 +91,34 @@ class MyMainFrame(object):
         if dev:
             print '[main] animation frame objects created'
 
-        self.main_pf2_title = MyLabel(self.main_pf2.frame, 'Animation Settings', 0.05, 0.05)
-        self.main_pf2_title.label.configure(bg=colors[4])
+        self.main_pf2_title = MyLabel(self.main_pf2.frame, 'Animation Settings', 0.175, 0.125)
+        self.main_pf2_title.label.configure(bg=GrayScale(20), font=MyFontLB)
+        self.main_pf2_title.label.place(relwidth=0.65)
 
-        self.time_factor_scale = MyScale(self.main_pf2.frame, 'Time Factor', 0.05, 0.15)
-        CreateToolTip(self.time_factor_scale.label, "Drag left or right to adjust animation speed")
-        self.len_mult_scale = MyScale(self.main_pf2.frame, 'Length Multiplier', 0.05, 0.30)
-        self.granularity_scale = MyScale(self.main_pf2.frame, 'Granularity', 0.05, 0.45)
+        self.time_factor_scale = MyScale(self.main_pf2.frame, 'Time Factor', 0.175, 0.25)
+        self.len_mult_scale = MyScale(self.main_pf2.frame, 'Length Multiplier', 0.175, 0.40)
+        self.granularity_scale = MyScale(self.main_pf2.frame, 'Granularity', 0.175, 0.55)
 
-        self.time_factor_scale.scale.configure(from_=1, to=100, resolution=1, bg=colors[4])
-        self.len_mult_scale.scale.configure(from_=1, to=100, resolution=1, bg=colors[4])
-        self.granularity_scale.scale.configure(from_=5, to=90, resolution=5, bg=colors[4])
+        self.time_factor_scale.scale.configure(from_=1, to=100, resolution=1, bg=GrayScale(20))
+        self.len_mult_scale.scale.configure(from_=1, to=100, resolution=1, bg=GrayScale(20))
+        self.granularity_scale.scale.configure(from_=5, to=90, resolution=5, bg=GrayScale(20))
 
-        self.time_factor_scale.label.configure(bg=colors[4])
-        self.len_mult_scale.label.configure(bg=colors[4])
-        self.granularity_scale.label.configure(bg=colors[4])
+        self.time_factor_scale.label.configure(bg=GrayScale(20), font=MyFontL)
+        self.len_mult_scale.label.configure(bg=GrayScale(20), font=MyFontL)
+        self.granularity_scale.label.configure(bg=GrayScale(20), font=MyFontL)
+
+        self.time_factor_scale.scale.place(relwidth=0.65)
+        self.len_mult_scale.scale.place(relwidth=0.65)
+        self.granularity_scale.scale.place(relwidth=0.65)
+
+        self.time_factor_scale.label.place(relwidth=0.65)
+        self.len_mult_scale.label.place(relwidth=0.65)
+        self.granularity_scale.label.place(relwidth=0.65)
+
+        if dev:
+            self.time_factor_scale.scale.set(1)
+            self.len_mult_scale.scale.set(100)
+            self.granularity_scale.scale.set(5)
 
         if not dev:
             self.time_factor_scale.scale.set(5)
@@ -117,6 +136,8 @@ class MyMainFrame(object):
             print '[main] frame1a objects created'
 
         self.main_label_1a = MyLabel(self.frame1a.frame, 'Orbiting Particle Basics', 0.05, 0.05)
+        self.main_label_1a.label.configure(font=MyFontXLB)
+        self.main_label_1a.label.place(relwidth=0.90)
         self.calculate_button_1a = MyButton(self.frame1a.frame, 'Calculate', self.calculate_1a, 0.70, 0.90)
         self.animate_button_1a = MyButton(self.frame1a.frame, 'Animate', self.animate_1a, 0.85, 0.90)
         self.frame1a_scale1 = MyScale(self.frame1a.frame, 'Radius (m)', 0.05, 0.20)
@@ -136,6 +157,8 @@ class MyMainFrame(object):
             print '[main] frame1b objects created'
 
         self.main_label_1b = MyLabel(self.frame1b.frame, 'Orbiting Particle Momentum', 0.05, 0.05)
+        self.main_label_1b.label.configure(font=MyFontXLB)
+        self.main_label_1b.label.place(relwidth=0.90)
         self.calculate_button_1b = MyButton(self.frame1b.frame, 'Calculate', self.calculate_1b, 0.70, 0.90)
         self.animate_button_1b = MyButton(self.frame1b.frame, 'Animate', self.animate_1b, 0.85, 0.90)
         self.frame1b_scale1 = MyScale(self.frame1b.frame, 'Radius (m)', 0.05, 0.20)
@@ -157,6 +180,8 @@ class MyMainFrame(object):
             print '[main] frame1c objects created'
 
         self.main_label_1c = MyLabel(self.frame1c.frame, 'Orbiting Particle Energy', 0.05, 0.05)
+        self.main_label_1c.label.configure(font=MyFontXLB)
+        self.main_label_1c.label.place(relwidth=0.90)
         self.calculate_button_1c = MyButton(self.frame1c.frame, 'Calculate', self.calculate_1c, 0.70, 0.90)
         self.animate_button_1c = MyButton(self.frame1c.frame, 'Animate', self.animate_1c, 0.85, 0.90)
         self.frame1c_scale1 = MyScale(self.frame1c.frame, 'Radius (m)', 0.05, 0.20)
@@ -178,6 +203,8 @@ class MyMainFrame(object):
             print '[main] frame2a objects created'
 
         self.main_label_2a = MyLabel(self.frame2a.frame, 'Rotating Circle Basics', 0.05, 0.05)
+        self.main_label_2a.label.configure(font=MyFontXLB)
+        self.main_label_2a.label.place(relwidth=0.90)
         self.calculate_button_2a = MyButton(self.frame2a.frame, 'Calculate', self.calculate_2a, 0.70, 0.90)
         self.animate_button_2a = MyButton(self.frame2a.frame, 'Animate', self.animate_2a, 0.85, 0.90)
         self.frame2a_scale1 = MyScale(self.frame2a.frame, 'Radius (m)', 0.05, 0.20)
@@ -197,6 +224,8 @@ class MyMainFrame(object):
             print '[main] frame2b objects created'
 
         self.main_label_2b = MyLabel(self.frame2b.frame, 'Rotating Circle Momentum', 0.05, 0.05)
+        self.main_label_2b.label.configure(font=MyFontXLB)
+        self.main_label_2b.label.place(relwidth=0.90)
         self.calculate_button_2b = MyButton(self.frame2b.frame, 'Calculate', self.calculate_2b, 0.70, 0.90)
         self.animate_button_2b = MyButton(self.frame2b.frame, 'Animate', self.animate_2b, 0.85, 0.90)
         self.frame2b_scale1 = MyScale(self.frame2b.frame, 'Radius (m)', 0.05, 0.20)
@@ -218,6 +247,8 @@ class MyMainFrame(object):
             print '[main] frame2c objects created'
 
         self.main_label_2c = MyLabel(self.frame2c.frame, 'Rotating Circle Energy', 0.05, 0.05)
+        self.main_label_2c.label.configure(font=MyFontXLB)
+        self.main_label_2c.label.place(relwidth=0.90)
         self.calculate_button_2c = MyButton(self.frame2c.frame, 'Calculate', self.calculate_2c, 0.70, 0.90)
         self.animate_button_2c = MyButton(self.frame2c.frame, 'Animate', self.animate_2c, 0.85, 0.90)
         self.frame2c_scale1 = MyScale(self.frame2c.frame, 'Radius (m)', 0.05, 0.20)
@@ -239,6 +270,8 @@ class MyMainFrame(object):
             print '[main] frame3a objects created'
 
         self.main_label_3a = MyLabel(self.frame3a.frame, 'Rolling Circle Basics', 0.05, 0.05)
+        self.main_label_3a.label.configure(font=MyFontXLB)
+        self.main_label_3a.label.place(relwidth=0.90)
         self.calculate_button_3a = MyButton(self.frame3a.frame, 'Calculate', self.calculate_3a, 0.70, 0.90)
         self.animate_button_3a = MyButton(self.frame3a.frame, 'Animate', self.animate_3a, 0.85, 0.90)
         self.frame3a_scale1 = MyScale(self.frame3a.frame, 'Radius (m)', 0.05, 0.20)
@@ -258,6 +291,8 @@ class MyMainFrame(object):
             print '[main] frame3b objects created'
 
         self.main_label_3b = MyLabel(self.frame3b.frame, 'Rolling Circle Momentum', 0.05, 0.05)
+        self.main_label_3b.label.configure(font=MyFontXLB)
+        self.main_label_3b.label.place(relwidth=0.90)
         self.calculate_button_3b = MyButton(self.frame3b.frame, 'Calculate', self.calculate_3b, 0.70, 0.90)
         self.animate_button_3b = MyButton(self.frame3b.frame, 'Animate', self.animate_3b, 0.85, 0.90)
         self.frame3b_scale1 = MyScale(self.frame3b.frame, 'Radius (m)', 0.05, 0.20)
@@ -280,6 +315,8 @@ class MyMainFrame(object):
             print '[main] frame3c objects created'
 
         self.main_label_3c = MyLabel(self.frame3c.frame, 'Rolling Circle Energy', 0.05, 0.05)
+        self.main_label_3c.label.configure(font=MyFontXLB)
+        self.main_label_3c.label.place(relwidth=0.90)
         self.calculate_button_3c = MyButton(self.frame3c.frame, 'Calculate', self.calculate_3c, 0.70, 0.90)
         self.animate_button_3c = MyButton(self.frame3c.frame, 'Animate', self.animate_3c, 0.85, 0.90)
         self.frame3c_scale1 = MyScale(self.frame3c.frame, 'Radius (m)', 0.05, 0.2)
@@ -303,6 +340,11 @@ class MyMainFrame(object):
     def flip_main_pf1(self):
         self.main_pf1.frame.tkraise()
         self.flip_frame1()
+        self.parent.geometry(
+            main_geometry + '+' + str(self.parent.winfo_screenwidth() / 2 - main_width / 2) + '+' + str(
+                self.parent.winfo_screenheight() / 2 - main_height / 2))
+
+        self.in_animation_settings = False
 
     def flip_main_pf2(self):
         if self.fr0:
@@ -310,6 +352,11 @@ class MyMainFrame(object):
             self.fr0 = False
 
         self.main_pf2.frame.tkraise()
+        self.parent.geometry(
+            start_geometry + '+' + str(self.parent.winfo_screenwidth() / 2 - start_width / 2) + '+' + str(
+                self.parent.winfo_screenheight() / 2 - start_height / 2))
+
+        self.in_animation_settings = True
 
     def flip_frame1(self):
         self.frame1.frame.tkraise()

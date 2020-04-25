@@ -3,11 +3,9 @@
 # imports
 from tkMessageBox import showinfo
 
-from math import pi, sin, cos
+from math import pi
 
 from PIL import Image, ImageTk
-
-from data.myclasses import ToolTip
 
 from data.myvariables import spoke_width
 
@@ -17,9 +15,28 @@ def PlaceHolder():
     showinfo('placeholder', 'feature to be added or enabled in later version')
 
 
+# create greyscale hex
+def GrayScale(num):
+    if 0 <= num <= 255 and type(num) == int:
+        h_num = hex(num)
+        h_num_str = str(h_num)
+
+        if len(h_num_str) == 3:
+            num3 = "0" + h_num_str[-1]
+
+        elif len(h_num_str) == 4:
+            num3 = h_num_str[-2] + h_num_str[-1]
+
+        else:
+            num3 = "fucky wucky"
+
+        return '#' + str(num3) + str(num3) + str(num3)
+
+
 # CreateToolTip function for ToolTip object
 # code from 'https://stackoverflow.com/questions/20399243/display-message-when-hovering-over-something-with-mouse-cursor-in-python'
 def CreateToolTip(widget, text):
+    from data.myclasses import ToolTip
     # instantizing toolTip instance of ToolTip class
     toolTip = ToolTip(widget)
 
@@ -65,10 +82,3 @@ def ftr(freq):
 # convert angular velocity into linear velocity
 def atl(ang_vel, radius):
     return float(ang_vel) * float(radius)
-
-
-# line at theta degrees from x_pos, y_pos to x, y (for animate_rotating_circle)
-def ttl(canvas, x_pos, y_pos, radius, theta):
-    x = x_pos + (float(radius) * sin(dtr(theta)))
-    y = y_pos + (float(-radius) * cos(dtr(theta)))
-    return canvas.create_line(x_pos, y_pos, x, y, width=spoke_width)

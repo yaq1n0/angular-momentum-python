@@ -1,11 +1,12 @@
 # game component class
+# -*- encoding: utf-8 -*-
 
 # imports
 from random import shuffle
 
 from data.myclasses import MyFrame, MyLabel, MyButton, MyQuestion
-
-from data.myvariables import dev, colors
+from data.myfunctions import GrayScale
+from data.myvariables import dev, MyFontL, MyFontLB
 
 
 class MyGameFrame(object):
@@ -24,21 +25,16 @@ class MyGameFrame(object):
         if dev:
             print '[game] game base frame created'
 
-        self.game_bf = MyFrame(self.parent, colors[4])
+        self.game_bf = MyFrame(self.parent, GrayScale(20))
 
     def create_end_frame(self):
         if dev:
             print '[game] end frame created'
 
-        self.end_frame = MyFrame(self.game_bf.frame, colors[4])
+        self.end_frame = MyFrame(self.game_bf.frame, GrayScale(80))
 
-        self.end_label = MyLabel(self.end_frame.frame,
-                                 'You have gone through all the questions \n '
-                                 'Please check in later for more \n '
-                                 'Press "Escape" to exit',
-                                 0.25, 0.25
-                                 )
-        self.end_label.label.configure(bg=colors[4], fg=colors[0])
+        self.end_label = MyLabel(self.end_frame.frame, 'You have finished the Quiz Game!', 0.25, 0.25)
+        self.end_label.label.configure(font=MyFontL, bg=GrayScale(80), fg=GrayScale(220))
         self.end_label.label.place(relwidth=0.50, relheight=0.15)
 
         self.score_button = MyButton(self.end_frame.frame, 'Calculate Score', self.calc_score, 0.45, 0.45)
@@ -49,40 +45,40 @@ class MyGameFrame(object):
 
         self.q1 = MyQuestion(self.game_bf.frame,
                              'What is the moment of inertia, I for a disc?',
-                             'I = MR^2',
-                             'I = 1/12 *  ML^2',
-                             'I = 1/2 *  MR^2',
-                             'I = 1/2 *  Mk^2',
+                             'I = MR²',
+                             'I = 1/12 ML²',
+                             'I = 1/2 MR²',
+                             'I = 1/2 Mk²',
                              'This is the Moment of Inertia for a particle.',
                              'This is the Moment of Inertia for a stick.',
                              'This is the Moment of Inertia for a disc.',
-                             'This Moment of Inertia is for a particle of a disc and involves k, \nwhich is the radius of gyration.',
+                             'I = Mk² is the Moment of Inertia for a disc \ninvolving k, radius of gyration.',
                              3
                              )
 
         self.q2 = MyQuestion(self.game_bf.frame,
                              'What is the Rotational Kinetic Energy of a rolling disc?',
-                             '0.5 * mv^2',
-                             '0.25 * mr^2w^2',
-                             '0.5 * mr^2',
-                             '0.25 * Iw^2',
+                             '0.5 mv²',
+                             '0.25 mr²w²',
+                             '0.5 mr²',
+                             '0.25 Iw²',
                              'This is a formula for Linear Kinetic Energy.',
-                             'For a rolling disc, the Rotational Kinetic Energy is given as, \nRKE = 0.5 * Iw^2 = 0.5 * (0.5 * mr^2)w^2 = 0.25 * mr^2w^2 ',
+                             'For a rolling disc, the Rotational Kinetic Energy is given as, \nRKE = 0.5 Iw² = 0.5 (0.5 mr²)w² = 0.25 mr²w² ',
                              'This is the Moment of Inertia of a disc. \nNote: This formula does not involve any kind of velocity. \nThus, it cannot be Kinetic Energy.',
-                             'For a rolling disc, the Rotational Kinetic Energy is given as, \nRKE = 0.5 * Iw^2. \n\nWhen the Moment of Inertia of the disc is substituted, \nthen only the 0.25 appear.',
+                             'For a rolling disc, the Rotational Kinetic Energy is given as, \nRKE = 0.5 Iw². \n\nWhen the Moment of Inertia of the disc is substituted, \nthen only the 0.25 appear.',
                              2
                              )
 
         self.q3 = MyQuestion(self.game_bf.frame,
                              'What is the angular momentum, L for an orbiting particle?',
-                             'L = mr^2w',
+                             'L = mr²w',
                              'L = mv',
                              'L = wr',
-                             'L = mr^2',
-                             'The angular momentum for an orbiting paticle is given as, \nL = Iw. \n\nThus, when the Moment of Inertia(I) of a disc is substituted, \nL = mr^2w ',
+                             'L = mr²',
+                             'The angular momentum for an orbiting paticle is given as, \nL = Iw. \n\nThus, when the Moment of Inertia(I) of a disc is substituted, \nL = mr²w ',
                              'Recall that LINEAR Momentum is the product of mass and velocity. \np = mv',
                              'This formula is used to find linear velocity. \nv = wr',
-                             'This formula is the Moment of Inertia for a particle. \nI = mr^2',
+                             'This formula is the Moment of Inertia for a particle. \nI = mr²',
                              1
                              )
 
@@ -101,14 +97,14 @@ class MyGameFrame(object):
 
         self.q5 = MyQuestion(self.game_bf.frame,
                              'What is the unit for Angular Momentum?',
-                             'kgms^-1',
-                             'kgm^2(s^-2)',
-                             'kgm^2(s^-1)',
-                             'kgm^2',
-                             'This unit is for LINEAR Momentum. \nLinear and Angular Momentum have different units due to involving different quantities. \np = mv = kgms^-1',
-                             'This unit is for Torque. \nTorque is the product of Moment of Inertia and Angular Acceleration. \nT = Ia = kgm^2(s^-2)',
-                             'This is the unit for Angular Momentum. \nL = Iw = (MR^2)w = (kgm^2)s^-1',
-                             'This is the unit for Moment of Inertia. \nI = mr^2 = kgm^2',
+                             'kgms⁻¹',
+                             'kgm²(s⁻²)',
+                             'kgm²(s⁻¹)',
+                             'kgm²',
+                             'This unit is for LINEAR Momentum. \nLinear and Angular Momentum have different units due to involving different quantities. \np = mv = kgms⁻¹',
+                             'This unit is for Torque. \nTorque is the product of Moment of Inertia and Angular Acceleration. \nT = Ia = kgm²(s⁻²)',
+                             'This is the unit for Angular Momentum. \nL = Iw = (MR²)w = (kgm²)s⁻¹',
+                             'This is the unit for Moment of Inertia. \nI = mr² = kgm²',
                              3
                              )
 
@@ -151,8 +147,100 @@ class MyGameFrame(object):
                              2
                              )
 
+        self.q9 = MyQuestion(self.game_bf.frame,
+                             'What is the moment of inertia, I for a particle?',
+                             'I = MR²',
+                             'I = 1/12 ML²',
+                             'I = 1/2 MR²',
+                             'I = 1/2 Mk²',
+                             'This is the Moment of Inertia for a particle.',
+                             'This is the Moment of Inertia for a stick.',
+                             'This is the Moment of Inertia for a disc.',
+                             'I = Mk² is the Moment of Inertia for a disc \ninvolving k, radius of gyration.',
+                             1
+                             )
+
+        self.q10 = MyQuestion(self.game_bf.frame,
+                              'What is the Rotational Kinetic Energy of an orbiting particle?',
+                              '0.5 mv²',
+                              '0.5 mr²w²',
+                              '0.5 mr²',
+                              '0.25 Iw²',
+                              'This is a formula for Linear Kinetic Energy.',
+                              'For an orbiting particle, the Rotational Kinetic Energy is given as, \nRKE = 0.5 Iw² = 0.5 mr²w² ',
+                              'This is the Moment of Inertia of a disc. \nNote: This formula does not involve any kind of velocity. \nThus, it cannot be Kinetic Energy.',
+                              'For a rolling disc, the Rotational Kinetic Energy is given as, \nRKE = 0.5 Iw². \n\nWhen the Moment of Inertia of the disc is substituted, \nthen only the 0.25 appear.',
+                              2
+                              )
+
+        self.q11 = MyQuestion(self.game_bf.frame,
+                              'What is the moment of inertia, I for a disc?',
+                              'I = MR²',
+                              'I = 1/12 ML²',
+                              'I = 1/2 MR',
+                              'I = Mk²',
+                              'This is the Moment of Inertia for a particle.',
+                              'This is the Moment of Inertia for a stick.',
+                              '1/2 MR² is the Moment of Inertia for a disc instead of 1/2 MR.',
+                              'This is the Moment of Inertia for a disc which involves k \nrepresenting the radius of gyration.',
+                              4
+                              )
+
+        self.q12 = MyQuestion(self.game_bf.frame,
+                              'Rate of change of linear momentum is equal to ___________?',
+                              'torque',
+                              'force',
+                              'moment of inertia',
+                              'angular velocity',
+                              'Torque is the rate of change of angular momentum.',
+                              'Force is the rate of change of LINEAR momentum.',
+                              'Moment of Inertia is the product of mass and square of distance.',
+                              'Angular Velocity is the rate of change of Angular Displacement in radians per second.',
+                              2
+                              )
+
+        self.q13 = MyQuestion(self.game_bf.frame,
+                              'What is the unit for Moment of Inertia?',
+                              'kgms⁻¹',
+                              'kgm²(s⁻²)',
+                              'kgm²(s⁻¹)',
+                              'kgm²',
+                              'This unit is for LINEAR Momentum. \nLinear and Angular Momentum have different units due to involving different quantities. \np = mv = kgms⁻¹',
+                              'This unit is for Torque. \nTorque is the product of Moment of Inertia and Angular Acceleration. \nT = Ia = kgm²(s⁻²)',
+                              'This is the unit for Angular Momentum. \nL = Iw = (MR²)w = (kgm²)s⁻¹',
+                              'This is the unit for Moment of Inertia. \nI = mr² = kgm²',
+                              4
+                              )
+
+        self.q14 = MyQuestion(self.game_bf.frame,
+                              'What is the unit for Torque?',
+                              'kgms⁻¹',
+                              'kgm²(s⁻²)',
+                              'kgm²(s⁻¹)',
+                              'kgm²',
+                              'This unit is for LINEAR Momentum. \nLinear and Angular Momentum have different units due to involving different quantities. \np = mv = kgms⁻¹',
+                              'This unit is for Torque. \nTorque is the product of Moment of Inertia and Angular Acceleration. \nT = Ia = kgm²(s⁻²)',
+                              'This is the unit for Angular Momentum. \nL = Iw = (MR²)w = (kgm²)s⁻¹',
+                              'This is the unit for Moment of Inertia. \nI = mr² = kgm²',
+                              2
+                              )
+
+        self.q15 = MyQuestion(self.game_bf.frame,
+                              'What is the Linear Kinetic Energy of a rolling ball?',
+                              '0.5 mv²',
+                              '0.5 mr²w²',
+                              '0.5 mr²',
+                              '0.25 Iw²',
+                              'This is a formula for Linear Kinetic Energy.',
+                              'For an orbiting particle, the Rotational Kinetic Energy is given as, \nRKE = 0.5 Iw² = 0.5 mr²w² ',
+                              'This is the Moment of Inertia of a disc. \nNote: This formula does not involve any kind of velocity. \nThus, it cannot be Kinetic Energy.',
+                              'For a rolling disc, the Rotational Kinetic Energy is given as, \nRKE = 0.5 Iw². \n\nWhen the Moment of Inertia of the disc is substituted, \nthen only the 0.25 appear.',
+                              1
+                              )
+
         # creating qlist
-        self.qlist = [self.q1, self.q2, self.q3, self.q4, self.q5, self.q6, self.q7, self.q8]
+        self.qlist = [self.q1, self.q2, self.q3, self.q4, self.q5, self.q6, self.q7, self.q8, self.q9,
+                      self.q10, self.q11, self.q12, self.q13, self.q14, self.q15]
 
     def shuffle_questions(self):
         if dev:
@@ -178,14 +266,14 @@ class MyGameFrame(object):
             # figuring out how many questions were correct:
             tmp_var = 0
             for question in self.qlist:
-                if question.is_correct:
+                if question.is_correct.get():
                     tmp_var += 1
 
             self.score_label = MyLabel(self.end_frame.frame,
                                        'You got ' + str(tmp_var) + '/' + str(len(self.qlist)) + ' questions correct!',
                                        0.25, 0.55
                                        )
-            self.score_label.label.configure(bg=colors[4], fg=colors[0])
+            self.score_label.label.configure(font=MyFontLB, bg=GrayScale(80), fg=GrayScale(220))
             self.score_label.label.place(relwidth=0.50, relheight=0.15)
 
             self.score_calulated = True

@@ -9,12 +9,19 @@ from time import time
 
 from math import pi, sin, cos
 
-from data.myfunctions import dtr, ttl
+from data.myfunctions import dtr, GrayScale
 
-from data.myvariables import dev, colors, spoke_step, platform_width, part_radius, circum_width
+from data.myvariables import dev, spoke_step, platform_width, part_radius, circum_width
 
 radius_error_ask_bool = True
 ang_vel_error_ask_bool = True
+
+
+# line at theta degrees from x_pos, y_pos to x, y (for animate_rotating_circle)
+def ttl(canvas, x_pos, y_pos, radius, theta):
+    x = x_pos + (float(radius) * sin(dtr(theta)))
+    y = y_pos + (float(-radius) * cos(dtr(theta)))
+    return canvas.create_line(x_pos, y_pos, x, y, fill=GrayScale(220))
 
 
 # animate orbiting particle
@@ -70,14 +77,15 @@ def orbiting_particle_animation(root,
                        y_pos - part_radius,
                        x_pos + part_radius,
                        y_pos + part_radius,
-                       fill=colors[4]
+                       fill=GrayScale(220)
                        )
 
     # orbit_path
     canvas.create_oval(x_pos - radius,
                        y_pos - radius,
                        x_pos + radius,
-                       y_pos + radius
+                       y_pos + radius,
+                       outline=GrayScale(220)
                        )
 
     # orbiting particle
@@ -91,7 +99,7 @@ def orbiting_particle_animation(root,
                                           y - part_radius,
                                           x + part_radius,
                                           y + part_radius,
-                                          fill=colors[4]
+                                          fill=GrayScale(220)
                                           )
             canvas.update()
             root.after(ref_ms, canvas.delete(orb_part))
@@ -152,7 +160,8 @@ def rotating_circle_animation(root,
                        y_pos - radius,
                        x_pos + radius,
                        y_pos + radius,
-                       width=circum_width
+                       width=circum_width,
+                       outline=GrayScale(220)
                        )
 
     # center
@@ -160,7 +169,8 @@ def rotating_circle_animation(root,
                        y_pos - (float(radius) / 50.0),
                        x_pos + (float(radius) / 50.0),
                        y_pos + (float(radius) / 50.0),
-                       width=circum_width
+                       width=circum_width,
+                       fill=GrayScale(220)
                        )
 
     while True:
@@ -177,6 +187,7 @@ def rotating_circle_animation(root,
             root.after(ref_ms, canvas.delete(line1, line2, line3, line4))
             c_end = time()
             print '[animation] time per cycle', round(c_end - c_start, 2)
+
 
 # animate rolling circle
 def rolling_circle_animation(root,
@@ -246,7 +257,8 @@ def rolling_circle_animation(root,
                                y_pos - radius,
                                x_pos + radius,
                                y_pos + radius,
-                               width=circum_width
+                               width=circum_width,
+                               outline=GrayScale(220)
                                )
 
             # center
@@ -254,7 +266,8 @@ def rolling_circle_animation(root,
                                y_pos - (float(radius) / 50.0),
                                x_pos + (float(radius) / 50.0),
                                y_pos + (float(radius) / 50.0),
-                               width=circum_width
+                               width=circum_width,
+                               fill=GrayScale(220)
                                )
 
             # platform outline
@@ -262,7 +275,8 @@ def rolling_circle_animation(root,
                                     py_pos,
                                     px_pos + platform_len,
                                     py_pos + platform_thickness,
-                                    width=platform_width
+                                    width=platform_width,
+                                    outline=GrayScale(220)
                                     )
 
             # rotating spokes
@@ -281,7 +295,7 @@ def rolling_circle_animation(root,
 
             # drawing vertical platform lines
             for line_pos in range(int(line_xpos), int(px_pos), -line_step):
-                canvas.create_line(line_pos, py_pos, line_pos, py_pos + platform_thickness)
+                canvas.create_line(line_pos, py_pos, line_pos, py_pos + platform_thickness, fill=GrayScale(220))
 
             # refreshing the canvas with all components drawn
             canvas.update()

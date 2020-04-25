@@ -1,7 +1,7 @@
 # consolidate functions into one file
 
 # imports
-from function_repo.f_other import PlaceHolder, CreateToolTip, CreateTkImage, dtr, rtf, ftr, atl, ttl
+from function_repo.f_other import PlaceHolder, GrayScale, CreateToolTip, CreateTkImage, dtr, rtf, ftr, atl
 
 from function_repo.f_calculations import Moment_Inertia, Angular_Momentum, Linear_Momentum, \
     Rotational_Kinetic_Energy, Linear_Kinetic_Energy, TKE

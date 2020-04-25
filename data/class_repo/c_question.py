@@ -7,7 +7,11 @@ from Tkinter import BooleanVar, IntVar, StringVar, \
 
 from tkMessageBox import showinfo, showerror
 
-from data.myvariables import dev, MyFont, colors, color_green, color_red
+from data.myclasses import MyButton
+
+from data.myfunctions import GrayScale
+
+from data.myvariables import dev, MyFont, MyFontB, MyFontLB, MyFontXLB, color_green, color_red
 
 
 class MyQuestion(object):
@@ -38,8 +42,8 @@ class MyQuestion(object):
             self.ans_input.set(self.ans)
 
         # questionwide bgcolor, fgcolor
-        self.bgcolor = colors[3]
-        self.fgcolor = colors[4]
+        self.bgcolor = GrayScale(80)
+        self.fgcolor = GrayScale(20)
 
         # creating parent frame
         self.parent_frame()
@@ -84,7 +88,7 @@ class MyQuestion(object):
         # creating title label for question frame
         self.tl = Label(self.qf)
         self.tl.configure(text=self.qtext)
-        self.tl.configure(font=MyFont)
+        self.tl.configure(font=MyFontXLB)
         self.tl.configure(bg=self.bgcolor, fg=self.fgcolor)
         self.tl.configure(relief=FLAT)
         self.tl.configure(padx=2, pady=2, anchor=N)
@@ -94,7 +98,7 @@ class MyQuestion(object):
         # creating radiobuttion1 for question frame
         self.q1 = Radiobutton(self.qf)
         self.q1.configure(text='A. ' + self.text1)
-        self.q1.configure(font=MyFont)
+        self.q1.configure(font=MyFontLB)
         self.q1.configure(bg=self.bgcolor, activebackground=self.bgcolor)
         self.q1.configure(variable=self.ans_input, value=1)
         self.q1.place(relx=0.10, rely=0.20)
@@ -103,7 +107,7 @@ class MyQuestion(object):
         # creating radiobutton2 for question frame
         self.q2 = Radiobutton(self.qf)
         self.q2.configure(text='B. ' + self.text2)
-        self.q2.configure(font=MyFont)
+        self.q2.configure(font=MyFontLB)
         self.q2.configure(bg=self.bgcolor, activebackground=self.bgcolor)
         self.q2.configure(variable=self.ans_input, value=2)
         self.q2.place(relx=0.10, rely=0.35)
@@ -112,7 +116,7 @@ class MyQuestion(object):
         # creating radiobutton3 for question frame
         self.q3 = Radiobutton(self.qf)
         self.q3.configure(text='C. ' + self.text3)
-        self.q3.configure(font=MyFont)
+        self.q3.configure(font=MyFontLB)
         self.q3.configure(bg=self.bgcolor, activebackground=self.bgcolor)
         self.q3.configure(variable=self.ans_input, value=3)
         self.q3.place(relx=0.10, rely=0.50)
@@ -121,27 +125,21 @@ class MyQuestion(object):
         # creating radiobutton4 for question frame
         self.q4 = Radiobutton(self.qf)
         self.q4.configure(text='D. ' + self.text4)
-        self.q4.configure(font=MyFont)
+        self.q4.configure(font=MyFontLB)
         self.q4.configure(bg=self.bgcolor, activebackground=self.bgcolor)
         self.q4.configure(variable=self.ans_input, value=4)
         self.q4.place(relx=0.10, rely=0.65)
 
     def check_ans_button(self):
         # creating check answer button for question frame
-        self.cb = Button(self.qf)
-        self.cb.configure(text='Check Answer', command=self.check_ans)
-        self.cb.configure(font=MyFont)
-        self.cb.configure(bg=colors[1], fg=colors[4])
-        self.cb.configure(activebackground=self.bgcolor, activeforeground=self.fgcolor)
-        self.cb.configure(relief=RIDGE, highlightthickness=0, bd=0)
-        self.cb.place(relx=0.80, rely=0.85, relwidth=0.10, relheight=0.05)
+        self.cb = MyButton(self.qf, 'Check Answer', self.check_ans, 0.80, 0.85)
 
     def is_correct_label(self):
         # creating is_correct_label for explanation frame
         self.cl = Label(self.ef)
         self.cl.configure(text=self.is_correct_text.get())
-        self.cl.configure(font=MyFont)
-        self.cl.configure(bg=self.efbg.get(), fg=self.fgcolor)
+        self.cl.configure(font=MyFontXLB)
+        self.cl.configure(bg=self.efbg.get(), fg=GrayScale(30))
         self.cl.configure(relief=FLAT)
         self.cl.configure(padx=2, pady=2, anchor=N)
         self.cl.place(relx=0.05, rely=0.05, relwidth=0.90, relheight=0.05)
@@ -150,31 +148,19 @@ class MyQuestion(object):
         # creating exp_label for explanation frame
         self.el = Label(self.ef)
         self.el.configure(text=self.exp_text.get())
-        self.el.configure(font=MyFont)
-        self.el.configure(bg=self.efbg.get(), fg=self.fgcolor)
+        self.el.configure(font=MyFontXLB)
+        self.el.configure(bg=self.efbg.get(), fg=GrayScale(30))
         self.el.configure(relief=FLAT)
         self.el.configure(padx=2, pady=2, anchor=N)
         self.el.place(relx=0.05, rely=0.10, relwidth=0.90, relheight=0.85)
 
     def next_ques_button(self):
         # creating next question button for explanation frame
-        self.nq = Button(self.ef)
-        self.nq.configure(text='Next Question', command=self.next_ques)
-        self.nq.configure(font=MyFont)
-        self.nq.configure(bg=colors[1], fg=colors[4])
-        self.nq.configure(activebackground=self.bgcolor, activeforeground=self.fgcolor)
-        self.nq.configure(relief=RIDGE, highlightthickness=0, bd=0)
-        self.nq.place(relx=0.80, rely=0.85, relwidth=0.10, relheight=0.05)
+        self.nq = MyButton(self.ef, 'Next Question', self.next_ques, 0.80, 0.85)
 
     def disp_ans_button(self):
         # creating display answer button for explanation frame
-        self.da = Button(self.ef)
-        self.da.configure(text='Show Answer', command=self.disp_ans)
-        self.da.configure(font=MyFont)
-        self.da.configure(bg=colors[1], fg=colors[4])
-        self.da.configure(activebackground=self.bgcolor, activeforeground=self.fgcolor)
-        self.da.configure(relief=RIDGE, highlightthickness=0, bd=0)
-        self.da.place(relx=0.65, rely=0.85, relwidth=0.10, relheight=0.05)
+        self.da = MyButton(self.ef, 'Show Answer', self.disp_ans, 0.65, 0.85)
 
     def assign_all(self):
         # assigning correct answer text (ans_text) and explanation attributes (ans_exp)

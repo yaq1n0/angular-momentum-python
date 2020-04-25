@@ -5,9 +5,10 @@ from Tkinter import \
     Toplevel, Frame, Canvas, Label, Button, Scale, Entry, \
     LEFT, HORIZONTAL, FLAT, RIDGE, SOLID, StringVar, N
 
+from data.myfunctions import GrayScale
+
 from data.myvariables import \
-    MyFont, colors, fbg, ffg, \
-    canvas_relx, canvas_rely, canvas_width, canvas_height, \
+    MyFont, MyFontB, canvas_relx, canvas_rely, canvas_width, canvas_height, \
     scale_relwidth, scale_relheight
 
 
@@ -35,7 +36,7 @@ class ToolTip(object):
         label = Label(tw, text=self.text)
         label.configure(justify=LEFT)
         label.configure(relief=SOLID, bd=1)
-        label.configure(bg=colors[0], fg=colors[4], font=MyFont)
+        label.configure(bg=GrayScale(60), fg=GrayScale(220), font=MyFont)
         label.pack(ipadx=1)
 
     # hidetip method for ToolTip class
@@ -51,17 +52,31 @@ class ToolTip(object):
 # Creating MyButton
 class MyButton(object):
     def __init__(self, parent, text, command, relx, rely):
-        bgcolor = colors[2]
-        fgcolor = colors[0]
+        bgcolor = GrayScale(40)
+        fgcolor = GrayScale(220)
 
         relwidth = 0.10
         relheight = 0.05
 
         self.button = Button(parent)
         self.button.configure(text=text, command=command)
-        self.button.configure(font=MyFont)
+        self.button.configure(font=MyFontB)
         self.button.configure(bg=bgcolor, fg=fgcolor)
         self.button.configure(activebackground=bgcolor, activeforeground=fgcolor)
+        self.button.configure(relief=RIDGE, highlightthickness=0, bd=0)
+        self.button.place(relx=relx, rely=rely, relwidth=relwidth, relheight=relheight)
+
+
+# Creating MyImageButton
+class MyImageButton(object):
+    def __init__(self, parent, img, command, relx, rely):
+        relwidth = 0.05 / (16.0 / 9.0)
+        relheight = 0.05
+
+        self.button = Button(parent)
+        self.button.configure(image=img)
+        self.button.image = img
+        self.button.configure(command=command)
         self.button.configure(relief=RIDGE, highlightthickness=0, bd=0)
         self.button.place(relx=relx, rely=rely, relwidth=relwidth, relheight=relheight)
 
@@ -69,7 +84,7 @@ class MyButton(object):
 # Creating MyCanvas
 class MyCanvas(object):
     def __init__(self, parent):
-        bgcolor = fbg
+        bgcolor = GrayScale(20)
 
         abswidth = canvas_width
         absheight = canvas_height
@@ -89,8 +104,8 @@ class MyEntry(object):
     def __init__(self, parent, text, relx, rely):
         charwidth = 20
 
-        bgcolor = fbg
-        fgcolor = ffg
+        bgcolor = GrayScale(20)
+        fgcolor = GrayScale(220)
 
         self.entry = Entry(parent)
         self.entry.configure(width=charwidth)
@@ -135,8 +150,8 @@ class MyFrameWBP(object):
 # Creating MyLabel
 class MyLabel(object):
     def __init__(self, parent, text, relx, rely):
-        bgcolor = fbg
-        fgcolor = ffg
+        bgcolor = GrayScale(20)
+        fgcolor = GrayScale(220)
 
         self.label = Label(parent)
         self.label.configure(text=text)
@@ -160,8 +175,8 @@ class MyScale(object):
         self.l_val = StringVar()
 
         # setting variables
-        bgcolor = fbg
-        fgcolor = ffg
+        bgcolor = GrayScale(20)
+        fgcolor = GrayScale(220)
 
         lowrange = 1.0
         highrange = 100.0
