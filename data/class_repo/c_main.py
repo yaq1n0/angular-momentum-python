@@ -1,30 +1,26 @@
 # main component class
+# -*- encoding: utf-8 -*-
 
 # imports
 from Tkinter import END
-
-from data.myclasses import MyFrame, MyFrameWBP, MyCanvas, MyLabel, MyScale, MyEntry, MyButton, MyImageButton
-
-from data.myfunctions import \
-    atl, Moment_Inertia, Angular_Momentum, Linear_Momentum, CreateToolTip, \
+from data.myvariables import dev, tooltips, MyFonts, \
+    frame_bottom_pad1, fb_rely_primary, fb_rely_secondary, \
+    canvas_width, canvas_height, particle_constant, circle_constant, \
+    start_geometry, start_width, start_height, main_geometry, main_width, main_height
+from data.myfunctions import CreateToolTip, CreateTkImage, GrayScale, atl, \
+    Moment_Inertia, Angular_Momentum, Linear_Momentum, \
     Rotational_Kinetic_Energy, Linear_Kinetic_Energy, TKE, \
-    orbiting_particle_animation, rotating_circle_animation, rolling_circle_animation, \
-    GrayScale, CreateTkImage
-
-from data.myvariables import \
-    dev, tooltips, frame_bottom_pad1, frame_bottom_pad2, \
-    fb_rely_primary, fb_rely_secondary, canvas_width, canvas_height, \
-    particle_constant, circle_constant, \
-    start_geometry, main_geometry, MyFontL, MyFontLB, MyFontXLB, \
-    main_width, main_height, start_width, start_height
+    orbiting_particle_animation, rotating_circle_animation, rolling_circle_animation
+from data.myclasses import MyFrame, MyFrameWBP, MyOutputFrame, MyCanvas, MyLabel, MyScale, MyOutputEntry, \
+    MyButton, MyImageButton, MyCycleButton
 
 
 class MyMainFrame(object):
-    def __init__(self, parent):
+    def __init__(self, root):
         # assigning parameters to attributes
-        self.parent = parent
+        self.parent = root
 
-        # creating first run variables
+        # creating first fun variables
         self.fr0 = True
         self.fr1 = True
         self.fr2 = True
@@ -36,10 +32,19 @@ class MyMainFrame(object):
         self.fr8 = True
         self.fr9 = True
 
+        # creating defaults
+        self.defaults()
+
+    def defaults(self):
         # creating frames, navigation buttons and animation frame
         self.create_frames()
         self.create_nav()
         self.create_animation_frame()
+
+        # creating frame1, frame2, frame3 objects
+        self.create_frame1()
+        self.create_frame2()
+        self.create_frame3()
 
         # select frames (main_pf1, frame1, frame1a)
         self.flip_main_pf1()
@@ -55,44 +60,44 @@ class MyMainFrame(object):
         self.frame1 = MyFrameWBP(self.main_bf.frame, GrayScale(20), frame_bottom_pad1)
         self.frame2 = MyFrameWBP(self.main_bf.frame, GrayScale(20), frame_bottom_pad1)
         self.frame3 = MyFrameWBP(self.main_bf.frame, GrayScale(20), frame_bottom_pad1)
-        self.frame1a = MyFrameWBP(self.frame1.frame, GrayScale(20), frame_bottom_pad2)
-        self.frame1b = MyFrameWBP(self.frame1.frame, GrayScale(20), frame_bottom_pad2)
-        self.frame1c = MyFrameWBP(self.frame1.frame, GrayScale(20), frame_bottom_pad2)
-        self.frame2a = MyFrameWBP(self.frame2.frame, GrayScale(20), frame_bottom_pad2)
-        self.frame2b = MyFrameWBP(self.frame2.frame, GrayScale(20), frame_bottom_pad2)
-        self.frame2c = MyFrameWBP(self.frame2.frame, GrayScale(20), frame_bottom_pad2)
-        self.frame3a = MyFrameWBP(self.frame3.frame, GrayScale(20), frame_bottom_pad2)
-        self.frame3b = MyFrameWBP(self.frame3.frame, GrayScale(20), frame_bottom_pad2)
-        self.frame3c = MyFrameWBP(self.frame3.frame, GrayScale(20), frame_bottom_pad2)
+        self.frame1a = MyOutputFrame(self.frame1.frame, GrayScale(20))
+        self.frame1b = MyOutputFrame(self.frame1.frame, GrayScale(20))
+        self.frame1c = MyOutputFrame(self.frame1.frame, GrayScale(20))
+        self.frame2a = MyOutputFrame(self.frame2.frame, GrayScale(20))
+        self.frame2b = MyOutputFrame(self.frame2.frame, GrayScale(20))
+        self.frame2c = MyOutputFrame(self.frame2.frame, GrayScale(20))
+        self.frame3a = MyOutputFrame(self.frame3.frame, GrayScale(20))
+        self.frame3b = MyOutputFrame(self.frame3.frame, GrayScale(20))
+        self.frame3c = MyOutputFrame(self.frame3.frame, GrayScale(20))
 
     def create_nav(self):
         if dev:
             print '[main] navigation buttons created'
 
-        self.enter_as = MyImageButton(self.main_pf1.frame, CreateTkImage('data/images/settings.png', 64, 64),
-                                      self.flip_main_pf2, 0.05, fb_rely_primary)
-        self.exit_as = MyImageButton(self.main_pf2.frame, CreateTkImage('data/images/back.png', 64, 64),
-                                     self.flip_main_pf1, 0.175, 0.85)
+        self.enter_as = MyImageButton(self.main_pf1.frame, GrayScale(20),
+                                      CreateTkImage('data/images/settings.png', 32, 32),
+                                      self.flip_main_pf2, 0.05, fb_rely_primary
+                                      )
+
+        self.exit_as = MyImageButton(self.main_pf2.frame, GrayScale(20),
+                                     CreateTkImage('data/images/back.png', 32, 32),
+                                     self.flip_main_pf1, 0.175, 0.85
+                                     )
+
         self.exit_as.button.place(relwidth=0.125, relheight=0.0625)
-        self.fb1 = MyButton(self.main_pf1.frame, 'Orbiting Particle', self.flip_frame1, 0.55, fb_rely_primary)
-        self.fb2 = MyButton(self.main_pf1.frame, 'Rotating Circle', self.flip_frame2, 0.70, fb_rely_primary)
-        self.fb3 = MyButton(self.main_pf1.frame, 'Rolling Circle', self.flip_frame3, 0.85, fb_rely_primary)
-        self.fb1a = MyButton(self.frame1.frame, 'Basic', self.flip_frame1a, 0.55, fb_rely_secondary)
-        self.fb1b = MyButton(self.frame1.frame, 'Momentum', self.flip_frame1b, 0.70, fb_rely_secondary)
-        self.fb1c = MyButton(self.frame1.frame, 'Energy', self.flip_frame1c, 0.85, fb_rely_secondary)
-        self.fb2a = MyButton(self.frame2.frame, 'Basic', self.flip_frame2a, 0.55, fb_rely_secondary)
-        self.fb2b = MyButton(self.frame2.frame, 'Momentum', self.flip_frame2b, 0.70, fb_rely_secondary)
-        self.fb2c = MyButton(self.frame2.frame, 'Energy', self.flip_frame2c, 0.85, fb_rely_secondary)
-        self.fb3a = MyButton(self.frame3.frame, 'Basic', self.flip_frame3a, 0.55, fb_rely_secondary)
-        self.fb3b = MyButton(self.frame3.frame, 'Momentum', self.flip_frame3b, 0.70, fb_rely_secondary)
-        self.fb3c = MyButton(self.frame3.frame, 'Energy', self.flip_frame3c, 0.85, fb_rely_secondary)
+
+        self.frame_cycle = MyCycleButton(self.main_pf1.frame,
+                                         ['Orbiting Particle', 'Rotating Circle', 'Rolling Circle'],
+                                         [self.frame1.frame, self.frame2.frame, self.frame3.frame],
+                                         0.85, fb_rely_primary
+                                         )
 
     def create_animation_frame(self):
         if dev:
             print '[main] animation frame objects created'
 
         self.main_pf2_title = MyLabel(self.main_pf2.frame, 'Animation Settings', 0.175, 0.125)
-        self.main_pf2_title.label.configure(bg=GrayScale(20), font=MyFontLB)
+        self.main_pf2_title.label.configure(bg=GrayScale(20), font=MyFonts['LargeBold'])
         self.main_pf2_title.label.place(relwidth=0.65)
 
         self.time_factor_scale = MyScale(self.main_pf2.frame, 'Time Factor', 0.175, 0.25)
@@ -103,9 +108,9 @@ class MyMainFrame(object):
         self.len_mult_scale.scale.configure(from_=1, to=100, resolution=1, bg=GrayScale(20))
         self.granularity_scale.scale.configure(from_=5, to=90, resolution=5, bg=GrayScale(20))
 
-        self.time_factor_scale.label.configure(bg=GrayScale(20), font=MyFontL)
-        self.len_mult_scale.label.configure(bg=GrayScale(20), font=MyFontL)
-        self.granularity_scale.label.configure(bg=GrayScale(20), font=MyFontL)
+        self.time_factor_scale.label.configure(bg=GrayScale(20), font=MyFonts['Large'])
+        self.len_mult_scale.label.configure(bg=GrayScale(20), font=MyFonts['Large'])
+        self.granularity_scale.label.configure(bg=GrayScale(20), font=MyFonts['Large'])
 
         self.time_factor_scale.scale.place(relwidth=0.65)
         self.len_mult_scale.scale.place(relwidth=0.65)
@@ -131,207 +136,220 @@ class MyMainFrame(object):
             CreateToolTip(self.granularity_scale.label,
                           'Drag slider to adjust animation smoothness\nhigher value is smoother')
 
-    def create_frame1a(self):
+    def create_frame1(self):
         if dev:
-            print '[main] frame1a objects created'
+            print '[main] frame1 objects created'
 
-        self.main_label_1a = MyLabel(self.frame1a.frame, 'Orbiting Particle Basics', 0.05, 0.05)
-        self.main_label_1a.label.configure(font=MyFontXLB)
-        self.main_label_1a.label.place(relwidth=0.90)
-        self.calculate_button_1a = MyButton(self.frame1a.frame, 'Calculate', self.calculate_1a, 0.70, 0.90)
-        self.animate_button_1a = MyButton(self.frame1a.frame, 'Animate', self.animate_1a, 0.85, 0.90)
-        self.frame1a_scale1 = MyScale(self.frame1a.frame, 'Radius (m)', 0.05, 0.20)
-        self.frame1a_scale2 = MyScale(self.frame1a.frame, 'Mass (kg)', 0.05, 0.35)
-        self.frame1a_scale3 = MyScale(self.frame1a.frame, 'Angular Velocity (rad/s)', 0.05, 0.50)
-        self.frame1a_entry1 = MyEntry(self.frame1a.frame, 'Moment of Inertia (kgm^2)', 0.85, 0.20)
-        self.frame1a_canvas1 = MyCanvas(self.frame1a.frame)
+        self.main_label_1 = MyLabel(self.frame1.frame, 'Orbiting Particle', 0.40, 0.05)
+        self.main_label_1.label.configure(font=MyFonts['ExtraLargeBold'])
+        self.main_label_1.label.place(relwidth=0.20)
+
+        self.frame1_scale1 = MyScale(self.frame1.frame, 'Radius (m)', 0.05, 0.20)
+        self.frame1_scale2 = MyScale(self.frame1.frame, 'Mass (kg)', 0.05, 0.35)
+        self.frame1_scale3 = MyScale(self.frame1.frame, 'Angular Velocity (rad/s)', 0.05, 0.50)
+
+        self.animate_button_1 = MyButton(self.frame1.frame, 'Animate', self.animate1, 0.05, fb_rely_secondary)
+        self.frame1_canvas = MyCanvas(self.frame1.frame)
+        self.frame1_cycle = MyCycleButton(self.frame1.frame,
+                                          ['Basic', 'Momentum', 'Energy'],
+                                          [self.frame1a.frame, self.frame1b.frame, self.frame1c.frame],
+                                          0.85, fb_rely_secondary
+                                          )
 
         if tooltips:
-            CreateToolTip(self.frame1a_scale1.label, 'Drag slider to adjust radius')
-            CreateToolTip(self.frame1a_scale2.label, 'Drag slider to adjust mass')
-            CreateToolTip(self.frame1a_scale3.label, 'Drag slider to adjust angular velocity')
+            CreateToolTip(self.frame1_scale1.label, 'Drag slider to adjust radius')
+            CreateToolTip(self.frame1_scale2.label, 'Drag slider to adjust mass')
+            CreateToolTip(self.frame1_scale3.label, 'Drag slider to adjust angular velocity')
+
+        self.create_frame1a()
+        self.create_frame1b()
+        self.create_frame1c()
+
+        self.frame1a.frame.tkraise()
+
+    def create_frame2(self):
+        if dev:
+            print '[main] frame2 objects created'
+
+        self.main_label_2 = MyLabel(self.frame2.frame, 'Rotating Circle', 0.40, 0.05)
+        self.main_label_2.label.configure(font=MyFonts['ExtraLargeBold'])
+        self.main_label_2.label.place(relwidth=0.20)
+
+        self.frame2_scale1 = MyScale(self.frame2.frame, 'Radius (m)', 0.05, 0.20)
+        self.frame2_scale2 = MyScale(self.frame2.frame, 'Mass (kg)', 0.05, 0.35)
+        self.frame2_scale3 = MyScale(self.frame2.frame, 'Angular Velocity (rad/s)', 0.05, 0.50)
+
+        self.animate_button_2 = MyButton(self.frame2.frame, 'Animate', self.animate2, 0.05, fb_rely_secondary)
+        self.frame2_canvas = MyCanvas(self.frame2.frame)
+        self.frame2_cycle = MyCycleButton(self.frame2.frame,
+                                          ['Basic', 'Momentum', 'Energy'],
+                                          [self.frame2a.frame, self.frame2b.frame, self.frame2c.frame],
+                                          0.85, fb_rely_secondary
+                                          )
+
+        if tooltips:
+            CreateToolTip(self.frame2_scale1.label, 'Drag slider to adjust radius')
+            CreateToolTip(self.frame2_scale2.label, 'Drag slider to adjust mass')
+            CreateToolTip(self.frame2_scale3.label, 'Drag slider to adjust angular velocity')
+
+        self.create_frame2a()
+        self.create_frame2b()
+        self.create_frame2c()
+
+        self.frame2a.frame.tkraise()
+
+    def create_frame3(self):
+        if dev:
+            print '[main] frame3 objects created'
+
+        self.main_label_3 = MyLabel(self.frame3.frame, 'Rolling Circle', 0.40, 0.05)
+        self.main_label_3.label.configure(font=MyFonts['ExtraLargeBold'])
+        self.main_label_3.label.place(relwidth=0.20)
+
+        self.frame3_scale1 = MyScale(self.frame3.frame, 'Radius (m)', 0.05, 0.20)
+        self.frame3_scale2 = MyScale(self.frame3.frame, 'Mass (kg)', 0.05, 0.35)
+        self.frame3_scale3 = MyScale(self.frame3.frame, 'Angular Velocity (rad/s)', 0.05, 0.50)
+
+        self.animate_button_3 = MyButton(self.frame3.frame, 'Animate', self.animate3, 0.05, fb_rely_secondary)
+        self.frame3_canvas = MyCanvas(self.frame3.frame)
+        self.frame3_cycle = MyCycleButton(self.frame3.frame,
+                                          ['Basic', 'Momentum', 'Energy'],
+                                          [self.frame3a.frame, self.frame3b.frame, self.frame3c.frame],
+                                          0.85, fb_rely_secondary
+                                          )
+
+        if tooltips:
+            CreateToolTip(self.frame3_scale1.label, 'Drag slider to adjust radius')
+            CreateToolTip(self.frame3_scale2.label, 'Drag slider to adjust mass')
+            CreateToolTip(self.frame3_scale3.label, 'Drag slider to adjust angular velocity')
+
+        self.create_frame3a()
+        self.create_frame3b()
+        self.create_frame3c()
+
+        self.frame3a.frame.tkraise()
+
+    def create_frame1a(self):
+        self.frame1a_entry1 = MyOutputEntry(self.frame1a.frame, 'Moment of Inertia (kgm^2)', 0.20, 0.25)
+
+        self.calculate_button_1a = MyImageButton(self.frame1a.frame, GrayScale(20),
+                                                 CreateTkImage('data/images/calculator.png', 48, 48),
+                                                 self.calculate_1a, 0.75, 0.25)
+        self.calculate_button_1a.button.configure(bg=GrayScale(20), activebackground=GrayScale(20))
+        self.calculate_button_1a.button.place(relwidth=0.10, relheight=0.10)
+
+        if tooltips:
             CreateToolTip(self.frame1a_entry1.label, 'I = MR^2')
 
     def create_frame1b(self):
-        if dev:
-            print '[main] frame1b objects created'
+        self.frame1b_entry1 = MyOutputEntry(self.frame1b.frame, 'Moment of Inertia (kgm^2)', 0.20, 0.25)
+        self.frame1b_entry2 = MyOutputEntry(self.frame1b.frame, 'Angular Momentum (kgm^2/s)', 0.20, 0.40)
 
-        self.main_label_1b = MyLabel(self.frame1b.frame, 'Orbiting Particle Momentum', 0.05, 0.05)
-        self.main_label_1b.label.configure(font=MyFontXLB)
-        self.main_label_1b.label.place(relwidth=0.90)
-        self.calculate_button_1b = MyButton(self.frame1b.frame, 'Calculate', self.calculate_1b, 0.70, 0.90)
-        self.animate_button_1b = MyButton(self.frame1b.frame, 'Animate', self.animate_1b, 0.85, 0.90)
-        self.frame1b_scale1 = MyScale(self.frame1b.frame, 'Radius (m)', 0.05, 0.20)
-        self.frame1b_scale2 = MyScale(self.frame1b.frame, 'Mass (kg)', 0.05, 0.35)
-        self.frame1b_scale3 = MyScale(self.frame1b.frame, 'Angular Velocity (rad/s)', 0.05, 0.50)
-        self.frame1b_entry1 = MyEntry(self.frame1b.frame, 'Moment of Inertia (kgm^2)', 0.85, 0.20)
-        self.frame1b_entry2 = MyEntry(self.frame1b.frame, 'Angular Momentum (kgm^2/s)', 0.85, 0.35)
-        self.frame1b_canvas1 = MyCanvas(self.frame1b.frame)
+        self.calculate_button_1b = MyImageButton(self.frame1b.frame, GrayScale(20),
+                                                 CreateTkImage('data/images/calculator.png', 48, 48),
+                                                 self.calculate_1b, 0.75, 0.25)
+        self.calculate_button_1b.button.configure(bg=GrayScale(20), activebackground=GrayScale(20))
+        self.calculate_button_1b.button.place(relwidth=0.10, relheight=0.10)
 
         if tooltips:
-            CreateToolTip(self.frame1b_scale1.label, 'Drag slider to adjust radius')
-            CreateToolTip(self.frame1b_scale2.label, 'Drag slider to adjust mass')
-            CreateToolTip(self.frame1b_scale3.label, 'Drag slider to adjust angular velocity')
             CreateToolTip(self.frame1b_entry1.label, 'I = MR^2')
             CreateToolTip(self.frame1b_entry2.label, 'L = Iw')
 
     def create_frame1c(self):
-        if dev:
-            print '[main] frame1c objects created'
+        self.frame1c_entry1 = MyOutputEntry(self.frame1c.frame, 'Moment of Inertia (kgm^2)', 0.20, 0.25)
+        self.frame1c_entry2 = MyOutputEntry(self.frame1c.frame, 'Rotational Kinetic Energy (J)', 0.20, 0.40)
 
-        self.main_label_1c = MyLabel(self.frame1c.frame, 'Orbiting Particle Energy', 0.05, 0.05)
-        self.main_label_1c.label.configure(font=MyFontXLB)
-        self.main_label_1c.label.place(relwidth=0.90)
-        self.calculate_button_1c = MyButton(self.frame1c.frame, 'Calculate', self.calculate_1c, 0.70, 0.90)
-        self.animate_button_1c = MyButton(self.frame1c.frame, 'Animate', self.animate_1c, 0.85, 0.90)
-        self.frame1c_scale1 = MyScale(self.frame1c.frame, 'Radius (m)', 0.05, 0.20)
-        self.frame1c_scale2 = MyScale(self.frame1c.frame, 'Mass (kg)', 0.05, 0.35)
-        self.frame1c_scale3 = MyScale(self.frame1c.frame, 'Angular Velocity (rad/s)', 0.05, 0.50)
-        self.frame1c_entry1 = MyEntry(self.frame1c.frame, 'Moment of Inertia (kgm^2)', 0.85, 0.20)
-        self.frame1c_entry2 = MyEntry(self.frame1c.frame, 'Rotational Kinetic Energy (J)', 0.85, 0.35)
-        self.frame1c_canvas1 = MyCanvas(self.frame1c.frame)
+        self.calculate_button_1c = MyImageButton(self.frame1c.frame, GrayScale(20),
+                                                 CreateTkImage('data/images/calculator.png', 48, 48),
+                                                 self.calculate_1c, 0.75, 0.25)
+        self.calculate_button_1c.button.configure(bg=GrayScale(20), activebackground=GrayScale(20))
+        self.calculate_button_1c.button.place(relwidth=0.10, relheight=0.10)
 
         if tooltips:
-            CreateToolTip(self.frame1c_scale1.label, 'Drag slider to adjust radius')
-            CreateToolTip(self.frame1c_scale2.label, 'Drag slider to adjust mass')
-            CreateToolTip(self.frame1c_scale3.label, 'Drag slider to adjust angular velocity')
             CreateToolTip(self.frame1c_entry1.label, 'I = MR^2')
             CreateToolTip(self.frame1c_entry2.label, 'RKE = (1/2) Iw^2')
 
     def create_frame2a(self):
-        if dev:
-            print '[main] frame2a objects created'
+        self.frame2a_entry1 = MyOutputEntry(self.frame2a.frame, 'Moment of Inertia (kgm^2)', 0.20, 0.25)
 
-        self.main_label_2a = MyLabel(self.frame2a.frame, 'Rotating Circle Basics', 0.05, 0.05)
-        self.main_label_2a.label.configure(font=MyFontXLB)
-        self.main_label_2a.label.place(relwidth=0.90)
-        self.calculate_button_2a = MyButton(self.frame2a.frame, 'Calculate', self.calculate_2a, 0.70, 0.90)
-        self.animate_button_2a = MyButton(self.frame2a.frame, 'Animate', self.animate_2a, 0.85, 0.90)
-        self.frame2a_scale1 = MyScale(self.frame2a.frame, 'Radius (m)', 0.05, 0.20)
-        self.frame2a_scale2 = MyScale(self.frame2a.frame, 'Mass (kg)', 0.05, 0.35)
-        self.frame2a_scale3 = MyScale(self.frame2a.frame, 'Angular Velocity (rad/s)', 0.05, 0.50)
-        self.frame2a_entry1 = MyEntry(self.frame2a.frame, 'Moment of Inertia (kgm^2)', 0.85, 0.20)
-        self.frame2a_canvas1 = MyCanvas(self.frame2a.frame)
+        self.calculate_button_2a = MyImageButton(self.frame2a.frame, GrayScale(20),
+                                                 CreateTkImage('data/images/calculator.png', 48, 48),
+                                                 self.calculate_2a, 0.75, 0.25)
+        self.calculate_button_2a.button.configure(bg=GrayScale(20), activebackground=GrayScale(20))
+        self.calculate_button_2a.button.place(relwidth=0.10, relheight=0.10)
 
         if tooltips:
-            CreateToolTip(self.frame2a_scale1.label, 'Drag slider to adjust radius')
-            CreateToolTip(self.frame2a_scale2.label, 'Drag slider to adjust mass')
-            CreateToolTip(self.frame2a_scale3.label, 'Drag slider to adjust angular velocity')
             CreateToolTip(self.frame2a_entry1.label, 'I = (1/2) MR^2')
 
     def create_frame2b(self):
-        if dev:
-            print '[main] frame2b objects created'
+        self.frame2b_entry1 = MyOutputEntry(self.frame2b.frame, 'Moment of Inertia (kgm^2)', 0.20, 0.25)
+        self.frame2b_entry2 = MyOutputEntry(self.frame2b.frame, 'Angular Momentum (kgm^2/s)', 0.20, 0.40)
 
-        self.main_label_2b = MyLabel(self.frame2b.frame, 'Rotating Circle Momentum', 0.05, 0.05)
-        self.main_label_2b.label.configure(font=MyFontXLB)
-        self.main_label_2b.label.place(relwidth=0.90)
-        self.calculate_button_2b = MyButton(self.frame2b.frame, 'Calculate', self.calculate_2b, 0.70, 0.90)
-        self.animate_button_2b = MyButton(self.frame2b.frame, 'Animate', self.animate_2b, 0.85, 0.90)
-        self.frame2b_scale1 = MyScale(self.frame2b.frame, 'Radius (m)', 0.05, 0.20)
-        self.frame2b_scale2 = MyScale(self.frame2b.frame, 'Mass (kg)', 0.05, 0.35)
-        self.frame2b_scale3 = MyScale(self.frame2b.frame, 'Angular Velocity (rad/s)', 0.05, 0.50)
-        self.frame2b_entry1 = MyEntry(self.frame2b.frame, 'Moment of Inertia (kgm^2)', 0.85, 0.20)
-        self.frame2b_entry2 = MyEntry(self.frame2b.frame, 'Angular Momentum (kgm^2/s)', 0.85, 0.35)
-        self.frame2b_canvas1 = MyCanvas(self.frame2b.frame)
+        self.calculate_button_2b = MyImageButton(self.frame2b.frame, GrayScale(20),
+                                                 CreateTkImage('data/images/calculator.png', 48, 48),
+                                                 self.calculate_2b, 0.75, 0.25)
+        self.calculate_button_2b.button.configure(bg=GrayScale(20), activebackground=GrayScale(20))
+        self.calculate_button_2b.button.place(relwidth=0.10, relheight=0.10)
 
         if tooltips:
-            CreateToolTip(self.frame2b_scale1.label, 'Drag slider to adjust radius')
-            CreateToolTip(self.frame2b_scale2.label, 'Drag slider to adjust mass')
-            CreateToolTip(self.frame2b_scale3.label, 'Drag slider to adjust angular velocity')
             CreateToolTip(self.frame2b_entry1.label, 'I = (1/2) MR^2')
             CreateToolTip(self.frame2b_entry2.label, 'L = Iw')
 
     def create_frame2c(self):
-        if dev:
-            print '[main] frame2c objects created'
+        self.frame2c_entry1 = MyOutputEntry(self.frame2c.frame, 'Moment of Inertia (kgm^2)', 0.20, 0.25)
+        self.frame2c_entry2 = MyOutputEntry(self.frame2c.frame, 'Rotational Kinetic Energy (J)', 0.20, 0.40)
 
-        self.main_label_2c = MyLabel(self.frame2c.frame, 'Rotating Circle Energy', 0.05, 0.05)
-        self.main_label_2c.label.configure(font=MyFontXLB)
-        self.main_label_2c.label.place(relwidth=0.90)
-        self.calculate_button_2c = MyButton(self.frame2c.frame, 'Calculate', self.calculate_2c, 0.70, 0.90)
-        self.animate_button_2c = MyButton(self.frame2c.frame, 'Animate', self.animate_2c, 0.85, 0.90)
-        self.frame2c_scale1 = MyScale(self.frame2c.frame, 'Radius (m)', 0.05, 0.20)
-        self.frame2c_scale2 = MyScale(self.frame2c.frame, 'Mass (kg)', 0.05, 0.35)
-        self.frame2c_scale3 = MyScale(self.frame2c.frame, 'Angular Velocity (rad/s)', 0.05, 0.50)
-        self.frame2c_entry1 = MyEntry(self.frame2c.frame, 'Moment of Inertia (kgm^2)', 0.85, 0.20)
-        self.frame2c_entry2 = MyEntry(self.frame2c.frame, 'Rotational Kinetic Energy (J)', 0.85, 0.35)
-        self.frame2c_canvas1 = MyCanvas(self.frame2c.frame)
+        self.calculate_button_2c = MyImageButton(self.frame2c.frame, GrayScale(20),
+                                                 CreateTkImage('data/images/calculator.png', 48, 48),
+                                                 self.calculate_2c, 0.75, 0.25)
+        self.calculate_button_2c.button.configure(bg=GrayScale(20), activebackground=GrayScale(20))
+        self.calculate_button_2c.button.place(relwidth=0.10, relheight=0.10)
 
         if tooltips:
-            CreateToolTip(self.frame2c_scale1.label, 'Drag slider to adjust radius')
-            CreateToolTip(self.frame2c_scale2.label, 'Drag slider to adjust mass')
-            CreateToolTip(self.frame2c_scale3.label, 'Drag slider to adjust angular velocity')
             CreateToolTip(self.frame2c_entry1.label, 'I = (1/2) MR^2')
             CreateToolTip(self.frame2c_entry2.label, 'RKE = (1/2) Iw^2')
 
     def create_frame3a(self):
-        if dev:
-            print '[main] frame3a objects created'
+        self.frame3a_entry1 = MyOutputEntry(self.frame3a.frame, 'Moment of Inertia (kgm^2)', 0.20, 0.25)
 
-        self.main_label_3a = MyLabel(self.frame3a.frame, 'Rolling Circle Basics', 0.05, 0.05)
-        self.main_label_3a.label.configure(font=MyFontXLB)
-        self.main_label_3a.label.place(relwidth=0.90)
-        self.calculate_button_3a = MyButton(self.frame3a.frame, 'Calculate', self.calculate_3a, 0.70, 0.90)
-        self.animate_button_3a = MyButton(self.frame3a.frame, 'Animate', self.animate_3a, 0.85, 0.90)
-        self.frame3a_scale1 = MyScale(self.frame3a.frame, 'Radius (m)', 0.05, 0.20)
-        self.frame3a_scale2 = MyScale(self.frame3a.frame, 'Mass (kg)', 0.05, 0.35)
-        self.frame3a_scale3 = MyScale(self.frame3a.frame, 'Angular Velocity (rad/s)', 0.05, 0.50)
-        self.frame3a_entry1 = MyEntry(self.frame3a.frame, 'Moment of Inertia (kgm^2)', 0.85, 0.20)
-        self.frame3a_canvas1 = MyCanvas(self.frame3a.frame)
+        self.calculate_button_3a = MyImageButton(self.frame3a.frame, GrayScale(20),
+                                                 CreateTkImage('data/images/calculator.png', 48, 48),
+                                                 self.calculate_3a, 0.75, 0.25)
+        self.calculate_button_3a.button.configure(bg=GrayScale(20), activebackground=GrayScale(20))
+        self.calculate_button_3a.button.place(relwidth=0.10, relheight=0.10)
 
         if tooltips:
-            CreateToolTip(self.frame3a_scale1.label, 'Drag slider to adjust radius')
-            CreateToolTip(self.frame3a_scale2.label, 'Drag slider to adjust mass')
-            CreateToolTip(self.frame3a_scale3.label, 'Drag slider to adjust angular velocity')
             CreateToolTip(self.frame3a_entry1.label, 'I = (1/2) MR^2')
 
     def create_frame3b(self):
-        if dev:
-            print '[main] frame3b objects created'
+        self.frame3b_entry1 = MyOutputEntry(self.frame3b.frame, 'Moment of Inertia (kgm^2)', 0.20, 0.25)
+        self.frame3b_entry2 = MyOutputEntry(self.frame3b.frame, 'Angular Momentum (kgm^2/s)', 0.20, 0.40)
+        self.frame3b_entry3 = MyOutputEntry(self.frame3b.frame, 'Linear Momentum (kgm/s)', 0.20, 0.55)
 
-        self.main_label_3b = MyLabel(self.frame3b.frame, 'Rolling Circle Momentum', 0.05, 0.05)
-        self.main_label_3b.label.configure(font=MyFontXLB)
-        self.main_label_3b.label.place(relwidth=0.90)
-        self.calculate_button_3b = MyButton(self.frame3b.frame, 'Calculate', self.calculate_3b, 0.70, 0.90)
-        self.animate_button_3b = MyButton(self.frame3b.frame, 'Animate', self.animate_3b, 0.85, 0.90)
-        self.frame3b_scale1 = MyScale(self.frame3b.frame, 'Radius (m)', 0.05, 0.20)
-        self.frame3b_scale2 = MyScale(self.frame3b.frame, 'Mass (kg)', 0.05, 0.35)
-        self.frame3b_scale3 = MyScale(self.frame3b.frame, 'Angular Velocity (rad/s)', 0.05, 0.50)
-        self.frame3b_entry1 = MyEntry(self.frame3b.frame, 'Moment of Inertia (kgm^2)', 0.85, 0.20)
-        self.frame3b_entry2 = MyEntry(self.frame3b.frame, 'Angular Momentum (kgm^2/s)', 0.85, 0.35)
-        self.frame3b_entry3 = MyEntry(self.frame3b.frame, 'Linear Momentum (kgm/s)', 0.85, 0.50)
-        self.frame3b_canvas1 = MyCanvas(self.frame3b.frame)
+        self.calculate_button_3b = MyImageButton(self.frame3b.frame, GrayScale(20),
+                                                 CreateTkImage('data/images/calculator.png', 48, 48),
+                                                 self.calculate_3b, 0.75, 0.25)
+        self.calculate_button_3b.button.configure(bg=GrayScale(20), activebackground=GrayScale(20))
+        self.calculate_button_3b.button.place(relwidth=0.10, relheight=0.10)
 
         if tooltips:
-            CreateToolTip(self.frame3b_scale1.label, 'Drag slider to adjust radius')
-            CreateToolTip(self.frame3b_scale2.label, 'Drag slider to adjust mass')
-            CreateToolTip(self.frame3b_scale3.label, 'Drag slider to adjust angular velocity')
+            CreateToolTip(self.frame3b_entry1.label, 'I = (1/2) MR^2')
             CreateToolTip(self.frame3b_entry2.label, 'L = Iw')
             CreateToolTip(self.frame3b_entry3.label, 'p = MV')
 
     def create_frame3c(self):
-        if dev:
-            print '[main] frame3c objects created'
+        self.frame3c_entry1 = MyOutputEntry(self.frame3c.frame, 'Moment of Inertia (kgm^2)', 0.20, 0.25)
+        self.frame3c_entry2 = MyOutputEntry(self.frame3c.frame, 'Rotational Kinetic Energy (J)', 0.20, 0.40)
+        self.frame3c_entry3 = MyOutputEntry(self.frame3c.frame, 'Linear Kinetic Energy (J)', 0.20, 0.55)
+        self.frame3c_entry4 = MyOutputEntry(self.frame3c.frame, 'Total Kinetic Energy (J)', 0.20, 0.70)
 
-        self.main_label_3c = MyLabel(self.frame3c.frame, 'Rolling Circle Energy', 0.05, 0.05)
-        self.main_label_3c.label.configure(font=MyFontXLB)
-        self.main_label_3c.label.place(relwidth=0.90)
-        self.calculate_button_3c = MyButton(self.frame3c.frame, 'Calculate', self.calculate_3c, 0.70, 0.90)
-        self.animate_button_3c = MyButton(self.frame3c.frame, 'Animate', self.animate_3c, 0.85, 0.90)
-        self.frame3c_scale1 = MyScale(self.frame3c.frame, 'Radius (m)', 0.05, 0.2)
-        self.frame3c_scale2 = MyScale(self.frame3c.frame, 'Mass (kg)', 0.05, 0.35)
-        self.frame3c_scale3 = MyScale(self.frame3c.frame, 'Angular Velocity (rad/s)', 0.05, 0.50)
-        self.frame3c_entry1 = MyEntry(self.frame3c.frame, 'Moment of Inertia (kgm^2)', 0.85, 0.20)
-        self.frame3c_entry2 = MyEntry(self.frame3c.frame, 'Rotational Kinetic Energy (J)', 0.85, 0.35)
-        self.frame3c_entry3 = MyEntry(self.frame3c.frame, 'Linear Kinetic Energy (J)', 0.85, 0.50)
-        self.frame3c_entry4 = MyEntry(self.frame3c.frame, 'Total Kinetic Energy (J)', 0.85, 0.65)
-        self.frame3c_canvas1 = MyCanvas(self.frame3c.frame)
+        self.calculate_button_3c = MyImageButton(self.frame3c.frame, GrayScale(20),
+                                                 CreateTkImage('data/images/calculator.png', 48, 48),
+                                                 self.calculate_3c, 0.75, 0.25)
+        self.calculate_button_3c.button.configure(bg=GrayScale(20), activebackground=GrayScale(20))
+        self.calculate_button_3c.button.place(relwidth=0.10, relheight=0.10)
 
         if tooltips:
-            CreateToolTip(self.frame3c_scale1.label, 'Drag slider to adjust radius')
-            CreateToolTip(self.frame3c_scale2.label, 'Drag slider to adjust mass')
-            CreateToolTip(self.frame3c_scale3.label, 'Drag slider to adjust angular velocity')
             CreateToolTip(self.frame3c_entry1.label, 'I = (1/2) MR^2')
             CreateToolTip(self.frame3c_entry2.label, 'RKE = (1/2) Iw^2')
             CreateToolTip(self.frame3c_entry3.label, 'LKE = (1/2) MV^2')
@@ -360,91 +378,28 @@ class MyMainFrame(object):
 
     def flip_frame1(self):
         self.frame1.frame.tkraise()
-        self.flip_frame1a()
+        self.frame1a.frame.tkraise()
 
     def flip_frame2(self):
         self.frame2.frame.tkraise()
-        self.flip_frame2a()
+        self.frame2a.frame.tkraise()
 
     def flip_frame3(self):
         self.frame3.frame.tkraise()
-        self.flip_frame3a()
-
-    def flip_frame1a(self):
-        if self.fr1:
-            self.create_frame1a()
-            self.fr1 = False
-
-        self.frame1a.frame.tkraise()
-
-    def flip_frame1b(self):
-        if self.fr2:
-            self.create_frame1b()
-            self.fr2 = False
-
-        self.frame1b.frame.tkraise()
-
-    def flip_frame1c(self):
-        if self.fr3:
-            self.create_frame1c()
-            self.fr3 = False
-
-        self.frame1c.frame.tkraise()
-
-    def flip_frame2a(self):
-        if self.fr4:
-            self.create_frame2a()
-            self.fr4 = False
-
-        self.frame2a.frame.tkraise()
-
-    def flip_frame2b(self):
-        if self.fr5:
-            self.create_frame2b()
-            self.fr5 = False
-
-        self.frame2b.frame.tkraise()
-
-    def flip_frame2c(self):
-        if self.fr6:
-            self.create_frame2c()
-            self.fr6 = False
-
-        self.frame2c.frame.tkraise()
-
-    def flip_frame3a(self):
-        if self.fr7:
-            self.create_frame3a()
-            self.fr7 = False
-
         self.frame3a.frame.tkraise()
 
-    def flip_frame3b(self):
-        if self.fr8:
-            self.create_frame3b()
-            self.fr8 = False
-
-        self.frame3b.frame.tkraise()
-
-    def flip_frame3c(self):
-        if self.fr9:
-            self.create_frame3c()
-            self.fr9 = False
-
-        self.frame3c.frame.tkraise()
-
     def calculate_1a(self):
-        var1 = self.frame1a_scale1.scale.get()
-        var2 = self.frame1a_scale2.scale.get()
+        var1 = self.frame1_scale1.scale.get()
+        var2 = self.frame1_scale2.scale.get()
         ans1 = Moment_Inertia(particle_constant, var1, var2)
         self.frame1a_entry1.entry.delete(0, END)
         self.frame1a_entry1.entry.insert(0, round(ans1, 2))
 
     # calculate 1b
     def calculate_1b(self):
-        var1 = self.frame1b_scale1.scale.get()
-        var2 = self.frame1b_scale2.scale.get()
-        var3 = self.frame1b_scale3.scale.get()
+        var1 = self.frame1_scale1.scale.get()
+        var2 = self.frame1_scale2.scale.get()
+        var3 = self.frame1_scale3.scale.get()
         ans1 = Moment_Inertia(particle_constant, var1, var2)
         ans2 = Angular_Momentum(ans1, var3)
         self.frame1b_entry1.entry.delete(0, END)
@@ -454,9 +409,9 @@ class MyMainFrame(object):
 
     # calculate 1c
     def calculate_1c(self):
-        var1 = self.frame1c_scale1.scale.get()
-        var2 = self.frame1c_scale2.scale.get()
-        var3 = self.frame1c_scale3.scale.get()
+        var1 = self.frame1_scale1.scale.get()
+        var2 = self.frame1_scale2.scale.get()
+        var3 = self.frame1_scale3.scale.get()
         ans1 = Moment_Inertia(particle_constant, var1, var2)
         ans2 = Rotational_Kinetic_Energy(ans1, var3)
         self.frame1c_entry1.entry.delete(0, END)
@@ -466,17 +421,17 @@ class MyMainFrame(object):
 
     # calculate 2a
     def calculate_2a(self):
-        var1 = self.frame2a_scale1.scale.get()
-        var2 = self.frame2a_scale2.scale.get()
+        var1 = self.frame2_scale1.scale.get()
+        var2 = self.frame2_scale2.scale.get()
         ans1 = Moment_Inertia(circle_constant, var1, var2)
         self.frame2a_entry1.entry.delete(0, END)
         self.frame2a_entry1.entry.insert(0, round(ans1, 2))
 
     # calculate 2b
     def calculate_2b(self):
-        var1 = self.frame2b_scale1.scale.get()
-        var2 = self.frame2b_scale2.scale.get()
-        var3 = self.frame2b_scale3.scale.get()
+        var1 = self.frame2_scale1.scale.get()
+        var2 = self.frame2_scale2.scale.get()
+        var3 = self.frame2_scale3.scale.get()
         ans1 = Moment_Inertia(circle_constant, var1, var2)
         ans2 = Angular_Momentum(ans1, var3)
         self.frame2b_entry1.entry.delete(0, END)
@@ -486,9 +441,9 @@ class MyMainFrame(object):
 
     # calculate 2c
     def calculate_2c(self):
-        var1 = self.frame2c_scale1.scale.get()
-        var2 = self.frame2c_scale2.scale.get()
-        var3 = self.frame2c_scale3.scale.get()
+        var1 = self.frame2_scale1.scale.get()
+        var2 = self.frame2_scale2.scale.get()
+        var3 = self.frame2_scale3.scale.get()
         ans1 = Moment_Inertia(circle_constant, var1, var2)
         ans2 = Rotational_Kinetic_Energy(ans1, var3)
         self.frame2c_entry1.entry.delete(0, END)
@@ -498,17 +453,17 @@ class MyMainFrame(object):
 
     # calculate 3a
     def calculate_3a(self):
-        var1 = self.frame3a_scale1.scale.get()
-        var2 = self.frame3a_scale2.scale.get()
+        var1 = self.frame3_scale1.scale.get()
+        var2 = self.frame3_scale2.scale.get()
         ans1 = Moment_Inertia(circle_constant, var1, var2)
         self.frame3a_entry1.entry.delete(0, END)
         self.frame3a_entry1.entry.insert(0, round(ans1, 2))
 
     # calculate 3b
     def calculate_3b(self):
-        var1 = self.frame3b_scale1.scale.get()
-        var2 = self.frame3b_scale2.scale.get()
-        var3 = self.frame3b_scale3.scale.get()
+        var1 = self.frame3_scale1.scale.get()
+        var2 = self.frame3_scale2.scale.get()
+        var3 = self.frame3_scale3.scale.get()
         var4 = atl(var3, var1)
         ans1 = Moment_Inertia(circle_constant, var1, var2)
         ans2 = Angular_Momentum(ans1, var3)
@@ -522,9 +477,9 @@ class MyMainFrame(object):
 
     # calculate 3c
     def calculate_3c(self):
-        var1 = self.frame3c_scale1.scale.get()
-        var2 = self.frame3c_scale2.scale.get()
-        var3 = self.frame3c_scale3.scale.get()
+        var1 = self.frame3_scale1.scale.get()
+        var2 = self.frame3_scale2.scale.get()
+        var3 = self.frame3_scale3.scale.get()
         var4 = atl(var3, var1)
         ans1 = Moment_Inertia(circle_constant, var1, var2)
         ans2 = Rotational_Kinetic_Energy(ans1, var3)
@@ -540,93 +495,35 @@ class MyMainFrame(object):
         self.frame3c_entry4.entry.insert(0, round(ans4, 2))
 
     # animate orbiting particle
-    def animate_orbiting_particle(self, canvas, radius, ang_vel):
+    def animate1(self):
         orbiting_particle_animation(self.parent,
-                                    canvas,
+                                    self.frame1_canvas.canvas,
                                     float(canvas_width) / 2.0,
                                     float(canvas_height) / 2.0,
-                                    float(radius.get()) * float(self.len_mult_scale.scale.get()),
-                                    float(ang_vel.get()) / float(self.time_factor_scale.scale.get()),
+                                    float(self.frame1_scale1.scale.get()) * float(self.len_mult_scale.scale.get()),
+                                    float(self.frame1_scale3.scale.get()) / float(self.time_factor_scale.scale.get()),
                                     self.granularity_scale.scale.get()
                                     )
 
-    # animate 1a
-    def animate_1a(self):
-        self.animate_orbiting_particle(self.frame1a_canvas1.canvas,
-                                       self.frame1a_scale1.scale,
-                                       self.frame1a_scale3.scale
-                                       )
-
-    # animate 1b
-    def animate_1b(self):
-        self.animate_orbiting_particle(self.frame1b_canvas1.canvas,
-                                       self.frame1b_scale1.scale,
-                                       self.frame1b_scale3.scale
-                                       )
-
-    # animate 1c
-    def animate_1c(self):
-        self.animate_orbiting_particle(self.frame1c_canvas1.canvas,
-                                       self.frame1c_scale1.scale,
-                                       self.frame1c_scale3.scale
-                                       )
-
     # animate rotating circle
-    def animate_rotating_circle(self, canvas, radius, ang_vel):
+    def animate2(self):
         rotating_circle_animation(self.parent,
-                                  canvas,
+                                  self.frame2_canvas.canvas,
                                   float(canvas_width) / 2.0,
                                   float(canvas_height) / 2.0,
-                                  float(radius.get()) * float(self.len_mult_scale.scale.get()),
-                                  float(ang_vel.get()) / float(self.time_factor_scale.scale.get()),
+                                  float(self.frame2_scale1.scale.get()) * float(self.len_mult_scale.scale.get()),
+                                  float(self.frame2_scale3.scale.get()) / float(
+                                      self.time_factor_scale.scale.get()),
                                   self.granularity_scale.scale.get()
                                   )
 
-    # animate 2a
-    def animate_2a(self):
-        self.animate_rotating_circle(self.frame2a_canvas1.canvas,
-                                     self.frame2a_scale1.scale,
-                                     self.frame2a_scale3.scale
-                                     )
-
-    # animate 2b
-    def animate_2b(self):
-        self.animate_rotating_circle(self.frame2b_canvas1.canvas,
-                                     self.frame2b_scale1.scale,
-                                     self.frame2b_scale3.scale
-                                     )
-
-    # animate 2c
-    def animate_2c(self):
-        self.animate_rotating_circle(self.frame2c_canvas1.canvas,
-                                     self.frame2c_scale1.scale,
-                                     self.frame2c_scale3.scale
-                                     )
-
-    def animate_rolling_circle(self, canvas, radius, ang_vel):
+    # animate rolling circle
+    def animate3(self):
         rolling_circle_animation(self.parent,
-                                 canvas,
+                                 self.frame3_canvas.canvas,
                                  float(canvas_width) / 2.0,
                                  float(canvas_height) / 2.0,
-                                 float(radius.get()) * float(self.len_mult_scale.scale.get()),
-                                 float(ang_vel.get()) / float(self.time_factor_scale.scale.get()),
+                                 float(self.frame3_scale1.scale.get()) * float(self.len_mult_scale.scale.get()),
+                                 float(self.frame3_scale3.scale.get()) / float(self.time_factor_scale.scale.get()),
                                  self.granularity_scale.scale.get()
                                  )
-
-    def animate_3a(self):
-        self.animate_rolling_circle(self.frame3a_canvas1.canvas,
-                                    self.frame3a_scale1.scale,
-                                    self.frame3a_scale3.scale
-                                    )
-
-    def animate_3b(self):
-        self.animate_rolling_circle(self.frame3b_canvas1.canvas,
-                                    self.frame3b_scale1.scale,
-                                    self.frame3b_scale3.scale
-                                    )
-
-    def animate_3c(self):
-        self.animate_rolling_circle(self.frame3c_canvas1.canvas,
-                                    self.frame3c_scale1.scale,
-                                    self.frame3c_scale3.scale
-                                    )

@@ -3,10 +3,9 @@
 
 # imports
 from random import shuffle
-
-from data.myclasses import MyFrame, MyLabel, MyButton, MyQuestion
+from data.myvariables import dev, MyFonts
 from data.myfunctions import GrayScale
-from data.myvariables import dev, MyFontL, MyFontLB
+from data.myclasses import MyFrame, MyLabel, MyButton, MyQuestion
 
 
 class MyGameFrame(object):
@@ -34,7 +33,7 @@ class MyGameFrame(object):
         self.end_frame = MyFrame(self.game_bf.frame, GrayScale(80))
 
         self.end_label = MyLabel(self.end_frame.frame, 'You have finished the Quiz Game!', 0.25, 0.25)
-        self.end_label.label.configure(font=MyFontL, bg=GrayScale(80), fg=GrayScale(220))
+        self.end_label.label.configure(font=MyFonts['ExtraLarge'], bg=GrayScale(80), fg=GrayScale(220))
         self.end_label.label.place(relwidth=0.50, relheight=0.15)
 
         self.score_button = MyButton(self.end_frame.frame, 'Calculate Score', self.calc_score, 0.45, 0.45)
@@ -258,6 +257,9 @@ class MyGameFrame(object):
         for question in self.qlist:
             question.pf.destroy()
 
+        self.score_label.label.destroy()
+        self.score_calulated = False
+
     def calc_score(self):
         if not self.score_calulated:
             if dev:
@@ -273,7 +275,7 @@ class MyGameFrame(object):
                                        'You got ' + str(tmp_var) + '/' + str(len(self.qlist)) + ' questions correct!',
                                        0.25, 0.55
                                        )
-            self.score_label.label.configure(font=MyFontLB, bg=GrayScale(80), fg=GrayScale(220))
+            self.score_label.label.configure(font=MyFonts['LargeBold'], bg=GrayScale(80), fg=GrayScale(220))
             self.score_label.label.place(relwidth=0.50, relheight=0.15)
 
             self.score_calulated = True

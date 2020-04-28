@@ -1,5 +1,8 @@
 # for other modules
 
+# imports
+
+
 # for c_other
 # scale relative sizing
 scale_relwidth = 0.10
@@ -23,6 +26,7 @@ spoke_step = 360.0 / spoke_number
 # moving platform vars
 platform_width = 2.0
 
-# for quiz
-# quiz game vars
-g_score = 0
+# for c_game
+# custom colors
+color_green = '#008000'
+color_red = '#800000'

@@ -1,17 +1,11 @@
 # MyQuestion class for game component
 
 # imports
-from Tkinter import BooleanVar, IntVar, StringVar, \
-    Frame, Label, Button, Radiobutton, \
-    FLAT, RIDGE, N
-
+from Tkinter import BooleanVar, IntVar, StringVar, Frame, Label, Radiobutton, FLAT, N
 from tkMessageBox import showinfo, showerror
-
-from data.myclasses import MyButton
-
+from data.myvariables import dev, MyFonts, color_green, color_red
 from data.myfunctions import GrayScale
-
-from data.myvariables import dev, MyFont, MyFontB, MyFontLB, MyFontXLB, color_green, color_red
+from data.myclasses import MyButton
 
 
 class MyQuestion(object):
@@ -88,7 +82,7 @@ class MyQuestion(object):
         # creating title label for question frame
         self.tl = Label(self.qf)
         self.tl.configure(text=self.qtext)
-        self.tl.configure(font=MyFontXLB)
+        self.tl.configure(font=MyFonts['ExtraLarge'])
         self.tl.configure(bg=self.bgcolor, fg=self.fgcolor)
         self.tl.configure(relief=FLAT)
         self.tl.configure(padx=2, pady=2, anchor=N)
@@ -98,7 +92,7 @@ class MyQuestion(object):
         # creating radiobuttion1 for question frame
         self.q1 = Radiobutton(self.qf)
         self.q1.configure(text='A. ' + self.text1)
-        self.q1.configure(font=MyFontLB)
+        self.q1.configure(font=MyFonts['Large'])
         self.q1.configure(bg=self.bgcolor, activebackground=self.bgcolor)
         self.q1.configure(variable=self.ans_input, value=1)
         self.q1.place(relx=0.10, rely=0.20)
@@ -107,7 +101,7 @@ class MyQuestion(object):
         # creating radiobutton2 for question frame
         self.q2 = Radiobutton(self.qf)
         self.q2.configure(text='B. ' + self.text2)
-        self.q2.configure(font=MyFontLB)
+        self.q2.configure(font=MyFonts['Large'])
         self.q2.configure(bg=self.bgcolor, activebackground=self.bgcolor)
         self.q2.configure(variable=self.ans_input, value=2)
         self.q2.place(relx=0.10, rely=0.35)
@@ -116,7 +110,7 @@ class MyQuestion(object):
         # creating radiobutton3 for question frame
         self.q3 = Radiobutton(self.qf)
         self.q3.configure(text='C. ' + self.text3)
-        self.q3.configure(font=MyFontLB)
+        self.q3.configure(font=MyFonts['Large'])
         self.q3.configure(bg=self.bgcolor, activebackground=self.bgcolor)
         self.q3.configure(variable=self.ans_input, value=3)
         self.q3.place(relx=0.10, rely=0.50)
@@ -125,7 +119,7 @@ class MyQuestion(object):
         # creating radiobutton4 for question frame
         self.q4 = Radiobutton(self.qf)
         self.q4.configure(text='D. ' + self.text4)
-        self.q4.configure(font=MyFontLB)
+        self.q4.configure(font=MyFonts['Large'])
         self.q4.configure(bg=self.bgcolor, activebackground=self.bgcolor)
         self.q4.configure(variable=self.ans_input, value=4)
         self.q4.place(relx=0.10, rely=0.65)
@@ -138,8 +132,8 @@ class MyQuestion(object):
         # creating is_correct_label for explanation frame
         self.cl = Label(self.ef)
         self.cl.configure(text=self.is_correct_text.get())
-        self.cl.configure(font=MyFontXLB)
-        self.cl.configure(bg=self.efbg.get(), fg=GrayScale(30))
+        self.cl.configure(font=MyFonts['ExtraLarge'])
+        self.cl.configure(bg=self.efbg.get(), fg=GrayScale(20))
         self.cl.configure(relief=FLAT)
         self.cl.configure(padx=2, pady=2, anchor=N)
         self.cl.place(relx=0.05, rely=0.05, relwidth=0.90, relheight=0.05)
@@ -148,8 +142,8 @@ class MyQuestion(object):
         # creating exp_label for explanation frame
         self.el = Label(self.ef)
         self.el.configure(text=self.exp_text.get())
-        self.el.configure(font=MyFontXLB)
-        self.el.configure(bg=self.efbg.get(), fg=GrayScale(30))
+        self.el.configure(font=MyFonts['ExtraLarge'])
+        self.el.configure(bg=self.efbg.get(), fg=GrayScale(20))
         self.el.configure(relief=FLAT)
         self.el.configure(padx=2, pady=2, anchor=N)
         self.el.place(relx=0.05, rely=0.10, relwidth=0.90, relheight=0.85)

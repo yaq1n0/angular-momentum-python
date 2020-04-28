@@ -2,25 +2,14 @@
 
 # imports
 from Tkinter import Tk
-from tkMessageBox import showerror
 from os import execv
 from sys import executable, argv
-from data.myclasses import MyMainFrame, MyGameFrame, MyImageFrame, MyFrame, MyButton, MyLabel
-from data.myfunctions import GrayScale
-from data.myvariables import dev, c_error, c_error_text, MyFontXLB, MyFont, \
+from data.myvariables import dev, MyFonts, \
     start_geometry, main_geometry, game_geometry, cheatsheet_geometry, documentation_geometry, \
     start_width, start_height, main_width, main_height, game_height, game_width, \
     cheatsheet_width, cheatsheet_height, documentation_width, documentation_height
-
-# Program start debug
-if c_error:
-    root = Tk()
-    root.withdraw()
-    showerror('Config', c_error_text)
-    exit()
-
-if dev:
-    print '[run] PROGRAM STARTED'
+from data.myfunctions import GrayScale
+from data.myclasses import MyMainFrame, MyGameFrame, MyImageFrame, MyFrame, MyButton, MyLabel
 
 # variables:
 ft_main = True
@@ -33,10 +22,11 @@ Fresh = True
 # creating root
 root = Tk()
 root.title('Rotational Motion')
-root.geometry(start_geometry + '+' + str(root.winfo_screenwidth() / 2 - start_width / 2) + '+' + str(
-    root.winfo_screenheight() / 2 - start_height / 2))
+root.iconbitmap('data/images/favicon.ico')
+root.geometry(start_geometry + '+' + str(root.winfo_screenwidth() / 2 - start_width / 2)
+              + '+' + str(root.winfo_screenheight() / 2 - start_height / 2))
 root.resizable(False, False)
-root.configure(bg=GrayScale(0))
+root.configure(bg=GrayScale(20))
 
 # creating start frame
 start_bf = MyFrame(root, GrayScale(20))
@@ -48,8 +38,8 @@ def goto_start():
     if dev:
         print '[nav] goto_start'
 
-    root.geometry(start_geometry + '+' + str(root.winfo_screenwidth() / 2 - start_width / 2) + '+' + str(
-        root.winfo_screenheight() / 2 - start_height / 2))
+    root.geometry(start_geometry + '+' + str(root.winfo_screenwidth() / 2 - start_width / 2)
+                  + '+' + str(root.winfo_screenheight() / 2 - start_height / 2))
     root.title('Rotational Motion')
 
     start_bf.frame.tkraise()
@@ -69,12 +59,12 @@ def goto_main():
         ft_main = False
     else:
         if main_bf.in_animation_settings:
-            root.geometry(start_geometry + '+' + str(root.winfo_screenwidth() / 2 - start_width / 2) + '+' + str(
-                root.winfo_screenheight() / 2 - start_height / 2))
+            root.geometry(start_geometry + '+' + str(root.winfo_screenwidth() / 2 - start_width / 2)
+                          + '+' + str(root.winfo_screenheight() / 2 - start_height / 2))
             main_bf.main_bf.frame.tkraise()
         if not main_bf.in_animation_settings:
-            root.geometry(main_geometry + '+' + str(root.winfo_screenwidth() / 2 - main_width / 2) + '+' + str(
-                root.winfo_screenheight() / 2 - main_height / 2))
+            root.geometry(main_geometry + '+' + str(root.winfo_screenwidth() / 2 - main_width / 2)
+                          + '+' + str(root.winfo_screenheight() / 2 - main_height / 2))
             main_bf.main_bf.frame.tkraise()
 
     at_start = False
@@ -86,8 +76,8 @@ def goto_game():
     if dev:
         print '[nav] goto_game'
 
-    root.geometry(game_geometry + '+' + str(root.winfo_screenwidth() / 2 - game_width / 2) + '+' + str(
-        root.winfo_screenheight() / 2 - game_height / 2))
+    root.geometry(game_geometry + '+' + str(root.winfo_screenwidth() / 2 - game_width / 2)
+                  + '+' + str(root.winfo_screenheight() / 2 - game_height / 2))
     root.title('Quiz Game')
 
     if ft_game:
@@ -112,8 +102,8 @@ def goto_cheatsheet():
     if dev:
         print '[nav] goto_cheatsheet'
 
-    root.geometry(cheatsheet_geometry + '+' + str(root.winfo_screenwidth() / 2 - cheatsheet_width / 2) + '+' + str(
-        root.winfo_screenheight() / 2 - cheatsheet_height / 2))
+    root.geometry(cheatsheet_geometry + '+' + str(root.winfo_screenwidth() / 2 - cheatsheet_width / 2)
+                  + '+' + str(root.winfo_screenheight() / 2 - cheatsheet_height / 2))
     root.title('CheatSheet')
 
     if ft_cheatsheet:
@@ -131,8 +121,8 @@ def goto_documentation():
     if dev:
         print '[nav] goto_documentation'
     root.geometry(
-        documentation_geometry + '+' + str(root.winfo_screenwidth() / 2 - documentation_width / 2) + '+' + str(
-            root.winfo_screenheight() / 2 - documentation_height / 2))
+        documentation_geometry + '+' + str(root.winfo_screenwidth() / 2 - documentation_width / 2)
+        + '+' + str(root.winfo_screenheight() / 2 - documentation_height / 2))
     root.title('Documentation')
 
     if ft_documentation:
@@ -188,7 +178,7 @@ root.bind('<Escape>', goto_start_bind)
 if dev:
     print '[start] creating objects'
 title_label = MyLabel(start_bf.frame, 'Welcome!', 0.25, 0.05)
-title_label.label.configure(bg=GrayScale(20), font=MyFontXLB)
+title_label.label.configure(bg=GrayScale(20), font=MyFonts['ExtraLargeBold'])
 title_label.label.place(relwidth=0.5)
 
 button1 = MyButton(start_bf.frame, 'Interactive Experiece', goto_main, 0.175, 0.15)
@@ -207,7 +197,7 @@ footnote_label = MyLabel(start_bf.frame,
                          'created by:\n Team 14\nYaqin Hasan\nLian Chao Hooi\nIbraheem El-Nahta\nJaden Pang',
                          0.25, 0.75
                          )
-footnote_label.label.configure(bg=GrayScale(20), fg=GrayScale(60), font=MyFont)
+footnote_label.label.configure(bg=GrayScale(20), fg=GrayScale(60), font=MyFonts['Default'])
 footnote_label.label.place(relwidth=0.5, relheight=0.25)
 
 goto_start()

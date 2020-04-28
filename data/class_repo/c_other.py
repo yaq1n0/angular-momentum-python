@@ -4,12 +4,10 @@
 from Tkinter import \
     Toplevel, Frame, Canvas, Label, Button, Scale, Entry, \
     LEFT, HORIZONTAL, FLAT, RIDGE, SOLID, StringVar, N
-
-from data.myfunctions import GrayScale
-
 from data.myvariables import \
-    MyFont, MyFontB, canvas_relx, canvas_rely, canvas_width, canvas_height, \
+    MyFonts, canvas_relx, canvas_rely, canvas_width, canvas_height, \
     scale_relwidth, scale_relheight
+from data.myfunctions import GrayScale
 
 
 # Defining Object ToolTip
@@ -36,7 +34,7 @@ class ToolTip(object):
         label = Label(tw, text=self.text)
         label.configure(justify=LEFT)
         label.configure(relief=SOLID, bd=1)
-        label.configure(bg=GrayScale(60), fg=GrayScale(220), font=MyFont)
+        label.configure(bg=GrayScale(60), fg=GrayScale(220), font=MyFonts['Default'])
         label.pack(ipadx=1)
 
     # hidetip method for ToolTip class
@@ -45,83 +43,6 @@ class ToolTip(object):
         self.tipwindow = None
         if tw:
             tw.destroy()
-
-
-# Creating MyObjects
-
-# Creating MyButton
-class MyButton(object):
-    def __init__(self, parent, text, command, relx, rely):
-        bgcolor = GrayScale(40)
-        fgcolor = GrayScale(220)
-
-        relwidth = 0.10
-        relheight = 0.05
-
-        self.button = Button(parent)
-        self.button.configure(text=text, command=command)
-        self.button.configure(font=MyFontB)
-        self.button.configure(bg=bgcolor, fg=fgcolor)
-        self.button.configure(activebackground=bgcolor, activeforeground=fgcolor)
-        self.button.configure(relief=RIDGE, highlightthickness=0, bd=0)
-        self.button.place(relx=relx, rely=rely, relwidth=relwidth, relheight=relheight)
-
-
-# Creating MyImageButton
-class MyImageButton(object):
-    def __init__(self, parent, img, command, relx, rely):
-        relwidth = 0.05 / (16.0 / 9.0)
-        relheight = 0.05
-
-        self.button = Button(parent)
-        self.button.configure(image=img)
-        self.button.image = img
-        self.button.configure(command=command)
-        self.button.configure(relief=RIDGE, highlightthickness=0, bd=0)
-        self.button.place(relx=relx, rely=rely, relwidth=relwidth, relheight=relheight)
-
-
-# Creating MyCanvas
-class MyCanvas(object):
-    def __init__(self, parent):
-        bgcolor = GrayScale(20)
-
-        abswidth = canvas_width
-        absheight = canvas_height
-
-        relx = canvas_relx
-        rely = canvas_rely
-
-        self.canvas = Canvas(parent)
-        self.canvas.configure(bg=bgcolor)
-        self.canvas.configure(width=abswidth, height=absheight)
-        self.canvas.configure(relief=RIDGE, highlightthickness=0, bd=0)
-        self.canvas.place(relx=relx, rely=rely)
-
-
-# Creating MyEntry
-class MyEntry(object):
-    def __init__(self, parent, text, relx, rely):
-        charwidth = 20
-
-        bgcolor = GrayScale(20)
-        fgcolor = GrayScale(220)
-
-        self.entry = Entry(parent)
-        self.entry.configure(width=charwidth)
-        self.entry.configure(bg=bgcolor, fg=fgcolor)
-        self.entry.configure(relief=RIDGE, highlightthickness=2, bd=0)
-        self.entry.place(relx=relx, rely=rely)
-
-        label_rely = rely - 0.045
-
-        self.label = Label(parent)
-        self.label.configure(text=text)
-        self.label.configure(font=MyFont)
-        self.label.configure(bg=bgcolor, fg=fgcolor)
-        self.label.configure(relief=FLAT)
-        self.label.configure(padx=2, pady=2)
-        self.label.place(relx=relx, rely=label_rely)
 
 
 # Creating MyFrame
@@ -147,19 +68,120 @@ class MyFrameWBP(object):
         self.frame.place(relx=relx, rely=rely, relwidth=relwidth, relheight=relheight)
 
 
-# Creating MyLabel
-class MyLabel(object):
-    def __init__(self, parent, text, relx, rely):
+# Creating MyOutputFrame
+class MyOutputFrame(object):
+    def __init__(self, parent, bgcolor):
+        relx = 0.70
+        rely = 0
+        relwidth = 0.30
+        relheight = 0.8
+
+        self.frame = Frame(parent)
+        self.frame.configure(bg=bgcolor)
+        self.frame.place(relx=relx, rely=rely, relwidth=relwidth, relheight=relheight)
+
+
+# Creating MyCanvas
+class MyCanvas(object):
+    def __init__(self, parent):
         bgcolor = GrayScale(20)
+
+        abswidth = canvas_width
+        absheight = canvas_height
+
+        relx = canvas_relx
+        rely = canvas_rely
+
+        self.canvas = Canvas(parent)
+        self.canvas.configure(bg=bgcolor)
+        self.canvas.configure(width=abswidth, height=absheight)
+        self.canvas.configure(relief=RIDGE, bd=2)
+        self.canvas.place(relx=relx, rely=rely)
+
+
+# Creating MyButton
+class MyButton(object):
+    def __init__(self, parent, text, command, relx, rely):
+        bgcolor = GrayScale(40)
         fgcolor = GrayScale(220)
 
-        self.label = Label(parent)
-        self.label.configure(text=text)
-        self.label.configure(font=MyFont)
-        self.label.configure(bg=bgcolor, fg=fgcolor)
-        self.label.configure(relief=FLAT, anchor=N)
-        self.label.configure(padx=2, pady=2)
-        self.label.place(relx=relx, rely=rely)
+        relwidth = 0.10
+        relheight = 0.05
+
+        self.button = Button(parent)
+        self.button.configure(text=text, command=command)
+        self.button.configure(font=MyFonts['DefaultBold'])
+        self.button.configure(bg=bgcolor, fg=fgcolor)
+        self.button.configure(activebackground=bgcolor, activeforeground=fgcolor)
+        self.button.configure(relief=RIDGE, highlightthickness=0, bd=0)
+        self.button.place(relx=relx, rely=rely, relwidth=relwidth, relheight=relheight)
+
+
+# Creating MyImageButton
+class MyImageButton(object):
+    def __init__(self, parent, bgcolor, img, command, relx, rely):
+        relwidth = 0.05 / (16.0 / 9.0)
+        relheight = 0.05
+
+        self.button = Button(parent)
+        self.button.configure(image=img)
+        self.button.image = img
+        self.button.configure(command=command)
+        self.button.configure(bg=bgcolor, activebackground=bgcolor)
+        self.button.configure(relief=RIDGE, highlightthickness=0, bd=0)
+        self.button.place(relx=relx, rely=rely, relwidth=relwidth, relheight=relheight)
+
+
+# Creating MyCycleButton
+class MyCycleButton(object):
+    def __init__(self, parent, options_list, frames_list, relx, rely):
+        # assigning parameters to attributes
+        self.parent = parent
+        self.o_list = options_list
+        self.f_list = frames_list
+        self.relx = relx
+        self.rely = rely
+
+        self.relwidth = 0.10
+        self.relheight = 0.05
+
+        # creating frames
+        self.create_frames()
+
+    def create_frames(self):
+        self.pf = Frame(self.parent)
+        self.pf.configure(bg=GrayScale(0))
+        self.pf.place(relx=self.relx, rely=self.rely, relwidth=self.relwidth, relheight=self.relheight)
+
+        self.f1 = MyFrame(self.pf, GrayScale(80))
+        self.f2 = MyFrame(self.pf, GrayScale(60))
+        self.f3 = MyFrame(self.pf, GrayScale(40))
+
+        self.b1 = MyButton(self.f1.frame, self.o_list[0], self.func1, 0, 0)
+        self.b2 = MyButton(self.f2.frame, self.o_list[1], self.func2, 0, 0)
+        self.b3 = MyButton(self.f3.frame, self.o_list[2], self.func3, 0, 0)
+
+        self.b1.button.configure(bg=GrayScale(80), activebackground=GrayScale(80))
+        self.b2.button.configure(bg=GrayScale(60), activebackground=GrayScale(60))
+        self.b3.button.configure(bg=GrayScale(40), activebackground=GrayScale(40))
+
+        self.b1.button.place(relwidth=1, relheight=1)
+        self.b2.button.place(relwidth=1, relheight=1)
+        self.b3.button.place(relwidth=1, relheight=1)
+
+        self.f1.frame.tkraise()
+
+    def func1(self):
+        self.f2.frame.tkraise()
+        self.f_list[1].tkraise()
+
+    def func2(self):
+        self.f3.frame.tkraise()
+        self.f_list[2].tkraise()
+
+    def func3(self):
+        self.f1.frame.tkraise()
+        self.f_list[0].tkraise()
 
 
 # Creating MyScale
@@ -198,7 +220,72 @@ class MyScale(object):
 
         self.label = Label(parent)
         self.label.configure(textvariable=self.l_val)
-        self.label.configure(font=MyFont)
+        self.label.configure(font=MyFonts['Default'])
+        self.label.configure(bg=bgcolor, fg=fgcolor)
+        self.label.configure(relief=FLAT)
+        self.label.configure(padx=2, pady=2)
+        self.label.place(relx=relx, rely=label_rely)
+
+
+# Creating MyLabel
+class MyLabel(object):
+    def __init__(self, parent, text, relx, rely):
+        bgcolor = GrayScale(20)
+        fgcolor = GrayScale(220)
+
+        self.label = Label(parent)
+        self.label.configure(text=text)
+        self.label.configure(font=MyFonts['Default'])
+        self.label.configure(bg=bgcolor, fg=fgcolor)
+        self.label.configure(relief=FLAT, anchor=N)
+        self.label.configure(padx=2, pady=2)
+        self.label.place(relx=relx, rely=rely)
+
+
+# Creating MyEntry
+class MyEntry(object):
+    def __init__(self, parent, text, relx, rely):
+        charwidth = 20
+
+        bgcolor = GrayScale(20)
+        fgcolor = GrayScale(220)
+
+        self.entry = Entry(parent)
+        self.entry.configure(width=charwidth)
+        self.entry.configure(bg=bgcolor, fg=fgcolor)
+        self.entry.configure(relief=RIDGE, highlightthickness=2, bd=0)
+        self.entry.place(relx=relx, rely=rely)
+
+        label_rely = rely - 0.045
+
+        self.label = Label(parent)
+        self.label.configure(text=text)
+        self.label.configure(font=MyFonts['Default'])
+        self.label.configure(bg=bgcolor, fg=fgcolor)
+        self.label.configure(relief=FLAT)
+        self.label.configure(padx=2, pady=2)
+        self.label.place(relx=relx, rely=label_rely)
+
+
+# Creating MyOutputEntry
+class MyOutputEntry(object):
+    def __init__(self, parent, text, relx, rely):
+        charwidth = 20
+
+        bgcolor = GrayScale(20)
+        fgcolor = GrayScale(220)
+
+        self.entry = Entry(parent)
+        self.entry.configure(width=charwidth)
+        self.entry.configure(bg=bgcolor, fg=fgcolor)
+        self.entry.configure(relief=RIDGE, highlightthickness=2, bd=0)
+        self.entry.place(relx=relx, rely=rely)
+
+        label_rely = rely - 0.050
+
+        self.label = Label(parent)
+        self.label.configure(text=text)
+        self.label.configure(font=MyFonts['Default'])
         self.label.configure(bg=bgcolor, fg=fgcolor)
         self.label.configure(relief=FLAT)
         self.label.configure(padx=2, pady=2)

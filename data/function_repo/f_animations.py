@@ -2,17 +2,13 @@
 
 # imports
 from Tkinter import ALL
-
 from tkMessageBox import askquestion
-
 from time import time
-
 from math import pi, sin, cos
-
+from data.myvariables import dev, spoke_step, platform_width, part_radius, circum_width
 from data.myfunctions import dtr, GrayScale
 
-from data.myvariables import dev, spoke_step, platform_width, part_radius, circum_width
-
+# default var states
 radius_error_ask_bool = True
 ang_vel_error_ask_bool = True
 
@@ -25,43 +21,36 @@ def ttl(canvas, x_pos, y_pos, radius, theta):
 
 
 # animate orbiting particle
-def orbiting_particle_animation(root,
-                                canvas,
-                                x_pos,
-                                y_pos,
-                                radius,
-                                ang_vel,
-                                granularity
-                                ):
+def orbiting_particle_animation(root, canvas, x_pos, y_pos, radius, ang_vel, granularity):
     global radius_error_ask_bool, ang_vel_error_ask_bool
     # checking value ranges
     if radius > 200 and radius_error_ask_bool:
-        radius_error = askquestion('Run Animation',
-                                   'You have selected parameters which may cause parts of the animation to be invisible, \n'
-                                   'it is recommended that you modify the animation settings\n'
-                                   'do you want to run the animation anyway?',
+        radius_error = askquestion('Run Animation Anyway?',
+                                   'You have selected a radius value which may cause parts of the animation to be be invisible. '
+                                   '\nIt is recommended to reduce Length Multipler in animation settings. '
+                                   '\nDo you want to run the animation anyway?',
                                    icon='warning')
         if radius_error == 'no':
             return
 
         else:
-            radius_error_ask = askquestion('Ask Again?', 'Do you want to disable further alerts like this?')
+            radius_error_ask = askquestion('Do Not Ask Again?', 'Do you want to disable further alerts like this?')
 
             if radius_error_ask == 'yes':
                 radius_error_ask_bool = False
 
     if ang_vel > 15 and ang_vel_error_ask_bool:
-        ang_vel_error = askquestion('Run Animation',
-                                    'You have selected parameters which may cause the animation speed to be inaccurate, \n'
-                                    'it is recommended that you modify the animation settings\n'
-                                    'do you want to run the animation anyway?',
+        ang_vel_error = askquestion('Run Animation Anyway?',
+                                    'You have selected an angular velocity value which may cause the animation speed to be inaccurate. '
+                                    '\nIt is recommended to increase Time Factor in animation settings '
+                                    '\nDo you want to run the animation anyway?',
                                     icon='warning')
 
         if ang_vel_error == 'no':
             return
 
         else:
-            ang_vel_error_ask = askquestion('Ask Again?', 'Do you want to disable further alerts like this?')
+            ang_vel_error_ask = askquestion('Do Not Ask Again?', 'Do you want to disable further alerts like this?')
 
             if ang_vel_error_ask == 'yes':
                 ang_vel_error_ask_bool = False
@@ -119,32 +108,32 @@ def rotating_circle_animation(root,
     global radius_error_ask_bool, ang_vel_error_ask_bool
     # checking value ranges
     if radius > 200 and radius_error_ask_bool:
-        radius_error = askquestion('Run Animation',
-                                   'You have selected parameters which may cause parts of the animation to be invisible, \n'
-                                   'it is recommended that you modify the animation settings\n'
-                                   'do you want to run the animation anyway?',
+        radius_error = askquestion('Run Animation Anyway?',
+                                   'You have selected a radius value which may cause parts of the animation to be be invisible. '
+                                   '\nIt is recommended to reduce Length Multipler in animation settings. '
+                                   '\nDo you want to run the animation anyway?',
                                    icon='warning')
         if radius_error == 'no':
             return
 
         else:
-            radius_error_ask = askquestion('Ask Again?', 'Do you want to disable further alerts like this?')
+            radius_error_ask = askquestion('Do Not Ask Again?', 'Do you want to disable further alerts like this?')
 
             if radius_error_ask == 'yes':
                 radius_error_ask_bool = False
 
     if ang_vel > 15 and ang_vel_error_ask_bool:
-        ang_vel_error = askquestion('Run Animation',
-                                    'You have selected parameters which may cause the animation speed to be inaccurate, \n'
-                                    'it is recommended that you modify the animation settings\n'
-                                    'do you want to run the animation anyway?',
+        ang_vel_error = askquestion('Run Animation Anyway?',
+                                    'You have selected an angular velocity value which may cause the animation speed to be inaccurate. '
+                                    '\nIt is recommended to increase Time Factor in animation settings '
+                                    '\nDo you want to run the animation anyway?',
                                     icon='warning')
 
         if ang_vel_error == 'no':
             return
 
         else:
-            ang_vel_error_ask = askquestion('Ask Again?', 'Do you want to disable further alerts like this?')
+            ang_vel_error_ask = askquestion('Do Not Ask Again?', 'Do you want to disable further alerts like this?')
 
             if ang_vel_error_ask == 'yes':
                 ang_vel_error_ask_bool = False
@@ -200,33 +189,33 @@ def rolling_circle_animation(root,
                              ):
     global radius_error_ask_bool, ang_vel_error_ask_bool
     # checking value ranges
-    if radius > 180 and radius_error_ask_bool:
-        radius_error = askquestion('Run Animation',
-                                   'You have selected parameters which may cause parts of the animation to be invisible, \n'
-                                   'it is recommended that you modify the animation settings\n'
-                                   'do you want to run the animation anyway?',
+    if radius > 200 and radius_error_ask_bool:
+        radius_error = askquestion('Run Animation Anyway?',
+                                   'You have selected a radius value which may cause parts of the animation to be be invisible. '
+                                   '\nIt is recommended to reduce Length Multipler in animation settings. '
+                                   '\nDo you want to run the animation anyway?',
                                    icon='warning')
         if radius_error == 'no':
             return
 
         else:
-            radius_error_ask = askquestion('Ask Again?', 'Do you want to disable further alerts like this?')
+            radius_error_ask = askquestion('Do Not Ask Again?', 'Do you want to disable further alerts like this?')
 
             if radius_error_ask == 'yes':
                 radius_error_ask_bool = False
 
     if ang_vel > 15 and ang_vel_error_ask_bool:
-        ang_vel_error = askquestion('Run Animation',
-                                    'You have selected parameters which may cause the animation speed to be inaccurate, \n'
-                                    'it is recommended that you modify the animation settings\n'
-                                    'do you want to run the animation anyway?',
+        ang_vel_error = askquestion('Run Animation Anyway?',
+                                    'You have selected an angular velocity value which may cause the animation speed to be inaccurate. '
+                                    '\nIt is recommended to increase Time Factor in animation settings '
+                                    '\nDo you want to run the animation anyway?',
                                     icon='warning')
 
         if ang_vel_error == 'no':
             return
 
         else:
-            ang_vel_error_ask = askquestion('Ask Again?', 'Do you want to disable further alerts like this?')
+            ang_vel_error_ask = askquestion('Do Not Ask Again?', 'Do you want to disable further alerts like this?')
 
             if ang_vel_error_ask == 'yes':
                 ang_vel_error_ask_bool = False

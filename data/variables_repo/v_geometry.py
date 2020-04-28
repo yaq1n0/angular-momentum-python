@@ -46,4 +46,6 @@ documentation_geometry = str(documentation_width) + "x" + str(documentation_heig
 # start geometry
 start_height = main_height
 start_width = start_height / 2
+start_width = int(start_width)
+start_height = int(start_height)
 start_geometry = str(start_width) + "x" + str(start_height)

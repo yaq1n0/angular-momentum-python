@@ -1,6 +1,8 @@
 # variables imported form config
 
 # imports
+from Tkinter import Tk
+from tkMessageBox import showerror
 from config import width as config_width
 from config import height as config_height
 from config import font as config_font
@@ -32,25 +34,23 @@ if type(tooltips) != bool:
     c_error = True
     c_error_text = 'please use either "True" or "False" boolean values'
 
-# setting default developer settings (for the Supreme Leader)
-dev_settings = True
-if dev and dev_settings:
-    config_width = 1280
-    config_height = 720
-    config_font = 'Arial'
-    config_font_size = 12
-    tooltips = True
+# Program start debug
+if c_error:
+    root = Tk()
+    root.withdraw()
+    showerror('Config', c_error_text)
+    exit()
 
-# creating my font using config_font and config_font_size
-MyFont = (config_font, config_font_size)
-MyFontB = (config_font, config_font_size, 'bold')
+if dev:
+    print '[run] PROGRAM STARTED'
 
-# different sizes
-MyFontS = (config_font, int(round(config_font_size * 0.75, 0)))
-MyFontL = (config_font, int(round(config_font_size * 1.25, 0)))
-MyFontXL = (config_font, int(round(config_font_size * 1.50, 0)))
-
-# bold variations
-MyFontSB = (config_font, int(round(config_font_size * 0.75, 0)), 'bold')
-MyFontLB = (config_font, int(round(config_font_size * 1.25, 0)), 'bold')
-MyFontXLB = (config_font, int(round(config_font_size * 1.50, 0)), 'bold')
+# MyFonts dictionary
+MyFonts = {'Default': (config_font, config_font_size),
+           'DefaultBold': (config_font, config_font_size, 'bold'),
+           'Small': (config_font, int(round(config_font_size * 0.75, 0))),
+           'SmallBold': (config_font, int(round(config_font_size * 0.75, 0)), 'bold'),
+           'Large': (config_font, int(round(config_font_size * 1.25, 0))),
+           'LargeBold': (config_font, int(round(config_font_size * 1.25, 0)), 'bold'),
+           'ExtraLarge': (config_font, int(round(config_font_size * 1.50, 0))),
+           'ExtraLargeBold': (config_font, int(round(config_font_size * 1.50, 0)), 'bold')
+           }

@@ -5,13 +5,12 @@ from data.myvariables import main_width, main_height
 
 # creating canvas vars
 # canvas size vars relative to main
-canvas_window_ratio = 0.25
-canvas_width = canvas_height = main_width * canvas_window_ratio
+canvas_width = 0.25 * main_width
+canvas_height = 0.25 * (16.0 / 9.0) * main_height
 
 # canvas placing vars relative to main
-frame_height = main_height * (0.9 ** 2)
-canvas_relx = 1.5 * canvas_window_ratio
-canvas_rely = ((frame_height - canvas_height) / 2) / frame_height
+canvas_relx = 0.375
+canvas_rely = 0.20
 
 # creating frame bottom pad and frame button rely position variables
 # frame bottom padding variable

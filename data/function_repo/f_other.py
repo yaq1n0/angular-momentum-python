@@ -2,12 +2,8 @@
 
 # imports
 from tkMessageBox import showinfo
-
 from math import pi
-
 from PIL import Image, ImageTk
-
-from data.myvariables import spoke_width
 
 
 # PlaceHolder function for whatever
