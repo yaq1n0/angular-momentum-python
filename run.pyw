@@ -2,22 +2,31 @@
 
 # imports
 from Tkinter import Tk
+from tkMessageBox import askquestion
 from os import execv
 from sys import executable, argv
-from data.myvariables import dev, MyFonts, \
+from data.myvariables import dev, MyFonts, ask_again_list, \
     start_geometry, main_geometry, game_geometry, cheatsheet_geometry, documentation_geometry, \
     start_width, start_height, main_width, main_height, game_height, game_width, \
     cheatsheet_width, cheatsheet_height, documentation_width, documentation_height
 from data.myfunctions import GrayScale
 from data.myclasses import MyMainFrame, MyGameFrame, MyImageFrame, MyFrame, MyButton, MyLabel
 
-# variables:
+# first time variables
 ft_main = True
 ft_game = True
 ft_cheatsheet = True
 ft_documentation = True
+
+# location identifier variables
 at_start = True
 Fresh = True
+in_game = False
+in_documentation = False
+
+# ask again boolean variables
+ask_goto_start_again_bool = True
+ask_goto_documentation_again_bool = True
 
 # creating root
 root = Tk()
@@ -34,7 +43,7 @@ start_bf = MyFrame(root, GrayScale(20))
 
 # goto functions
 def goto_start():
-    global start_bf, at_start
+    global start_bf, at_start, in_game, in_documentation
     if dev:
         print '[nav] goto_start'
 
@@ -45,6 +54,8 @@ def goto_start():
     start_bf.frame.tkraise()
 
     at_start = True
+    in_game = False
+    in_documentation = False
 
 
 def goto_main():
@@ -52,7 +63,7 @@ def goto_main():
     if dev:
         print '[nav] goto_main'
 
-    root.title('Rotational Motion')
+    root.title('Interactive Experience')
 
     if ft_main:
         main_bf = MyMainFrame(root)
@@ -72,13 +83,13 @@ def goto_main():
 
 
 def goto_game():
-    global ft_game, game_bf, at_start, Fresh
+    global ft_game, game_bf, at_start, Fresh, in_game
     if dev:
         print '[nav] goto_game'
 
     root.geometry(game_geometry + '+' + str(root.winfo_screenwidth() / 2 - game_width / 2)
                   + '+' + str(root.winfo_screenheight() / 2 - game_height / 2))
-    root.title('Quiz Game')
+    root.title('Test Your Understanding')
 
     if ft_game:
         game_bf = MyGameFrame(root)
@@ -95,6 +106,7 @@ def goto_game():
 
     at_start = False
     Fresh = False
+    in_game = True
 
 
 def goto_cheatsheet():
@@ -104,7 +116,7 @@ def goto_cheatsheet():
 
     root.geometry(cheatsheet_geometry + '+' + str(root.winfo_screenwidth() / 2 - cheatsheet_width / 2)
                   + '+' + str(root.winfo_screenheight() / 2 - cheatsheet_height / 2))
-    root.title('CheatSheet')
+    root.title('Improve Your Understanding')
 
     if ft_cheatsheet:
         cheatsheet_bf = MyImageFrame(root, 'data/images/cheatsheet.jpg', cheatsheet_width, cheatsheet_height)
@@ -117,13 +129,13 @@ def goto_cheatsheet():
 
 
 def goto_documentation():
-    global ft_documentation, documentation_bf, at_start, Fresh
+    global ft_documentation, documentation_bf, at_start, Fresh, in_documentation
     if dev:
         print '[nav] goto_documentation'
     root.geometry(
         documentation_geometry + '+' + str(root.winfo_screenwidth() / 2 - documentation_width / 2)
         + '+' + str(root.winfo_screenheight() / 2 - documentation_height / 2))
-    root.title('Documentation')
+    root.title('Program Documentation')
 
     if ft_documentation:
         documentation_bf = MyImageFrame(root, 'data/images/documentation.jpg', documentation_width,
@@ -134,6 +146,7 @@ def goto_documentation():
 
     at_start = False
     Fresh = False
+    in_documentation = True
 
 
 # resart and quit functions
@@ -161,8 +174,55 @@ def program_quit_bind(event):
 
 
 def goto_start_bind(event):
-    if not at_start:
-        goto_start()
+    global ask_goto_start_again_bool
+    if in_game and ask_goto_start_again_bool:
+        ask_goto_start = askquestion('Go Back?', 'You have pressed Escape to go to start.'
+                                                 '\nYou will lose all progress in the quiz.'
+                                                 '\nAre you sure you go to start?')
+        if ask_goto_start == 'yes':
+            ask_goto_start_again = askquestion(ask_again_list[0], ask_again_list[1])
+
+            if ask_goto_start_again == 'yes':
+                ask_goto_start_again_bool = False
+
+            goto_start()
+
+        if ask_goto_start == 'no':
+            return
+
+    if at_start:
+        if dev:
+            print '[start] already in start'
+        return
+
+    goto_start()
+
+
+def goto_documentation_bind(event):
+    global ask_goto_documentation_again_bool
+    if in_game and ask_goto_documentation_again_bool:
+        ask_goto_documentation = askquestion('Open Documentation?', 'You have pressed F2 to open documentation.'
+                                                                    '\nYou will lose all progress in the quiz.'
+                                                                    '\nAre you sure you want to open documentation?')
+        if ask_goto_documentation == 'yes':
+            ask_goto_documentation_again = askquestion(ask_again_list[0], ask_again_list[1])
+
+            if ask_goto_documentation_again == 'yes':
+                ask_goto_documentation_again_bool = False
+
+            goto_start()
+            goto_documentation()
+
+        if ask_goto_documentation == 'no':
+            return
+
+    if in_documentation:
+        if dev:
+            print '[documentation] already in documentation'
+        return
+
+    goto_start()
+    goto_documentation()
 
 
 # binding control + q to quit program
@@ -174,6 +234,9 @@ root.bind('<Control-r>', program_restart_bind)
 # binding escape to return to start
 root.bind('<Escape>', goto_start_bind)
 
+# binding control + h to show program documentation
+root.bind('<Control-h>', goto_documentation_bind)
+
 # start_bf objects
 if dev:
     print '[start] creating objects'
@@ -181,7 +244,7 @@ title_label = MyLabel(start_bf.frame, 'Welcome!', 0.25, 0.05)
 title_label.label.configure(bg=GrayScale(20), font=MyFonts['ExtraLargeBold'])
 title_label.label.place(relwidth=0.5)
 
-button1 = MyButton(start_bf.frame, 'Interactive Experiece', goto_main, 0.175, 0.15)
+button1 = MyButton(start_bf.frame, 'Interactive Experience', goto_main, 0.175, 0.15)
 button1.button.place(relwidth=0.65)
 
 button2 = MyButton(start_bf.frame, 'Test Your Understanding', goto_game, 0.175, 0.30)

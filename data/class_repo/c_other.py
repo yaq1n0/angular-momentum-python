@@ -68,13 +68,26 @@ class MyFrameWBP(object):
         self.frame.place(relx=relx, rely=rely, relwidth=relwidth, relheight=relheight)
 
 
+# Creating MyInputFrame
+class MyInputFrame(object):
+    def __init__(self, parent, bgcolor):
+        relx = 0
+        rely = 0
+        relwidth = 0.30
+        relheight = 0.80
+
+        self.frame = Frame(parent)
+        self.frame.configure(bg=bgcolor)
+        self.frame.place(relx=relx, rely=rely, relwidth=relwidth, relheight=relheight)
+
+
 # Creating MyOutputFrame
 class MyOutputFrame(object):
     def __init__(self, parent, bgcolor):
         relx = 0.70
         rely = 0
         relwidth = 0.30
-        relheight = 0.8
+        relheight = 0.80 / 0.90
 
         self.frame = Frame(parent)
         self.frame.configure(bg=bgcolor)
@@ -173,14 +186,17 @@ class MyCycleButton(object):
 
     def func1(self):
         self.f2.frame.tkraise()
-        self.f_list[1].tkraise()
+        self.f_list[2].tkraise()
+        self.f_list[0].tkraise()
 
     def func2(self):
         self.f3.frame.tkraise()
-        self.f_list[2].tkraise()
+        self.f_list[3].tkraise()
+        self.f_list[0].tkraise()
 
     def func3(self):
         self.f1.frame.tkraise()
+        self.f_list[1].tkraise()
         self.f_list[0].tkraise()
 
 
@@ -215,6 +231,50 @@ class MyScale(object):
         self.scale.configure(bg=bgcolor, fg=fgcolor)
         self.scale.configure(relief=RIDGE, highlightthickness=0, bd=0)
         self.scale.place(relx=relx, rely=rely, relwidth=scale_relwidth, relheight=scale_relheight)
+
+        label_rely = rely - 0.050
+
+        self.label = Label(parent)
+        self.label.configure(textvariable=self.l_val)
+        self.label.configure(font=MyFonts['Default'])
+        self.label.configure(bg=bgcolor, fg=fgcolor)
+        self.label.configure(relief=FLAT)
+        self.label.configure(padx=2, pady=2)
+        self.label.place(relx=relx, rely=label_rely)
+
+
+# Creating MyInputScale
+class MyInputScale(object):
+    def __init__(self, parent, text, relx, rely):
+        # making parameters into attributes
+        self.parent = parent
+        self.text = text
+        self.relx = relx
+        self.rely = rely
+
+        # creating Tkinter variables
+        self.l_val = StringVar()
+
+        # setting variables
+        bgcolor = GrayScale(20)
+        fgcolor = GrayScale(220)
+
+        lowrange = 1.0
+        highrange = 100.0
+        resolution = 0.1
+
+        def update(scale_value):
+            self.l_val.set(' ' + self.text + ' = ' + scale_value + ' ')
+
+        # creating Scale
+        self.scale = Scale(self.parent)
+        self.scale.configure(command=update)
+        self.scale.configure(from_=lowrange, to=highrange)
+        self.scale.configure(orient=HORIZONTAL, showvalue=0, resolution=resolution)
+        self.scale.configure(bg=bgcolor, fg=fgcolor)
+        self.scale.configure(relief=RIDGE, highlightthickness=0, bd=0)
+        self.scale.place(relx=relx, rely=rely, relwidth=scale_relwidth * 1.35 / 0.3,
+                         relheight=scale_relheight * 1.35 / 0.8)
 
         label_rely = rely - 0.050
 

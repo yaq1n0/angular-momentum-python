@@ -33,7 +33,7 @@ def GrayScale(num):
 # code from 'https://stackoverflow.com/questions/20399243/display-message-when-hovering-over-something-with-mouse-cursor-in-python'
 def CreateToolTip(widget, text):
     from data.myclasses import ToolTip
-    # instantizing toolTip instance of ToolTip class
+    # initializing toolTip instance of ToolTip class
     toolTip = ToolTip(widget)
 
     # binding enter event to showtip method
