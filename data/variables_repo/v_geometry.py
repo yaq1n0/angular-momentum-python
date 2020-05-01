@@ -1,7 +1,7 @@
 # creating geometry values
 
 # imports
-from data.myvariables import config_width, config_height
+from data.variables_repo.v_config import config_width, config_height
 
 # main geometry
 main_width = config_width
@@ -18,6 +18,7 @@ game_height = int(game_height)
 game_geometry = str(game_width) + "x" + str(game_height)
 
 # cheatsheet geometry
+# image resolution
 cheatsheet_width = 2560
 cheatsheet_height = 2239
 
@@ -31,6 +32,7 @@ cheatsheet_height = int(cheatsheet_height)
 cheatsheet_geometry = str(cheatsheet_width) + "x" + str(cheatsheet_height)
 
 # documentation geometry
+# image resolution
 documentation_width = 2879
 documentation_height = 2159
 

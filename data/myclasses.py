@@ -1,7 +1,8 @@
 # consolidate classes into one file
 
 # imports
-from class_repo.c_other import ToolTip, MyButton, MyImageButton, MyCycleButton, MyCanvas, MyEntry, MyOutputEntry, \
+from class_repo.c_other import ToolTip, MyButton, MyImageButton, MyToggleButton, MyCycleButton3, MyCanvas, MyEntry, \
+    MyOutputEntry, \
     MyFrame, MyFrameWBP, MyInputFrame, MyOutputFrame, MyLabel, MyScale, MyInputScale
 
 from class_repo.c_main import MyMainFrame

@@ -4,10 +4,10 @@
 from Tkinter import \
     Toplevel, Frame, Canvas, Label, Button, Scale, Entry, \
     LEFT, HORIZONTAL, FLAT, RIDGE, SOLID, StringVar, N
+from data.myfunctions import GrayScale
 from data.myvariables import \
     MyFonts, canvas_relx, canvas_rely, canvas_width, canvas_height, \
     scale_relwidth, scale_relheight
-from data.myfunctions import GrayScale
 
 
 # Defining Object ToolTip
@@ -145,8 +145,55 @@ class MyImageButton(object):
         self.button.place(relx=relx, rely=rely, relwidth=relwidth, relheight=relheight)
 
 
-# Creating MyCycleButton
-class MyCycleButton(object):
+# Creating MyToggleButton
+class MyToggleButton(object):
+    def __init__(self, parent, text, relx, rely):
+        # assigning parameters to attributes
+        self.parent = parent
+        self.text = text
+        self.relx = relx
+        self.rely = rely
+
+        self.relwidth = 0.20
+        self.relheight = 0.20 / 2
+
+        self.enabled = False
+
+        self.create_title_label()
+        self.create_frames()
+
+    def create_title_label(self):
+        self.title_label = MyLabel(self.parent, self.text, self.relx, self.rely - 0.05)
+        self.title_label.label.configure(font=MyFonts['LargeBold'])
+
+    def create_frames(self):
+        self.pf = Frame(self.parent)
+        self.pf.configure(bg=GrayScale(0))
+        self.pf.place(relx=self.relx, rely=self.rely, relwidth=self.relwidth, relheight=self.relheight)
+
+        self.f1 = MyFrame(self.pf, GrayScale(80))
+        self.f2 = MyFrame(self.pf, GrayScale(60))
+
+        self.b1 = MyButton(self.f1.frame, 'Disabled', self.func1, 0, 0)
+        self.b2 = MyButton(self.f2.frame, 'Enabled', self.func2, 0, 0)
+
+        self.b1.button.configure(bg=GrayScale(40), activebackground=GrayScale(180))
+        self.b2.button.configure(bg=GrayScale(180), activebackground=GrayScale(40), fg=GrayScale(20))
+
+        self.b1.button.place(relwidth=1, relheight=1)
+        self.b2.button.place(relwidth=1, relheight=1)
+
+    def func1(self):
+        self.f2.frame.tkraise()
+        self.enabled = True
+
+    def func2(self):
+        self.f1.frame.tkraise()
+        self.enabled = False
+
+
+# Creating MyCycleButton3
+class MyCycleButton3(object):
     def __init__(self, parent, options_list, frames_list, relx, rely):
         # assigning parameters to attributes
         self.parent = parent

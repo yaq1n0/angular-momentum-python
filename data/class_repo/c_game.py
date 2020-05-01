@@ -4,9 +4,9 @@
 # imports
 from Tkinter import N
 from random import shuffle
-from data.myvariables import dev, MyFonts
-from data.myfunctions import GrayScale
 from data.myclasses import MyFrame, MyLabel, MyButton, MyQuestion
+from data.myfunctions import GrayScale
+from data.myvariables import dev, MyFonts
 
 
 class MyGameFrame(object):

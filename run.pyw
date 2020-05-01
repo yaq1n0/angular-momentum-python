@@ -5,12 +5,12 @@ from Tkinter import Tk
 from tkMessageBox import askquestion
 from os import execv
 from sys import executable, argv
+from data.myclasses import MyMainFrame, MyGameFrame, MyImageFrame, MyFrame, MyButton, MyLabel
+from data.myfunctions import GrayScale
 from data.myvariables import dev, MyFonts, ask_again_list, \
     start_geometry, main_geometry, game_geometry, cheatsheet_geometry, documentation_geometry, \
     start_width, start_height, main_width, main_height, game_height, game_width, \
     cheatsheet_width, cheatsheet_height, documentation_width, documentation_height
-from data.myfunctions import GrayScale
-from data.myclasses import MyMainFrame, MyGameFrame, MyImageFrame, MyFrame, MyButton, MyLabel
 
 # first time variables
 ft_main = True
@@ -27,6 +27,7 @@ in_documentation = False
 # ask again boolean variables
 ask_goto_start_again_bool = True
 ask_goto_documentation_again_bool = True
+ask_open_preferences_again_bool = True
 
 # creating root
 root = Tk()
@@ -149,7 +150,7 @@ def goto_documentation():
     in_documentation = True
 
 
-# resart and quit functions
+# restart and quit functions
 def program_restart():
     if dev:
         print '[program] restart'
@@ -265,4 +266,5 @@ footnote_label.label.place(relwidth=0.5, relheight=0.25)
 
 goto_start()
 
+# mainloop
 root.mainloop()

@@ -1,7 +1,7 @@
 # for other modules
 
 # imports
-from data.myvariables import main_width, main_height
+from data.variables_repo.v_geometry import main_width, main_height
 
 # for all
 ask_again_list = ['Do Not Ask Again?', 'Do you want to disable further alerts like this?']

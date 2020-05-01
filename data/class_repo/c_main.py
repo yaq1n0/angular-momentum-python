@@ -3,17 +3,17 @@
 
 # imports
 from Tkinter import END
-from data.myvariables import dev, tooltips, MyFonts, \
-    frame_bottom_pad1, fb_rely_primary, fb_rely_secondary, \
-    canvas_width, canvas_height, particle_constant, circle_constant, \
-    start_geometry, start_width, start_height, main_geometry, main_width, main_height
+from data.myclasses import MyFrame, MyFrameWBP, MyInputFrame, MyOutputFrame, MyCanvas, MyLabel, MyScale, MyInputScale, \
+    MyOutputEntry, \
+    MyButton, MyImageButton, MyCycleButton3
 from data.myfunctions import CreateToolTip, CreateTkImage, GrayScale, atl, \
     Moment_Inertia, Angular_Momentum, Linear_Momentum, \
     Rotational_Kinetic_Energy, Linear_Kinetic_Energy, TKE, \
     orbiting_particle_animation, rotating_circle_animation, rolling_circle_animation
-from data.myclasses import MyFrame, MyFrameWBP, MyInputFrame, MyOutputFrame, MyCanvas, MyLabel, MyScale, MyInputScale, \
-    MyOutputEntry, \
-    MyButton, MyImageButton, MyCycleButton
+from data.myvariables import dev, tooltips, MyFonts, \
+    frame_bottom_pad1, fb_rely_primary, fb_rely_secondary, \
+    canvas_width, canvas_height, particle_constant, circle_constant, \
+    start_geometry, start_width, start_height, main_geometry, main_width, main_height
 
 
 class MyMainFrame(object):
@@ -90,11 +90,11 @@ class MyMainFrame(object):
 
         self.exit_as.button.place(relwidth=0.125, relheight=0.0625)
 
-        self.frame_cycle = MyCycleButton(self.main_pf1.frame,
-                                         ['Orbiting Particle', 'Rotating Circle', 'Rolling Circle'],
-                                         [self.scales.frame, self.frame1.frame, self.frame2.frame, self.frame3.frame],
-                                         0.85, fb_rely_primary
-                                         )
+        self.frame_cycle = MyCycleButton3(self.main_pf1.frame,
+                                          ['Orbiting Particle', 'Rotating Circle', 'Rolling Circle'],
+                                          [self.scales.frame, self.frame1.frame, self.frame2.frame, self.frame3.frame],
+                                          0.85, fb_rely_primary
+                                          )
 
     def create_animation_frame(self):
         if dev:
@@ -167,12 +167,12 @@ class MyMainFrame(object):
 
         self.animate_button_1 = MyButton(self.frame1.frame, 'Animate', self.animate1, 0.05, fb_rely_secondary)
         self.frame1_canvas = MyCanvas(self.frame1.frame)
-        self.frame1_cycle = MyCycleButton(self.frame1.frame,
-                                          ['Basic', 'Momentum', 'Energy'],
-                                          [self.scales.frame, self.frame1a.frame, self.frame1b.frame,
-                                           self.frame1c.frame],
-                                          0.85, fb_rely_secondary
-                                          )
+        self.frame1_cycle = MyCycleButton3(self.frame1.frame,
+                                           ['Basic', 'Momentum', 'Energy'],
+                                           [self.scales.frame, self.frame1a.frame, self.frame1b.frame,
+                                            self.frame1c.frame],
+                                           0.85, fb_rely_secondary
+                                           )
 
         self.create_frame1a()
         self.create_frame1b()
@@ -190,12 +190,12 @@ class MyMainFrame(object):
 
         self.animate_button_2 = MyButton(self.frame2.frame, 'Animate', self.animate2, 0.05, fb_rely_secondary)
         self.frame2_canvas = MyCanvas(self.frame2.frame)
-        self.frame2_cycle = MyCycleButton(self.frame2.frame,
-                                          ['Basic', 'Momentum', 'Energy'],
-                                          [self.scales.frame, self.frame2a.frame, self.frame2b.frame,
-                                           self.frame2c.frame],
-                                          0.85, fb_rely_secondary
-                                          )
+        self.frame2_cycle = MyCycleButton3(self.frame2.frame,
+                                           ['Basic', 'Momentum', 'Energy'],
+                                           [self.scales.frame, self.frame2a.frame, self.frame2b.frame,
+                                            self.frame2c.frame],
+                                           0.85, fb_rely_secondary
+                                           )
 
         self.create_frame2a()
         self.create_frame2b()
@@ -213,12 +213,12 @@ class MyMainFrame(object):
 
         self.animate_button_3 = MyButton(self.frame3.frame, 'Animate', self.animate3, 0.05, fb_rely_secondary)
         self.frame3_canvas = MyCanvas(self.frame3.frame)
-        self.frame3_cycle = MyCycleButton(self.frame3.frame,
-                                          ['Basic', 'Momentum', 'Energy'],
-                                          [self.scales.frame, self.frame3a.frame, self.frame3b.frame,
-                                           self.frame3c.frame],
-                                          0.85, fb_rely_secondary
-                                          )
+        self.frame3_cycle = MyCycleButton3(self.frame3.frame,
+                                           ['Basic', 'Momentum', 'Energy'],
+                                           [self.scales.frame, self.frame3a.frame, self.frame3b.frame,
+                                            self.frame3c.frame],
+                                           0.85, fb_rely_secondary
+                                           )
 
         self.create_frame3a()
         self.create_frame3b()

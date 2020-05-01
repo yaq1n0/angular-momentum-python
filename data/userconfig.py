@@ -11,5 +11,5 @@ font_size = 12
 # enable tooltips
 enable_tooltips = True
 
-# enable developer mode
+# enable developer
 enable_developer = True

@@ -5,8 +5,8 @@ from Tkinter import ALL
 from tkMessageBox import askquestion
 from time import time
 from math import pi, sin, cos
-from data.myvariables import dev, ask_again_list, spoke_step, platform_width, part_radius, circum_width
 from data.myfunctions import dtr, GrayScale
+from data.myvariables import dev, ask_again_list, spoke_step, platform_width, part_radius, circum_width
 
 # default var states
 radius_error_ask_bool = True
@@ -83,8 +83,10 @@ def orbiting_particle_animation(root, canvas, x_pos, y_pos, radius, ang_vel, gra
 
     # orbiting particle
     while True:
+        old_time = 0
         for theta in range(0, 360, int(granularity)):
             c_start = time()
+
             ref_ms = int(1000 * ((1.0 / float(ang_freq)) / (360.0 / float(granularity))))
             x = x_pos + (float(radius) * sin(dtr(theta)))
             y = y_pos + (float(-radius) * cos(dtr(theta)))
@@ -96,9 +98,14 @@ def orbiting_particle_animation(root, canvas, x_pos, y_pos, radius, ang_vel, gra
                                           )
             canvas.update()
             root.after(ref_ms, canvas.delete(orb_part))
+
             c_end = time()
-            if dev:
-                print '[animation] time per cycle', round(c_end - c_start, 2)
+            new_time = c_end - c_start
+
+            if dev and round(new_time, 2) != round(old_time, 2):
+                print '[animation] time per cycle', round(new_time, 2)
+
+            old_time = new_time
 
 
 # animate rotating circle
@@ -159,8 +166,10 @@ def rotating_circle_animation(root,
                        )
 
     while True:
+        old_time = 0
         for theta in range(0, 360, int(granularity)):
             c_start = time()
+
             ref_ms = int(1000 * ((1.0 / float(ang_freq)) / (360.0 / float(granularity))))
 
             line1 = ttl(canvas, x_pos, y_pos, radius, theta + (0 * spoke_step))
@@ -170,8 +179,14 @@ def rotating_circle_animation(root,
 
             canvas.update()
             root.after(ref_ms, canvas.delete(line1, line2, line3, line4))
+
             c_end = time()
-            print '[animation] time per cycle', round(c_end - c_start, 2)
+            new_time = c_end - c_start
+
+            if dev and round(new_time, 2) != round(old_time, 2):
+                print '[animation] time per cycle', round(new_time, 2)
+
+            old_time = new_time
 
 
 # animate rolling circle
@@ -227,8 +242,10 @@ def rolling_circle_animation(root,
     rec_num = 0
 
     while True:
+        old_time = 0
         for theta in range(0, 360, int(granularity)):
             c_start = time()
+
             # circumference
             canvas.create_oval(x_pos - radius,
                                y_pos - radius,
@@ -281,4 +298,9 @@ def rolling_circle_animation(root,
             root.after(ref_ms, canvas.delete(ALL))
 
             c_end = time()
-            print '[animation] time per cycle', round(c_end - c_start, 2)
+            new_time = c_end - c_start
+
+            if dev and round(new_time, 2) != round(old_time, 2):
+                print '[animation] time per cycle', round(new_time, 2)
+
+            old_time = new_time
