@@ -7,10 +7,17 @@ from os import execv
 from sys import executable, argv
 from data.myclasses import MyMainFrame, MyGameFrame, MyImageFrame, MyFrame, MyButton, MyLabel
 from data.myfunctions import GrayScale
+from data.programconfig.f_programconfig import setGotoStartFalse, setGotoDocFalse
 from data.myvariables import dev, MyFonts, ask_again_list, \
     start_geometry, main_geometry, game_geometry, cheatsheet_geometry, documentation_geometry, \
     start_width, start_height, main_width, main_height, game_height, game_width, \
     cheatsheet_width, cheatsheet_height, documentation_width, documentation_height
+from data.myvariables import ask_goto_start_again_bool as agsab
+from data.myvariables import ask_goto_documentation_again_bool as agdab
+
+# # assigning imported variables to global variables
+ask_goto_start_again_bool = agsab
+ask_goto_documentation_again_bool = agdab
 
 # first time variables
 ft_main = True
@@ -23,11 +30,6 @@ at_start = True
 Fresh = True
 in_game = False
 in_documentation = False
-
-# ask again boolean variables
-ask_goto_start_again_bool = True
-ask_goto_documentation_again_bool = True
-ask_open_preferences_again_bool = True
 
 # creating root
 root = Tk()
@@ -185,6 +187,7 @@ def goto_start_bind(event):
 
             if ask_goto_start_again == 'yes':
                 ask_goto_start_again_bool = False
+                setGotoStartFalse()
 
             goto_start()
 
@@ -210,6 +213,7 @@ def goto_documentation_bind(event):
 
             if ask_goto_documentation_again == 'yes':
                 ask_goto_documentation_again_bool = False
+                setGotoDocFalse()
 
             goto_start()
             goto_documentation()

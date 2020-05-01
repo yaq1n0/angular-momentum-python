@@ -16,3 +16,6 @@ from data.variables_repo.v_modules import ask_again_list, \
     scale_relwidth, scale_relheight, particle_constant, circle_constant, \
     part_radius, circum_width, spoke_width, spoke_step, platform_width, \
     color_green, color_red
+
+from data.programconfig.main import ask_goto_start_again_bool, ask_goto_documentation_again_bool, \
+    ask_radius_error_bool, ask_ang_vel_error_bool

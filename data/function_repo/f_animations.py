@@ -6,11 +6,14 @@ from tkMessageBox import askquestion
 from time import time
 from math import pi, sin, cos
 from data.myfunctions import dtr, GrayScale
+from data.programconfig.f_programconfig import setRadiusFalse, setAngVelFalse
 from data.myvariables import dev, ask_again_list, spoke_step, platform_width, part_radius, circum_width
+from data.myvariables import ask_radius_error_bool as areb
+from data.myvariables import ask_ang_vel_error_bool as aaveb
 
-# default var states
-radius_error_ask_bool = True
-ang_vel_error_ask_bool = True
+# assigning imported variables to global variables
+ask_radius_error_bool = areb
+ask_ang_vel_error_bool = aaveb
 
 
 # line at theta degrees from x_pos, y_pos to x, y (for animate_rotating_circle)
@@ -34,9 +37,9 @@ ang_vel_error_list = ('Run Animation Anyway?',
 
 # animate orbiting particle
 def orbiting_particle_animation(root, canvas, x_pos, y_pos, radius, ang_vel, granularity):
-    global radius_error_ask_bool, ang_vel_error_ask_bool
+    global ask_radius_error_bool, ask_ang_vel_error_bool
     # checking value ranges
-    if radius >= 180 and radius_error_ask_bool:
+    if radius >= 180 and ask_radius_error_bool:
         radius_error = askquestion(radius_error_list[0], radius_error_list[1])
         if radius_error == 'no':
             return
@@ -45,9 +48,10 @@ def orbiting_particle_animation(root, canvas, x_pos, y_pos, radius, ang_vel, gra
             radius_error_ask = askquestion(ask_again_list[0], ask_again_list[1])
 
             if radius_error_ask == 'yes':
-                radius_error_ask_bool = False
+                ask_radius_error_bool = False
+                setRadiusFalse()
 
-    if ang_vel >= 10 and ang_vel_error_ask_bool:
+    if ang_vel >= 10 and ask_ang_vel_error_bool:
         ang_vel_error = askquestion(ang_vel_error_list[0], ang_vel_error_list[1])
 
         if ang_vel_error == 'no':
@@ -57,7 +61,8 @@ def orbiting_particle_animation(root, canvas, x_pos, y_pos, radius, ang_vel, gra
             ang_vel_error_ask = askquestion(ask_again_list[0], ask_again_list[1])
 
             if ang_vel_error_ask == 'yes':
-                ang_vel_error_ask_bool = False
+                ask_ang_vel_error_bool = False
+                setAngVelFalse()
 
     # angular frequency defined as angular velocity / 2pi
     ang_freq = ang_vel / (2 * pi)
@@ -116,9 +121,9 @@ def rotating_circle_animation(root,
                               radius,
                               ang_vel,
                               granularity):
-    global radius_error_ask_bool, ang_vel_error_ask_bool
+    global ask_radius_error_bool, ask_ang_vel_error_bool
     # checking value ranges
-    if radius >= 200 and radius_error_ask_bool:
+    if radius >= 200 and ask_radius_error_bool:
         radius_error = askquestion(radius_error_list[0], radius_error_list[1])
         if radius_error == 'no':
             return
@@ -127,9 +132,10 @@ def rotating_circle_animation(root,
             radius_error_ask = askquestion(ask_again_list[0], ask_again_list[1])
 
             if radius_error_ask == 'yes':
-                radius_error_ask_bool = False
+                ask_radius_error_bool = False
+                setRadiusFalse()
 
-    if ang_vel >= 10 and ang_vel_error_ask_bool:
+    if ang_vel >= 10 and ask_ang_vel_error_bool:
         ang_vel_error = askquestion(ang_vel_error_list[0], ang_vel_error_list[1])
 
         if ang_vel_error == 'no':
@@ -139,7 +145,8 @@ def rotating_circle_animation(root,
             ang_vel_error_ask = askquestion(ask_again_list[0], ask_again_list[1])
 
             if ang_vel_error_ask == 'yes':
-                ang_vel_error_ask_bool = False
+                ask_ang_vel_error_bool = False
+                setAngVelFalse()
 
     # angular frequency defined as angular velocity / 2pi
     ang_freq = ang_vel / (2 * pi)
@@ -198,9 +205,9 @@ def rolling_circle_animation(root,
                              ang_vel,
                              granularity
                              ):
-    global radius_error_ask_bool, ang_vel_error_ask_bool
+    global ask_radius_error_bool, ask_ang_vel_error_bool
     # checking value ranges
-    if radius >= 200 and radius_error_ask_bool:
+    if radius >= 200 and ask_radius_error_bool:
         radius_error = askquestion(radius_error_list[0], radius_error_list[1])
         if radius_error == 'no':
             return
@@ -209,9 +216,10 @@ def rolling_circle_animation(root,
             radius_error_ask = askquestion(ask_again_list[0], ask_again_list[1])
 
             if radius_error_ask == 'yes':
-                radius_error_ask_bool = False
+                ask_radius_error_bool = False
+                setRadiusFalse()
 
-    if ang_vel >= 10 and ang_vel_error_ask_bool:
+    if ang_vel >= 10 and ask_ang_vel_error_bool:
         ang_vel_error = askquestion(ang_vel_error_list[0], ang_vel_error_list[1])
 
         if ang_vel_error == 'no':
@@ -221,7 +229,8 @@ def rolling_circle_animation(root,
             ang_vel_error_ask = askquestion(ask_again_list[0], ask_again_list[1])
 
             if ang_vel_error_ask == 'yes':
-                ang_vel_error_ask_bool = False
+                ask_ang_vel_error_bool = False
+                setAngVelFalse()
 
     circumference = 2.0 * pi * float(radius)
     ang_freq = ang_vel / (2 * pi)

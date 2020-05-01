@@ -6,7 +6,7 @@ from tkMessageBox import showwarning
 from os import execv
 from sys import executable, argv
 from data.myclasses import MyLabel, MyEntry, MyToggleButton, MyImageButton
-from data.myfunctions import GrayScale, CreateTkImage
+from data.myfunctions import GrayScale, CreateTkImage, setAllTrue
 from data.myvariables import start_geometry, start_width, start_height, MyFonts, dev
 from data.userconfig import width as config_width
 from data.userconfig import height as config_height
@@ -119,6 +119,9 @@ def funcReset():
 
     setattr(tooltips_button, 'enabled', True)
     tooltips_button.f2.frame.tkraise()
+
+    # reset all saved ask again boolean variables
+    setAllTrue()
 
 
 def funcSave():
