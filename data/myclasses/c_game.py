@@ -19,7 +19,7 @@ class MyGameFrame(object):
         self.create_end_frame()
 
         # creating vars
-        self.score_calulated = False
+        self.score_calculated = False
 
     def create_game_bf(self):
         if dev:
@@ -31,25 +31,25 @@ class MyGameFrame(object):
         if dev:
             print '[game] end frame created'
 
-        self.end_frame = MyFrame(self.game_bf.frame, GrayScale(80))
+        self.end_frame = MyFrame(self.game_bf, GrayScale(80))
 
-        self.end_label = MyLabel(self.end_frame.frame, 'You have finished the Quiz Game!', 0.25, 0.25)
-        self.end_label.label.configure(font=MyFonts['ExtraLarge'], bg=GrayScale(80), fg=GrayScale(220))
-        self.end_label.label.place(relwidth=0.50, relheight=0.15)
+        self.end_label = MyLabel(self.end_frame, 'You have finished the Quiz Game!', 0.25, 0.25)
+        self.end_label.configure(font=MyFonts['ExtraLarge'], bg=GrayScale(80), fg=GrayScale(220))
+        self.end_label.place(relwidth=0.50, relheight=0.15)
 
-        self.score_button = MyButton(self.end_frame.frame, 'Calculate Score', self.calc_score, 0.45, 0.45)
+        self.score_button = MyButton(self.end_frame, 'Calculate Score', self.calc_score, 0.45, 0.45)
 
-        self.credits_label = MyLabel(self.end_frame.frame, 'Questions by:'
-                                                           '\nLian Chao Hooi', 0.25, 0.85)
+        self.credits_label = MyLabel(self.end_frame, 'Questions by:'
+                                                     '\nLian Chao Hooi', 0.25, 0.85)
 
-        self.credits_label.label.configure(bg=GrayScale(80), anchor=N, font=MyFonts['Default'])
-        self.credits_label.label.place(relwidth=0.50)
+        self.credits_label.configure(bg=GrayScale(80), anchor=N, font=MyFonts['Default'])
+        self.credits_label.place(relwidth=0.50)
 
     def create_questions(self):
         if dev:
             print '[game] questions created'
 
-        self.q1 = MyQuestion(self.game_bf.frame,
+        self.q1 = MyQuestion(self.game_bf,
                              'What is the moment of inertia, I for a disc?',
                              'I = MR²',
                              'I = ¹⁄₁₂ ML²',
@@ -63,7 +63,7 @@ class MyGameFrame(object):
                              3
                              )
 
-        self.q2 = MyQuestion(self.game_bf.frame,
+        self.q2 = MyQuestion(self.game_bf,
                              'What is the Rotational Kinetic Energy of a rolling disc?',
                              '0.5 mv²',
                              '0.25 mr²w²',
@@ -82,7 +82,7 @@ class MyGameFrame(object):
                              2
                              )
 
-        self.q3 = MyQuestion(self.game_bf.frame,
+        self.q3 = MyQuestion(self.game_bf,
                              'What is the angular momentum, L for an orbiting particle?',
                              'L = mr²w',
                              'L = mv',
@@ -101,7 +101,7 @@ class MyGameFrame(object):
                              1
                              )
 
-        self.q4 = MyQuestion(self.game_bf.frame,
+        self.q4 = MyQuestion(self.game_bf,
                              'Rate of change of angular momentum is equal to ___________?',
                              'torque',
                              'force',
@@ -114,7 +114,7 @@ class MyGameFrame(object):
                              1
                              )
 
-        self.q5 = MyQuestion(self.game_bf.frame,
+        self.q5 = MyQuestion(self.game_bf,
                              'What is the unit for Angular Momentum?',
                              'kgm/s',
                              'kgm²/s²',
@@ -133,7 +133,7 @@ class MyGameFrame(object):
                              3
                              )
 
-        self.q6 = MyQuestion(self.game_bf.frame,
+        self.q6 = MyQuestion(self.game_bf,
                              'What real force keeps a satellite in a circular orbit around the earth?',
                              'Thrust',
                              'Gravity',
@@ -148,7 +148,7 @@ class MyGameFrame(object):
                              2
                              )
 
-        self.q7 = MyQuestion(self.game_bf.frame,
+        self.q7 = MyQuestion(self.game_bf,
                              'The velocity is always __________ to the line of a circle.',
                              'tangent',
                              'towards the center',
@@ -161,7 +161,7 @@ class MyGameFrame(object):
                              1
                              )
 
-        self.q8 = MyQuestion(self.game_bf.frame,
+        self.q8 = MyQuestion(self.game_bf,
                              'What is the force that keeps an object in circular motion?',
                              'Centrifugal force',
                              'Centripetal force',
@@ -179,7 +179,7 @@ class MyGameFrame(object):
                              2
                              )
 
-        self.q9 = MyQuestion(self.game_bf.frame,
+        self.q9 = MyQuestion(self.game_bf,
                              'What is the moment of inertia, I for a particle?',
                              'I = MR²',
                              'I = ¹⁄₁₂ ML²',
@@ -192,7 +192,7 @@ class MyGameFrame(object):
                              1
                              )
 
-        self.q10 = MyQuestion(self.game_bf.frame,
+        self.q10 = MyQuestion(self.game_bf,
                               'What is the Rotational Kinetic Energy of an orbiting particle?',
                               '0.5 mv²',
                               '0.5 mr²w²',
@@ -211,7 +211,7 @@ class MyGameFrame(object):
                               2
                               )
 
-        self.q11 = MyQuestion(self.game_bf.frame,
+        self.q11 = MyQuestion(self.game_bf,
                               'What is the moment of inertia, I for a disc?',
                               'I = MR²',
                               'I = ¹⁄₁₂ ML²',
@@ -225,7 +225,7 @@ class MyGameFrame(object):
                               4
                               )
 
-        self.q12 = MyQuestion(self.game_bf.frame,
+        self.q12 = MyQuestion(self.game_bf,
                               'Rate of change of linear momentum is equal to ___________?',
                               'torque',
                               'force',
@@ -238,7 +238,7 @@ class MyGameFrame(object):
                               2
                               )
 
-        self.q13 = MyQuestion(self.game_bf.frame,
+        self.q13 = MyQuestion(self.game_bf,
                               'What is the unit for Moment of Inertia?',
                               'kgm/s',
                               'kgm²/s²',
@@ -257,7 +257,7 @@ class MyGameFrame(object):
                               4
                               )
 
-        self.q14 = MyQuestion(self.game_bf.frame,
+        self.q14 = MyQuestion(self.game_bf,
                               'What is the unit for Torque?',
                               'kgm/s',
                               'kgm²/s²',
@@ -276,7 +276,7 @@ class MyGameFrame(object):
                               2
                               )
 
-        self.q15 = MyQuestion(self.game_bf.frame,
+        self.q15 = MyQuestion(self.game_bf,
                               'What is the Linear Kinetic Energy of a rolling ball?',
                               '0.5 mv²',
                               '0.5 mr²w²',
@@ -315,12 +315,12 @@ class MyGameFrame(object):
         for question in self.qlist:
             question.pf.destroy()
 
-        if self.score_calulated:
-            self.score_label.label.destroy()
-            self.score_calulated = False
+        if self.score_calculated:
+            self.score_label.destroy()
+            self.score_calculated = False
 
     def calc_score(self):
-        if not self.score_calulated:
+        if not self.score_calculated:
             if dev:
                 print '[game] calculating final score'
 
@@ -330,13 +330,13 @@ class MyGameFrame(object):
                 if question.is_correct.get():
                     tmp_var += 1
 
-            self.score_label = MyLabel(self.end_frame.frame,
+            self.score_label = MyLabel(self.end_frame,
                                        'You got ' + str(tmp_var) + '/' + str(len(self.qlist)) + ' questions correct!',
                                        0.25, 0.55
                                        )
-            self.score_label.label.configure(font=MyFonts['LargeBold'], bg=GrayScale(80), fg=GrayScale(220))
-            self.score_label.label.place(relwidth=0.50, relheight=0.15)
+            self.score_label.configure(font=MyFonts['LargeBold'], bg=GrayScale(80), fg=GrayScale(220))
+            self.score_label.place(relwidth=0.50, relheight=0.15)
 
-            self.score_calulated = True
+            self.score_calculated = True
         else:
             return

@@ -7,7 +7,7 @@ from os import execv
 from sys import executable, argv
 from data.myclasses import MyMainFrame, MyGameFrame, MyImageFrame, MyFrame, MyButton, MyLabel
 from data.myfunctions import GrayScale
-from data.programconfig.f_programconfig import setGotoStartFalse, setGotoDocFalse
+from data.myfunctions.f_programconfig import setGotoStartFalse, setGotoDocFalse
 from data.myvariables import dev, MyFonts, ask_again_list, \
     start_geometry, main_geometry, game_geometry, cheatsheet_geometry, documentation_geometry, \
     start_width, start_height, main_width, main_height, game_height, game_width, \
@@ -54,7 +54,7 @@ def goto_start():
                   + '+' + str(root.winfo_screenheight() / 2 - start_height / 2))
     root.title('Rotational Motion')
 
-    start_bf.frame.tkraise()
+    start_bf.tkraise()
 
     at_start = True
     in_game = False
@@ -75,11 +75,11 @@ def goto_main():
         if main_bf.in_animation_settings:
             root.geometry(start_geometry + '+' + str(root.winfo_screenwidth() / 2 - start_width / 2)
                           + '+' + str(root.winfo_screenheight() / 2 - start_height / 2))
-            main_bf.main_bf.frame.tkraise()
+            main_bf.main_bf.tkraise()
         if not main_bf.in_animation_settings:
             root.geometry(main_geometry + '+' + str(root.winfo_screenwidth() / 2 - main_width / 2)
                           + '+' + str(root.winfo_screenheight() / 2 - main_height / 2))
-            main_bf.main_bf.frame.tkraise()
+            main_bf.main_bf.tkraise()
 
     at_start = False
     Fresh = False
@@ -99,13 +99,13 @@ def goto_game():
         ft_game = False
         game_bf.create_questions()
         game_bf.shuffle_questions()
-        game_bf.game_bf.frame.tkraise()
+        game_bf.game_bf.tkraise()
 
     else:
         game_bf.destroy_questions()
         game_bf.create_questions()
         game_bf.shuffle_questions()
-        game_bf.game_bf.frame.tkraise()
+        game_bf.game_bf.tkraise()
 
     at_start = False
     Fresh = False
@@ -122,7 +122,7 @@ def goto_cheatsheet():
     root.title('Improve Your Understanding')
 
     if ft_cheatsheet:
-        cheatsheet_bf = MyImageFrame(root, 'data/images/cheatsheet.jpg', cheatsheet_width, cheatsheet_height)
+        cheatsheet_bf = MyImageFrame(root, 'data/images/cheatsheet.png', cheatsheet_width, cheatsheet_height)
         ft_cheatsheet = False
     else:
         cheatsheet_bf.img_frame.frame.tkraise()
@@ -141,7 +141,7 @@ def goto_documentation():
     root.title('Program Documentation')
 
     if ft_documentation:
-        documentation_bf = MyImageFrame(root, 'data/images/documentation.jpg', documentation_width,
+        documentation_bf = MyImageFrame(root, 'data/images/documentation.png', documentation_width,
                                         documentation_height)
         ft_documentation = False
     else:
@@ -245,30 +245,31 @@ root.bind('<Control-h>', goto_documentation_bind)
 # start_bf objects
 if dev:
     print '[start] creating objects'
-title_label = MyLabel(start_bf.frame, 'Welcome!', 0.25, 0.05)
-title_label.label.configure(bg=GrayScale(20), font=MyFonts['ExtraLargeBold'])
-title_label.label.place(relwidth=0.5)
+title_label = MyLabel(start_bf, 'Welcome!', 0.25, 0.05)
+title_label.configure(bg=GrayScale(20), font=MyFonts['ExtraLargeBold'])
+title_label.place(relwidth=0.5)
 
-button1 = MyButton(start_bf.frame, 'Interactive Experience', goto_main, 0.175, 0.15)
-button1.button.place(relwidth=0.65)
+button1 = MyButton(start_bf, 'Interactive Experience', goto_main, 0.175, 0.15)
+button1.place(relwidth=0.65)
 
-button2 = MyButton(start_bf.frame, 'Test Your Understanding', goto_game, 0.175, 0.30)
-button2.button.place(relwidth=0.65)
+button2 = MyButton(start_bf, 'Test Your Understanding', goto_game, 0.175, 0.30)
+button2.place(relwidth=0.65)
 
-button3 = MyButton(start_bf.frame, 'Improve Your Understanding', goto_cheatsheet, 0.175, 0.45)
-button3.button.place(relwidth=0.65)
+button3 = MyButton(start_bf, 'Improve Your Understanding', goto_cheatsheet, 0.175, 0.45)
+button3.place(relwidth=0.65)
 
-button4 = MyButton(start_bf.frame, 'Program Documentation', goto_documentation, 0.175, 0.60)
-button4.button.place(relwidth=0.65)
+button4 = MyButton(start_bf, 'Program Documentation', goto_documentation, 0.175, 0.60)
+button4.place(relwidth=0.65)
 
-footnote_label = MyLabel(start_bf.frame,
+footnote_label = MyLabel(start_bf,
                          'created by:\n Team 14\nYaqin Hasan\nLian Chao Hooi\nIbraheem El-Nahta\nJaden Pang',
                          0.25, 0.75
                          )
-footnote_label.label.configure(bg=GrayScale(20), fg=GrayScale(60), font=MyFonts['Default'])
-footnote_label.label.place(relwidth=0.5, relheight=0.25)
+footnote_label.configure(bg=GrayScale(20), fg=GrayScale(60), font=MyFonts['Default'])
+footnote_label.place(relwidth=0.5, relheight=0.25)
 
 goto_start()
+goto_main()
 
 # mainloop
 root.mainloop()

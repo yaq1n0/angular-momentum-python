@@ -12,4 +12,4 @@ font_size = 12
 enable_tooltips = True
 
 # enable developer
-enable_developer = False
+enable_developer = True

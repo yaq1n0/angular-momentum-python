@@ -1,7 +1,7 @@
 # creating geometry values
 
 # imports
-from data.variables_repo.v_config import config_width, config_height
+from data.myvariables.v_config import config_width, config_height
 
 # main geometry
 main_width = config_width
@@ -19,8 +19,8 @@ game_geometry = str(game_width) + "x" + str(game_height)
 
 # cheatsheet geometry
 # image resolution
-cheatsheet_width = 2560
-cheatsheet_height = 2239
+cheatsheet_width = 2000
+cheatsheet_height = 1750
 
 cheatsheet_aspect = float(cheatsheet_width) / float(cheatsheet_height)
 cheatsheet_resize_factor = float(main_height) / float(cheatsheet_height)
@@ -33,8 +33,8 @@ cheatsheet_geometry = str(cheatsheet_width) + "x" + str(cheatsheet_height)
 
 # documentation geometry
 # image resolution
-documentation_width = 2879
-documentation_height = 2159
+documentation_width = 2000
+documentation_height = 1750
 
 documentation_aspect = float(documentation_width) / float(documentation_height)
 documentation_resize_factor = float(main_height) / float(documentation_height)

@@ -16,6 +16,6 @@ class MyImageFrame(object):
 
         img_object = CreateTkImage(path, x_size, y_size)
 
-        self.img_label = Label(self.img_frame.frame, image=img_object)
+        self.img_label = Label(self.img_frame, image=img_object)
         self.img_label.image = img_object
         self.img_label.place(relx=0, rely=0, relwidth=1, relheight=1)
