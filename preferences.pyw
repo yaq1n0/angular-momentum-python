@@ -2,7 +2,7 @@
 
 # imports
 from Tkinter import Tk, END
-from tkMessageBox import showwarning
+from tkMessageBox import showwarning, showinfo
 from os import execv
 from sys import executable, argv
 from data.myclasses import MyLabel, MyEntry, MyToggleButton, MyImageButton
@@ -123,6 +123,8 @@ def funcReset():
     # reset all saved ask again boolean variables
     setAllTrue()
 
+    showinfo('Settings Reset', 'All settings reset to default')
+
 
 def funcSave():
     # save and write to config
@@ -134,6 +136,10 @@ def funcSave():
                     font_size_entry.entry.get(),
                     getattr(tooltips_button, 'enabled')
                     )
+
+    showinfo('Settings Saved', 'Settings Saved, click OK to restart')
+
+    program_restart()
 
 
 # restart and quit functions
@@ -167,32 +173,36 @@ root.bind('<Control-q>', program_quit_bind)
 root.bind('<Control-r>', program_restart_bind)
 
 # creating objects
-title_label = MyLabel(root, 'Modify Program Settings', 0.25, 0.10)
-title_label.label.configure(font=MyFonts['LargeBold'])
-title_label.label.place(relwidth=0.5)
+title_label = MyLabel(root, 'Modify Program Settings', 0.05, 0.05)
+title_label.label.configure(font=MyFonts['ExtraLargeBold'])
+title_label.label.place(relwidth=0.9)
 
-width_entry = MyEntry(root, 'Window Width (pixels)', 0.25, 0.25)
+width_entry = MyEntry(root, 'Window Width (pixels)', 0.25, 0.20)
 width_entry.label.configure(font=MyFonts['LargeBold'])
+width_entry.label.place(relwidth=0.90, relx=0.05)
 width_entry.entry.place(relwidth=0.50)
 
-height_entry = MyEntry(root, 'Window Height (pixels)', 0.25, 0.40)
+height_entry = MyEntry(root, 'Window Height (pixels)', 0.25, 0.35)
 height_entry.label.configure(font=MyFonts['LargeBold'])
+height_entry.label.place(relwidth=0.90, relx=0.05)
 height_entry.entry.place(relwidth=0.50)
 
-font_entry = MyEntry(root, 'Font Name', 0.25, 0.55)
+font_entry = MyEntry(root, 'Font Name', 0.25, 0.50)
 font_entry.label.configure(font=MyFonts['LargeBold'])
+font_entry.label.place(relwidth=0.90, relx=0.05)
 font_entry.entry.place(relwidth=0.50)
 
-font_size_entry = MyEntry(root, 'Font Size (points)', 0.25, 0.70)
+font_size_entry = MyEntry(root, 'Font Size (points)', 0.25, 0.65)
 font_size_entry.label.configure(font=MyFonts['LargeBold'])
+font_size_entry.label.place(relwidth=0.90, relx=0.05)
 font_size_entry.entry.place(relwidth=0.50)
 
-tooltips_button = MyToggleButton(root, 'Tooltips', 0.25, 0.85)
+tooltips_button = MyToggleButton(root, 'Tooltips', 0.15, 0.80)
 
-reset_button = MyImageButton(root, GrayScale(20), CreateTkImage('data/images/reset.png', 48, 48), funcReset, 0.50, 0.85)
+reset_button = MyImageButton(root, GrayScale(20), CreateTkImage('data/images/reset.png', 48, 48), funcReset, 0.45, 0.82)
 reset_button.button.place(relwidth=0.14, relheight=0.07)
 
-save_button = MyImageButton(root, GrayScale(20), CreateTkImage('data/images/save.png', 48, 48), funcSave, 0.70, 0.85)
+save_button = MyImageButton(root, GrayScale(20), CreateTkImage('data/images/save.png', 48, 48), funcSave, 0.70, 0.82)
 save_button.button.place(relwidth=0.14, relheight=0.07)
 
 setAll()
