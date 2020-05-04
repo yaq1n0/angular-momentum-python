@@ -3,16 +3,16 @@
 
 # imports
 from Tkinter import END
-from c_other import MyFrame, MyFrameWBP1, MyFrameWBP2, MyInputFrame, MyOutputFrame, MyCanvas, MyLabel, MyScale, \
-    MyInputScale, \
-    MyOutputEntry, \
-    MyButton, MyImageButton, MyCycleButton3
+
+from c_other import MyFrame, MyFrameWBP1, MyInputFrame, MyOutputFrame, \
+    MyCanvas, MyLabel, MyScale, MyInputScale, MyOutputEntry, MyButton, MyImageButton, MyCycleButton3
+
 from data.myfunctions import CreateToolTip, CreateTkImage, GrayScale, atl, \
     Moment_Inertia, Angular_Momentum, Linear_Momentum, \
     Rotational_Kinetic_Energy, Linear_Kinetic_Energy, TKE, \
     orbiting_particle_animation, rotating_circle_animation, rolling_circle_animation
 from data.myvariables import dev, tooltips, MyFonts, \
-    frame_bottom_pad1, fb_rely_primary, fb_rely_secondary, \
+    fb_rely_primary, fb_rely_secondary, \
     canvas_width, canvas_height, particle_constant, circle_constant, \
     start_geometry, start_width, start_height, main_geometry, main_width, main_height
 

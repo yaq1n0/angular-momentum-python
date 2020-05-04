@@ -4,7 +4,10 @@
 # imports
 from Tkinter import N
 from random import shuffle
-from data.myclasses import MyFrame, MyLabel, MyButton, MyQuestion
+
+from c_other import MyFrame, MyLabel, MyButton
+from c_question import MyQuestion
+
 from data.myfunctions import GrayScale
 from data.myvariables import dev, MyFonts
 

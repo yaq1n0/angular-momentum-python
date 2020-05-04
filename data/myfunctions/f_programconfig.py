@@ -4,6 +4,7 @@
 
 
 # defining functions
+# set boolean values to False
 def setRadiusFalse():
     with open('data/myvariables/bool_radius.py', 'w') as myfile:
         myfile.write('ask_radius_error_bool = False\n')
@@ -24,6 +25,7 @@ def setGotoDocFalse():
         myfile.write('ask_goto_documentation_again_bool = False\n')
 
 
+# set boolean values to True
 def setRadiusTrue():
     with open('data/myvariables/bool_radius.py', 'w') as myfile:
         myfile.write('ask_radius_error_bool = True\n')
@@ -44,6 +46,7 @@ def setGotoDocTrue():
         myfile.write('ask_goto_documentation_again_bool = True\n')
 
 
+# set all boolean values back to True (default)
 def setAllTrue():
     setRadiusTrue()
     setAngVelTrue()

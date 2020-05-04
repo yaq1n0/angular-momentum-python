@@ -3,7 +3,9 @@
 # imports
 from Tkinter import BooleanVar, IntVar, StringVar, Frame, Label, Radiobutton, FLAT, N
 from tkMessageBox import showinfo, showerror
-from data.myclasses import MyButton
+
+from c_other import MyButton
+
 from data.myfunctions import GrayScale
 from data.myvariables import dev, MyFonts, color_green, color_red
 

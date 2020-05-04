@@ -1,7 +1,9 @@
 # creating geometry values
 
 # imports
-from data.myvariables.v_config import config_width, config_height
+# TODO: change config_width in GUI editor (project wide)
+from data.myvariables.userconfig import width as config_width
+from data.myvariables.userconfig import height as config_height
 
 # main geometry
 main_width = config_width
@@ -31,7 +33,7 @@ cheatsheet_width = int(cheatsheet_width)
 cheatsheet_height = int(cheatsheet_height)
 cheatsheet_geometry = str(cheatsheet_width) + "x" + str(cheatsheet_height)
 
-# documentation geometry
+# documentation geometry (coincidentally similar to cheatsheet)
 # image resolution
 documentation_width = 2000
 documentation_height = 1750

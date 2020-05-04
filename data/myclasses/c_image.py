@@ -2,7 +2,9 @@
 
 # imports
 from Tkinter import Label
-from data.myclasses import MyFrame
+
+from c_other import MyFrame
+
 from data.myfunctions import CreateTkImage, GrayScale
 from data.myvariables import dev
 

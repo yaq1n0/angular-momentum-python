@@ -3,9 +3,10 @@
 # imports
 from Tkinter import Toplevel, Frame, Canvas, Label, Button, Scale, Entry, \
     LEFT, HORIZONTAL, FLAT, RIDGE, SOLID, StringVar, N
+
 from data.myfunctions import GrayScale
 from data.myvariables import MyFonts, canvas_relx, canvas_rely, canvas_width, canvas_height, scale_relwidth, \
-    scale_relheight, frame_bottom_pad1, frame_bottom_pad2
+    scale_relheight, frame_bottom_pad1
 
 
 # Defining Object ToolTip
@@ -71,14 +72,6 @@ class MyFrameWBP1(MyFrame):
         MyFrame.__init__(self, parent, bgcolor)
 
 
-# Creating MyFrameWBP2
-class MyFrameWBP2(MyFrame):
-    relheight = 1 - frame_bottom_pad2
-
-    def __init__(self, parent, bgcolor):
-        MyFrame.__init__(self, parent, bgcolor)
-
-
 # Creating MyInputFrame
 class MyInputFrame(MyFrame):
     relwidth = 0.30
@@ -113,6 +106,32 @@ class MyCanvas(Canvas):
 
     def place_(self):
         self.place(relx=canvas_relx, rely=canvas_rely)
+
+
+class MyLabel(Label):
+    bgcolor = GrayScale(20)
+    fgcolor = GrayScale(220)
+
+    def __init__(self, parent, text, relx, rely):
+        self.parent = parent
+        self.text = text
+        self.relx = relx
+        self.rely = rely
+
+        Label.__init__(self, self.parent)
+
+        self.configure_()
+        self.place_()
+
+    def configure_(self):
+        self.configure(text=self.text)
+        self.configure(font=MyFonts['Default'])
+        self.configure(bg=self.bgcolor, fg=self.fgcolor)
+        self.configure(relief=FLAT, anchor=N)
+        self.configure(padx=2, pady=2)
+
+    def place_(self):
+        self.place(relx=self.relx, rely=self.rely)
 
 
 # Creating MyButton
@@ -347,32 +366,6 @@ class MyInputScale(MyScale):
         MyScale.__init__(self, parent, text, relx, rely)
 
 
-class MyLabel(Label):
-    bgcolor = GrayScale(20)
-    fgcolor = GrayScale(220)
-
-    def __init__(self, parent, text, relx, rely):
-        self.parent = parent
-        self.text = text
-        self.relx = relx
-        self.rely = rely
-
-        Label.__init__(self, self.parent)
-
-        self.configure_()
-        self.place_()
-
-    def configure_(self):
-        self.configure(text=self.text)
-        self.configure(font=MyFonts['Default'])
-        self.configure(bg=self.bgcolor, fg=self.fgcolor)
-        self.configure(relief=FLAT, anchor=N)
-        self.configure(padx=2, pady=2)
-
-    def place_(self):
-        self.place(relx=self.relx, rely=self.rely)
-
-
 # Creating MyEntry
 class MyEntry(Entry):
     charwidth = 20
@@ -394,7 +387,7 @@ class MyEntry(Entry):
         self.label_create_()
 
     def entry_configure_(self):
-        self.configure(width=self.charwidth)
+        self.configure(width=self.charwidth, font=MyFonts['Default'])
         self.configure(bg=self.bgcolor, fg=self.fgcolor)
         self.configure(relief=RIDGE, highlightthickness=2, bd=0)
 
@@ -403,6 +396,7 @@ class MyEntry(Entry):
 
     def label_create_(self):
         self.label = MyLabel(self.parent, self.text, self.relx, self.label_rely)
+        self.label.configure(font=MyFonts['Large'])
 
 
 # Creating MyOutputEntry

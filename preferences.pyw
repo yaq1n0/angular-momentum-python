@@ -5,14 +5,15 @@ from Tkinter import Tk, END
 from tkMessageBox import showwarning, showinfo
 from os import execv
 from sys import executable, argv
+
 from data.myclasses import MyLabel, MyEntry, MyToggleButton, MyImageButton
 from data.myfunctions import GrayScale, CreateTkImage, setAllTrue
 from data.myvariables import start_geometry, start_width, start_height, MyFonts, dev
-from data.userconfig import width as config_width
-from data.userconfig import height as config_height
-from data.userconfig import font as config_font
-from data.userconfig import font_size as config_font_size
-from data.userconfig import enable_tooltips as config_tooltips
+from data.myvariables.userconfig import width as config_width
+from data.myvariables.userconfig import height as config_height
+from data.myvariables.userconfig import font as config_font
+from data.myvariables.userconfig import font_size as config_font_size
+from data.myvariables.userconfig import enable_tooltips as config_tooltips
 
 # creating Tk window
 
@@ -28,7 +29,7 @@ root.configure(bg=GrayScale(20))
 # defining functions
 def openConfig():
     # open userconfig.py for full overwrite
-    myfile = open('data/userconfig.py', 'w')
+    myfile = open('data/myvariables/userconfig.py', 'w')
     return myfile
 
 
@@ -66,20 +67,20 @@ def writeConfig(file, width, height, font, font_size, tooltips_bool):
 
 def clearALL():
     # clear all entries in GUI
-    width_entry.entry.delete(0, END)
-    height_entry.entry.delete(0, END)
-    font_entry.entry.delete(0, END)
-    font_size_entry.entry.delete(0, END)
+    width_entry.delete(0, END)
+    height_entry.delete(0, END)
+    font_entry.delete(0, END)
+    font_size_entry.delete(0, END)
 
 
 def setAll():
     # set all entries in GUI from imported vars from userconfig.py
     clearALL()
 
-    width_entry.entry.insert(0, str(config_width))
-    height_entry.entry.insert(0, str(config_height))
-    font_entry.entry.insert(0, str(config_font))
-    font_size_entry.entry.insert(0, str(config_font_size))
+    width_entry.insert(0, str(config_width))
+    height_entry.insert(0, str(config_height))
+    font_entry.insert(0, str(config_font))
+    font_size_entry.insert(0, str(config_font_size))
 
     if config_tooltips:
         tooltips_button.func1()
@@ -91,8 +92,8 @@ def setAll():
 def checkAll():
     # checking that values are reasonable
     # currently only checks that resolution is 16 by 9 and is a common resolution
-    input_width = width_entry.entry.get()
-    input_height = height_entry.entry.get()
+    input_width = width_entry.get()
+    input_height = height_entry.get()
 
     width_list = ['1280', '1920', '2560', '3840']
     height_list = ['720', '1080', '1440', '2160']
@@ -112,13 +113,13 @@ def funcReset():
     # reset to defaults
     clearALL()
 
-    width_entry.entry.insert(0, '1280')
-    height_entry.entry.insert(0, '720')
-    font_entry.entry.insert(0, 'Helvetica')
-    font_size_entry.entry.insert(0, '12')
+    width_entry.insert(0, '1280')
+    height_entry.insert(0, '720')
+    font_entry.insert(0, 'Helvetica')
+    font_size_entry.insert(0, '12')
 
     setattr(tooltips_button, 'enabled', True)
-    tooltips_button.f2.frame.tkraise()
+    tooltips_button.f2.tkraise()
 
     # reset all saved ask again boolean variables
     setAllTrue()
@@ -130,10 +131,10 @@ def funcSave():
     # save and write to config
     if checkAll():
         writeConfig(openConfig(),
-                    width_entry.entry.get(),
-                    height_entry.entry.get(),
-                    font_entry.entry.get(),
-                    font_size_entry.entry.get(),
+                    width_entry.get(),
+                    height_entry.get(),
+                    font_entry.get(),
+                    font_size_entry.get(),
                     getattr(tooltips_button, 'enabled')
                     )
 
@@ -174,36 +175,32 @@ root.bind('<Control-r>', program_restart_bind)
 
 # creating objects
 title_label = MyLabel(root, 'Modify Program Settings', 0.05, 0.05)
-title_label.label.configure(font=MyFonts['ExtraLargeBold'])
-title_label.label.place(relwidth=0.9)
+title_label.configure(font=MyFonts['ExtraLargeBold'])
+title_label.place(relwidth=0.9)
 
 width_entry = MyEntry(root, 'Window Width (pixels)', 0.25, 0.20)
-width_entry.label.configure(font=MyFonts['LargeBold'])
 width_entry.label.place(relwidth=0.90, relx=0.05)
-width_entry.entry.place(relwidth=0.50)
+width_entry.place(relwidth=0.50)
 
 height_entry = MyEntry(root, 'Window Height (pixels)', 0.25, 0.35)
-height_entry.label.configure(font=MyFonts['LargeBold'])
 height_entry.label.place(relwidth=0.90, relx=0.05)
-height_entry.entry.place(relwidth=0.50)
+height_entry.place(relwidth=0.50)
 
 font_entry = MyEntry(root, 'Font Name', 0.25, 0.50)
-font_entry.label.configure(font=MyFonts['LargeBold'])
 font_entry.label.place(relwidth=0.90, relx=0.05)
-font_entry.entry.place(relwidth=0.50)
+font_entry.place(relwidth=0.50)
 
 font_size_entry = MyEntry(root, 'Font Size (points)', 0.25, 0.65)
-font_size_entry.label.configure(font=MyFonts['LargeBold'])
 font_size_entry.label.place(relwidth=0.90, relx=0.05)
-font_size_entry.entry.place(relwidth=0.50)
+font_size_entry.place(relwidth=0.50)
 
 tooltips_button = MyToggleButton(root, 'Tooltips', 0.15, 0.80)
 
 reset_button = MyImageButton(root, GrayScale(20), CreateTkImage('data/images/reset.png', 48, 48), funcReset, 0.45, 0.82)
-reset_button.button.place(relwidth=0.14, relheight=0.07)
+reset_button.place(relwidth=0.14, relheight=0.07)
 
 save_button = MyImageButton(root, GrayScale(20), CreateTkImage('data/images/save.png', 48, 48), funcSave, 0.70, 0.82)
-save_button.button.place(relwidth=0.14, relheight=0.07)
+save_button.place(relwidth=0.14, relheight=0.07)
 
 setAll()
 

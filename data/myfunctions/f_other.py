@@ -6,11 +6,6 @@ from math import pi
 from PIL import Image, ImageTk
 
 
-# PlaceHolder function for whatever
-def PlaceHolder():
-    showinfo('placeholder', 'feature to be added or enabled in later version')
-
-
 # create greyscale hex
 def GrayScale(num):
     if 0 <= num <= 255 and type(num) == int:

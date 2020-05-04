@@ -5,9 +5,9 @@ from Tkinter import Tk
 from tkMessageBox import askquestion
 from os import execv
 from sys import executable, argv
-from data.myclasses import MyMainFrame, MyGameFrame, MyImageFrame, MyFrame, MyButton, MyLabel
-from data.myfunctions import GrayScale
-from data.myfunctions.f_programconfig import setGotoStartFalse, setGotoDocFalse
+
+from data.myclasses import MyMainFrame, MyGameFrame, MyImageFrame, MyFrame, MyButton, MyImageButton, MyLabel
+from data.myfunctions import GrayScale, setGotoStartFalse, setGotoDocFalse, CreateTkImage
 from data.myvariables import dev, MyFonts, ask_again_list, \
     start_geometry, main_geometry, game_geometry, cheatsheet_geometry, documentation_geometry, \
     start_width, start_height, main_width, main_height, game_height, game_width, \
@@ -15,7 +15,7 @@ from data.myvariables import dev, MyFonts, ask_again_list, \
 from data.myvariables import ask_goto_start_again_bool as agsab
 from data.myvariables import ask_goto_documentation_again_bool as agdab
 
-# # assigning imported variables to global variables
+# assigning imported variables to global variables
 ask_goto_start_again_bool = agsab
 ask_goto_documentation_again_bool = agdab
 
@@ -125,7 +125,7 @@ def goto_cheatsheet():
         cheatsheet_bf = MyImageFrame(root, 'data/images/cheatsheet.png', cheatsheet_width, cheatsheet_height)
         ft_cheatsheet = False
     else:
-        cheatsheet_bf.img_frame.frame.tkraise()
+        cheatsheet_bf.img_frame.tkraise()
 
     at_start = False
     Fresh = False
@@ -145,11 +145,15 @@ def goto_documentation():
                                         documentation_height)
         ft_documentation = False
     else:
-        documentation_bf.img_frame.frame.tkraise()
+        documentation_bf.img_frame.tkraise()
 
     at_start = False
     Fresh = False
     in_documentation = True
+
+
+def goto_preferences():
+    execfile('preferences.pyw', globals())
 
 
 # restart and quit functions
@@ -261,15 +265,18 @@ button3.place(relwidth=0.65)
 button4 = MyButton(start_bf, 'Program Documentation', goto_documentation, 0.175, 0.60)
 button4.place(relwidth=0.65)
 
+button5 = MyImageButton(start_bf, GrayScale(20), CreateTkImage('data/images/preferences.png', 32, 32), goto_preferences,
+                        0.175, 0.75)
+button5.place(relwidth=0.12, relheight=0.06)
+
 footnote_label = MyLabel(start_bf,
                          'created by:\n Team 14\nYaqin Hasan\nLian Chao Hooi\nIbraheem El-Nahta\nJaden Pang',
-                         0.25, 0.75
+                         0.25, 0.85
                          )
 footnote_label.configure(bg=GrayScale(20), fg=GrayScale(60), font=MyFonts['Default'])
-footnote_label.place(relwidth=0.5, relheight=0.25)
+footnote_label.place(relwidth=0.5, relheight=0.15)
 
 goto_start()
-goto_main()
 
 # mainloop
 root.mainloop()
