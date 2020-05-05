@@ -133,8 +133,8 @@ class MyMainFrame(object):
 
         if not dev:
             self.time_factor_scale.set(5)
-            self.len_mult_scale.set(10)
-            self.granularity_scale.set(15)
+            self.len_mult_scale.set(5)
+            self.granularity_scale.set(5)
 
         if tooltips:
             CreateToolTip(self.time_factor_scale.label, 'Drag slider to adjust animation speed.'
@@ -158,6 +158,10 @@ class MyMainFrame(object):
             CreateToolTip(self.radius_scale.label, 'Drag slider to adjust radius')
             CreateToolTip(self.mass_scale.label, 'Drag slider to adjust mass')
             CreateToolTip(self.ang_vel_scale.label, 'Drag slider to adjust angular velocity')
+
+        self.radius_scale.set(20.0)
+        self.mass_scale.set(20.0)
+        self.ang_vel_scale.set(20.0)
 
     # noinspection DuplicatedCode
     def create_frame1(self):

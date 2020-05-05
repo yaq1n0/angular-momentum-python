@@ -4,6 +4,24 @@
 from tkMessageBox import showinfo
 from math import pi
 from PIL import Image, ImageTk
+from os import execv
+from sys import executable, argv
+
+from data.myvariables import dev
+
+
+# restart and quit functions
+def program_restart():
+    if dev:
+        print '[program] restart'
+    # code from 'https://blog.petrzemek.net/2014/03/23/restarting-a-python-script-within-itself/'
+    execv(executable, ['python'] + argv)
+
+
+def program_quit():
+    if dev:
+        print '[program] quit'
+    exit()
 
 
 # create greyscale hex
