@@ -62,10 +62,10 @@ class MyMainFrame(object):
         self.main_bf = MyFrame(self.parent, GrayScale(20))
         self.main_pf1 = MyFrame(self.main_bf, GrayScale(20))
         self.main_pf2 = MyFrame(self.main_bf, GrayScale(20))
-        self.scales = MyInputFrame(self.main_bf, GrayScale(20))
-        self.frame1 = MyFrameWBP1(self.main_bf, GrayScale(20))
-        self.frame2 = MyFrameWBP1(self.main_bf, GrayScale(20))
-        self.frame3 = MyFrameWBP1(self.main_bf, GrayScale(20))
+        self.scales = MyInputFrame(self.main_pf1, GrayScale(20))
+        self.frame1 = MyFrameWBP1(self.main_pf1, GrayScale(20))
+        self.frame2 = MyFrameWBP1(self.main_pf1, GrayScale(20))
+        self.frame3 = MyFrameWBP1(self.main_pf1, GrayScale(20))
         self.frame1a = MyOutputFrame(self.frame1, GrayScale(20))
         self.frame1b = MyOutputFrame(self.frame1, GrayScale(20))
         self.frame1c = MyOutputFrame(self.frame1, GrayScale(20))
@@ -371,7 +371,6 @@ class MyMainFrame(object):
 
     def flip_main_pf1(self):
         self.main_pf1.tkraise()
-        self.flip_frame1()
         self.parent.geometry(
             main_geometry + '+' + str(self.parent.winfo_screenwidth() / 2 - main_width / 2) + '+' + str(
                 self.parent.winfo_screenheight() / 2 - main_height / 2))
