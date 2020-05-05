@@ -134,7 +134,7 @@ class MyQuestion(object):
         # creating is_correct_label for explanation frame
         self.cl = Label(self.ef)
         self.cl.configure(text=self.is_correct_text.get())
-        self.cl.configure(font=MyFonts['ExtraLarge'])
+        self.cl.configure(font=MyFonts['ExtraLargeBold'])
         self.cl.configure(bg=self.efbg.get(), fg=GrayScale(20))
         self.cl.configure(relief=FLAT)
         self.cl.configure(padx=2, pady=2, anchor=N)
@@ -144,7 +144,7 @@ class MyQuestion(object):
         # creating exp_label for explanation frame
         self.el = Label(self.ef)
         self.el.configure(text=self.exp_text.get())
-        self.el.configure(font=MyFonts['ExtraLarge'])
+        self.el.configure(font=MyFonts['LargeBold'])
         self.el.configure(bg=self.efbg.get(), fg=GrayScale(20))
         self.el.configure(relief=FLAT)
         self.el.configure(padx=2, pady=2, anchor=N)

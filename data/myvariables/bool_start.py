@@ -1,1 +1,1 @@
-ask_goto_start_again_bool = False
+ask_goto_start_again_bool = True

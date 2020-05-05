@@ -12,4 +12,6 @@ font_size = 12
 enable_tooltips = True
 
 # enable developer
-enable_developer = True
+enable_developer = False
+
+# Oh Hello There

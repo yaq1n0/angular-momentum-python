@@ -60,7 +60,9 @@ def writeConfig(myfile, width, height, font, font_size, tooltips_bool):
          line5,
          '\n',
          '# enable developer\n',
-         line6
+         line6,
+         '\n',
+         '# Oh Hello There\n'
          ]
     )
 

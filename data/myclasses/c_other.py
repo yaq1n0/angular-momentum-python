@@ -334,7 +334,7 @@ class MyScale(Scale):
         self.configure(relief=RIDGE, highlightthickness=0, bd=0)
 
     def scale_place_(self):
-        self.place(relx=self.relx, rely=self.rely, relwidth=self.s_relwidth, relheight=self.s_relheight)
+        self.place(relx=self.relx, rely=(self.rely + 0.01), relwidth=self.s_relwidth, relheight=self.s_relheight)
 
     def label_create_(self):
         self.label = Label(self.parent)
@@ -344,7 +344,7 @@ class MyScale(Scale):
 
     def label_configure_(self):
         self.label.configure(textvariable=self.l_val)
-        self.label.configure(font=MyFonts['Default'])
+        self.label.configure(font=MyFonts['Large'])
         self.label.configure(bg=self.bgcolor, fg=self.fgcolor)
         self.label.configure(relief=FLAT)
         self.label.configure(padx=2, pady=2)
@@ -354,7 +354,7 @@ class MyScale(Scale):
         self.label.place(relx=self.relx, rely=label_rely)
 
     def update(self, *args):
-        self.l_val.set(' ' + self.text + ' = ' + str(Scale.get(self)) + ' ')
+        self.l_val.set(self.text + ' = ' + str(Scale.get(self)))
 
 
 # Creating MyInputScale
@@ -383,7 +383,7 @@ class MyEntry(Entry):
         self.entry_configure_()
         self.entry_place_()
 
-        self.label_rely = self.rely - 0.045
+        self.label_rely = self.rely - 0.050
         self.label_create_()
 
     def entry_configure_(self):
@@ -403,4 +403,6 @@ class MyEntry(Entry):
 class MyOutputEntry(MyEntry):
     def __init__(self, parent, text, relx, rely):
         MyEntry.__init__(self, parent, text, relx, rely)
-        self.label_rely = rely - 0.050
+        self.label.destroy()
+        self.label_rely = rely - 0.060
+        MyEntry.label_create_(self)

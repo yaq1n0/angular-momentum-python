@@ -1,7 +1,6 @@
 # creating geometry values
 
 # imports
-# TODO: change config_width in GUI editor (project wide)
 from data.myvariables.userconfig import width as config_width
 from data.myvariables.userconfig import height as config_height
 

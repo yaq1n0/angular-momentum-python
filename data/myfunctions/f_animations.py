@@ -9,7 +9,6 @@ from math import pi, sin, cos
 from f_other import dtr, GrayScale
 from f_programconfig import setRadiusFalse, setAngVelFalse
 
-# TODO: try to remove 'redundant' import as and variable assignment
 from data.myvariables import dev, ask_again_list, spoke_step, platform_width, part_radius, circum_width
 from data.myvariables import ask_radius_error_bool as areb
 from data.myvariables import ask_ang_vel_error_bool as aaveb

@@ -311,7 +311,7 @@ footnote_label = MyLabel(start_bf,
                          'created by:\n Team 14\nYaqin Hasan\nLian Chao Hooi\nIbraheem El-Nahta\nJaden Pang',
                          0.25, 0.85
                          )
-footnote_label.configure(bg=GrayScale(20), fg=GrayScale(60), font=MyFonts['Default'])
+footnote_label.configure(bg=GrayScale(20), fg=GrayScale(60), font=MyFonts['Small'])
 footnote_label.place(relwidth=0.5, relheight=0.15)
 
 goto_start()
