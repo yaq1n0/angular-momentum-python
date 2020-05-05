@@ -12,3 +12,5 @@ from c_question import MyQuestion
 from c_game import MyGameFrame
 
 from c_image import MyImageFrame
+
+from c_preferences import MyPreferencesFrame

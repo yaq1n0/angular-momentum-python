@@ -6,30 +6,35 @@ from tkMessageBox import askquestion
 from os import execv
 from sys import executable, argv
 
-from data.myclasses import MyMainFrame, MyGameFrame, MyImageFrame, MyFrame, MyButton, MyImageButton, MyLabel
-from data.myfunctions import GrayScale, setGotoStartFalse, setGotoDocFalse, CreateTkImage
+from data.myclasses import MyMainFrame, MyGameFrame, MyImageFrame, MyPreferencesFrame, MyFrame, MyButton, MyImageButton, \
+    MyLabel
+from data.myfunctions import GrayScale, setGotoStartFalse, setGotoDocFalse, setExitPrefFalse, CreateTkImage
 from data.myvariables import dev, MyFonts, ask_again_list, \
     start_geometry, main_geometry, game_geometry, cheatsheet_geometry, documentation_geometry, \
     start_width, start_height, main_width, main_height, game_height, game_width, \
     cheatsheet_width, cheatsheet_height, documentation_width, documentation_height
 from data.myvariables import ask_goto_start_again_bool as agsab
 from data.myvariables import ask_goto_documentation_again_bool as agdab
+from data.myvariables import ask_exit_preferences_again_bool as aepab
 
 # assigning imported variables to global variables
 ask_goto_start_again_bool = agsab
 ask_goto_documentation_again_bool = agdab
+ask_exit_preferences_again_bool = aepab
 
 # first time variables
 ft_main = True
 ft_game = True
 ft_cheatsheet = True
 ft_documentation = True
+ft_preferences = True
 
 # location identifier variables
 at_start = True
 Fresh = True
 in_game = False
 in_documentation = False
+in_preferences = False
 
 # creating root
 root = Tk()
@@ -46,7 +51,7 @@ start_bf = MyFrame(root, GrayScale(20))
 
 # goto functions
 def goto_start():
-    global start_bf, at_start, in_game, in_documentation
+    global start_bf, at_start, in_game, in_documentation, in_preferences
     if dev:
         print '[nav] goto_start'
 
@@ -59,6 +64,7 @@ def goto_start():
     at_start = True
     in_game = False
     in_documentation = False
+    in_preferences = False
 
 
 def goto_main():
@@ -153,7 +159,23 @@ def goto_documentation():
 
 
 def goto_preferences():
-    execfile('preferences.pyw', globals())
+    global ft_preferences, preferences_bf, at_start, Fresh, in_preferences
+    if dev:
+        print '[nav] goto_preferences'
+    root.geometry(start_geometry + '+' + str(root.winfo_screenwidth() / 2 - start_width / 2)
+                  + '+' + str(root.winfo_screenheight() / 2 - start_height / 2))
+    root.title('Modify Program settings')
+
+    if ft_preferences:
+        preferences_bf = MyPreferencesFrame(root)
+        ft_preferences = False
+
+    else:
+        preferences_bf.main_bf.tkraise()
+
+    at_start = False
+    Fresh = False
+    in_preferences = True
 
 
 # restart and quit functions
@@ -181,7 +203,7 @@ def program_quit_bind(event):
 
 
 def goto_start_bind(event):
-    global ask_goto_start_again_bool
+    global ask_goto_start_again_bool, ask_exit_preferences_again_bool
     if in_game and ask_goto_start_again_bool:
         ask_goto_start = askquestion('Go Back?', 'You have pressed Escape to go to start.'
                                                  '\nYou will lose all progress in the quiz.'
@@ -197,6 +219,22 @@ def goto_start_bind(event):
 
         if ask_goto_start == 'no':
             return
+
+    if in_preferences and ask_exit_preferences_again_bool:
+        ask_exit_preferences = askquestion('Exit Preferences', 'You may have unsaved changes.'
+                                                               '\nIt is recommended to restart the program before exiting.'
+                                                               '\nDo you want to restart?')
+        if ask_exit_preferences == 'yes':
+            program_restart()
+
+        if ask_exit_preferences == 'no':
+            ask_exit_preferences_again = askquestion(ask_again_list[0], ask_again_list[1])
+
+            if ask_exit_preferences_again == 'yes':
+                ask_exit_preferences_again_bool = False
+                setExitPrefFalse()
+
+            goto_start()
 
     if at_start:
         if dev:

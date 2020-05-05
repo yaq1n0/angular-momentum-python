@@ -25,6 +25,11 @@ def setGotoDocFalse():
         myfile.write('ask_goto_documentation_again_bool = False\n')
 
 
+def setExitPrefFalse():
+    with open('data/myvariables/bool_preferences.py', 'w') as myfile:
+        myfile.write('ask_exit_preferences_again_bool = False\n')
+
+
 # set boolean values to True
 def setRadiusTrue():
     with open('data/myvariables/bool_radius.py', 'w') as myfile:
@@ -46,9 +51,15 @@ def setGotoDocTrue():
         myfile.write('ask_goto_documentation_again_bool = True\n')
 
 
+def setExitPrefTrue():
+    with open('data/myvariables/bool_preferences.py', 'w') as myfile:
+        myfile.write('ask_exit_preferences_again_bool = True\n')
+
+
 # set all boolean values back to True (default)
 def setAllTrue():
     setRadiusTrue()
     setAngVelTrue()
     setGotoStartTrue()
     setGotoDocTrue()
+    setExitPrefTrue()

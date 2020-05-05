@@ -17,6 +17,7 @@ from bool_radius import ask_radius_error_bool
 from bool_angvel import ask_ang_vel_error_bool
 from bool_start import ask_goto_start_again_bool
 from bool_doc import ask_goto_documentation_again_bool
+from bool_preferences import ask_exit_preferences_again_bool
 
 from userconfig import enable_developer as dev
 from userconfig import enable_tooltips as tooltips
