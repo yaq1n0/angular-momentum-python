@@ -3,15 +3,31 @@
 # imports
 from Tkinter import END
 from tkMessageBox import showwarning, showinfo
+from os import execv
+from sys import executable, argv
 
 from data.myclasses import MyFrame, MyLabel, MyEntry, MyToggleButton, MyImageButton
-from data.myfunctions import program_restart, GrayScale, CreateTkImage, setAllTrue
-from data.myvariables import MyFonts
+from data.myfunctions import GrayScale, CreateTkImage, setAllTrue
+from data.myvariables import dev, MyFonts
 from data.myvariables.userconfig import width as config_width
 from data.myvariables.userconfig import height as config_height
 from data.myvariables.userconfig import font as config_font
 from data.myvariables.userconfig import font_size as config_font_size
 from data.myvariables.userconfig import enable_tooltips as config_tooltips
+
+
+# restart and quit functions
+def program_restart():
+    if dev:
+        print '[program] restart'
+    # code from 'https://blog.petrzemek.net/2014/03/23/restarting-a-python-script-within-itself/'
+    execv(executable, ['python'] + argv)
+
+
+def program_quit():
+    if dev:
+        print '[program] quit'
+    exit()
 
 
 def openConfig():

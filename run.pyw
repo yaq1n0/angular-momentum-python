@@ -3,11 +3,12 @@
 # imports
 from Tkinter import Tk
 from tkMessageBox import askquestion
+from os import execv
+from sys import executable, argv
 
 from data.myclasses import MyMainFrame, MyGameFrame, MyImageFrame, MyPreferencesFrame, MyFrame, MyButton, MyImageButton, \
     MyLabel
-from data.myfunctions import GrayScale, setGotoStartFalse, setGotoDocFalse, setExitPrefFalse, CreateTkImage, \
-    program_restart, program_quit
+from data.myfunctions import GrayScale, setGotoStartFalse, setGotoDocFalse, setExitPrefFalse, CreateTkImage
 from data.myvariables import dev, MyFonts, ask_again_list, \
     start_geometry, main_geometry, game_geometry, cheatsheet_geometry, documentation_geometry, \
     start_width, start_height, main_width, main_height, game_height, game_width, \
@@ -46,6 +47,20 @@ root.configure(bg=GrayScale(20))
 
 # creating start frame
 start_bf = MyFrame(root, GrayScale(20))
+
+
+# restart and quit functions
+def program_restart():
+    if dev:
+        print '[program] restart'
+    # code from 'https://blog.petrzemek.net/2014/03/23/restarting-a-python-script-within-itself/'
+    execv(executable, ['python'] + argv)
+
+
+def program_quit():
+    if dev:
+        print '[program] quit'
+    exit()
 
 
 # goto functions
