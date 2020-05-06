@@ -247,7 +247,7 @@ def goto_start_bind(event):
 def goto_documentation_bind(event):
     global ask_goto_documentation_again_bool
     if in_game and ask_goto_documentation_again_bool:
-        ask_goto_documentation = askquestion('Open Documentation?', 'You have pressed F2 to open documentation.'
+        ask_goto_documentation = askquestion('Open Documentation?', 'You have pressed Control + H to open documentation.'
                                                                     '\nYou will lose all progress in the quiz.'
                                                                     '\nAre you sure you want to open documentation?')
         if ask_goto_documentation == 'yes':
