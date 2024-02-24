@@ -39,7 +39,8 @@ in_preferences = False
 # creating root
 root = Tk()
 root.title('Rotational Motion')
-root.iconbitmap('data/images/favicon.ico')
+# this seems to break wtih the current versions of python2 and stuff
+#root.iconbitmap('data/images/favicon.ico')
 root.geometry(start_geometry + '+' + str(root.winfo_screenwidth() / 2 - start_width / 2)
               + '+' + str(root.winfo_screenheight() / 2 - start_height / 2))
 root.resizable(False, False)
